@@ -1,5 +1,7 @@
 package com.darkenedsky.d20charviewer.d20objects;
 
+import com.darkenedsky.d20charviewer.common.RuleObject;
+
 
 
 public class D20Feat extends RuleObject implements D20Stats {

@@ -1,9 +1,9 @@
 package com.darkenedsky.d20charviewer.d20srd.classes;
 
-import com.darkenedsky.d20charviewer.Dice;
+import com.darkenedsky.d20charviewer.common.Dice;
+import com.darkenedsky.d20charviewer.common.Progression;
 import com.darkenedsky.d20charviewer.d20objects.D20Character;
 import com.darkenedsky.d20charviewer.d20objects.D20Class;
-import com.darkenedsky.d20charviewer.d20objects.D20Progression;
 import com.darkenedsky.d20charviewer.d20objects.D20Race;
 import com.darkenedsky.d20charviewer.d20srd.D20SRD;
 
@@ -14,7 +14,7 @@ public class Ranger extends D20Class {
 		ageClass = (D20Race.AGE_MOD_RANGER);
 		hitDice = new Dice(1,8);
 		skillPoints = 4;
-		babProgression = D20Progression.FIGHTER_BAB;
+		babProgression = Progression.FIGHTER_BAB;
 	}
 	
 	@Override

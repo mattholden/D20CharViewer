@@ -3,7 +3,9 @@ package com.darkenedsky.d20charviewer.d20objects;
 import java.util.ArrayList;
 import java.util.Map;
 
-import com.darkenedsky.d20charviewer.Dice;
+import com.darkenedsky.d20charviewer.common.Dice;
+import com.darkenedsky.d20charviewer.common.Progression;
+import com.darkenedsky.d20charviewer.common.RuleObject;
 
 public class D20Class extends RuleObject implements D20Stats {
 
@@ -12,8 +14,8 @@ public class D20Class extends RuleObject implements D20Stats {
 	 */
 	private static final long serialVersionUID = -8981668795309213519L;
 	
-	protected D20Progression fortSaveProgression, reflexSaveProgression, willSaveProgression, babProgression;
-	protected D20Progression spellProgression = D20Progression.ZERO;
+	protected Progression fortSaveProgression, reflexSaveProgression, willSaveProgression, babProgression;
+	protected Progression spellProgression = Progression.ZERO;
 	
 	protected ArrayList<D20Skill> classSkills = new ArrayList<D20Skill>();
 	protected ArrayList<D20Skill> forbiddenSkills = new ArrayList<D20Skill>();
@@ -30,23 +32,23 @@ public class D20Class extends RuleObject implements D20Stats {
 	public ArrayList<D20Skill> getClassSkills() { return classSkills; }
 	public ArrayList<D20Skill> getForbiddenSkills() { return forbiddenSkills; }
 
-	public D20Progression getFortSaveProgression() {
+	public Progression getFortSaveProgression() {
 		return fortSaveProgression;
 	}
 
-	public D20Progression getReflexSaveProgression() {
+	public Progression getReflexSaveProgression() {
 		return reflexSaveProgression;
 	}
 
-	public D20Progression getWillSaveProgression() {
+	public Progression getWillSaveProgression() {
 		return willSaveProgression;
 	}
 
-	public D20Progression getBABProgression() {
+	public Progression getBABProgression() {
 		return babProgression;
 	}
 
-	public D20Progression getSpellProgression() {
+	public Progression getSpellProgression() {
 		return spellProgression;
 	}
 	

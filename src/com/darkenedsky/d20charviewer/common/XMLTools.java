@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.darkenedsky.d20charviewer;
+package com.darkenedsky.d20charviewer.common;
 import java.io.IOException;
 import java.io.StringReader;
 import java.sql.*;
@@ -31,21 +31,25 @@ public abstract class XMLTools {
 		return e;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public static String getString(Element root, String elem) { 
 		List list = root.getChildren(elem);
 		if (list.size() == 0) return null;
 		return ((Element)list.get(0)).getText();
 	}
+	@SuppressWarnings("rawtypes")
 	public static Integer getInt(Element root, String elem) { 
 		List list = root.getChildren(elem);
 		if (list.size() == 0) return null;
 		return Integer.parseInt(((Element)list.get(0)).getText());
 	}
+	@SuppressWarnings("rawtypes")
 	public static Boolean getBoolean(Element root, String elem) { 
 		List list = root.getChildren(elem);
 		if (list.size() == 0) return null;
 		return Boolean.parseBoolean(((Element)list.get(0)).getText());
 	}
+	@SuppressWarnings("rawtypes")
 	public static Float getFloat(Element root, String elem) { 
 		List list = root.getChildren(elem);
 		if (list.size() == 0) return null;

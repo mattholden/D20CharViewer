@@ -1,4 +1,4 @@
-package com.darkenedsky.d20charviewer.d20objects.prereq;
+package com.darkenedsky.d20charviewer.common.prereq;
 
 import com.darkenedsky.d20charviewer.d20objects.D20Character;
 

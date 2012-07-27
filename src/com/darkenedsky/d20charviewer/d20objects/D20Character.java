@@ -3,8 +3,9 @@ import java.io.Serializable;
 import java.util.*;
 import org.jdom.Element;
 
-import com.darkenedsky.d20charviewer.NumberTools;
-import com.darkenedsky.d20charviewer.XMLTools;
+import com.darkenedsky.d20charviewer.common.NumberTools;
+import com.darkenedsky.d20charviewer.common.RuleObject;
+import com.darkenedsky.d20charviewer.common.XMLTools;
 
 public class D20Character implements D20Stats, Serializable {
 
@@ -531,7 +532,87 @@ public class D20Character implements D20Stats, Serializable {
 		return e;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public D20Character(Element e) { 
+		player = XMLTools.getString(e, "player");
+		name = XMLTools.getString(e, "name");
+		hair = XMLTools.getString(e, "hair");
+		eyes = XMLTools.getString(e, "eyes");
+		height = XMLTools.getInt(e,"height");
+		weight = XMLTools.getInt(e,"weight");
+		age = XMLTools.getInt(e,"age");
+		ageClass = XMLTools.getInt(e,"ageclass");
+		male = XMLTools.getBoolean(e,"male");
+		skillsAvailable = XMLTools.getInt(e,"skillsavailable");
+		featsAvailable = XMLTools.getInt(e,"featsavailable");
+		levelsToGain = XMLTools.getInt(e,"levelstogain");
+		abilityScores[0] = XMLTools.getInt(e,"strength");
+		abilityScores[1] = XMLTools.getInt(e,"dexterity");
+		abilityScores[2] = XMLTools.getInt(e,"constitution");
+		abilityScores[3] = XMLTools.getInt(e,"intelligence");
+		abilityScores[4] = XMLTools.getInt(e,"wisdom");
+		abilityScores[5] = XMLTools.getInt(e,"charisma");
+		saves[0] = XMLTools.getInt(e,"fortitude");
+		saves[1] = XMLTools.getInt(e,"reflex");
+		saves[2] = XMLTools.getInt(e,"willpower");
+		bab = XMLTools.getInt(e,"bab");
+		hp = XMLTools.getInt(e,"hp");
+		maxHp = XMLTools.getInt(e,"maxhp");
+		xp = XMLTools.getInt(e,"xp");
+		baseSpeed = XMLTools.getInt(e,"basespeed");
+		
+		size = D20Size.load(XMLTools.getString(e,"size"));
+		alignment = D20Alignment.load(XMLTools.getString(e,"alignment"));
+		race = D20Library.getLibrary().lookupRace(XMLTools.getString(e,"race"));
+	
+		List lv = e.getChildren("level");
+		for (int i = 0; i < lv.size(); i++) { 
+			Element lvl = (Element)lv.get(i);
+			levels.add(D20Library.getLibrary().lookupClass(lvl.getText()));
+		}
+		
+		List sk = e.getChildren("skill");
+		for (int i = 0; i < sk.size(); i++) { 
+			Element skyll = (Element)sk.get(i);
+			Element a = skyll.getChild("ability");
+			D20Skill skill = D20Library.getLibrary().lookupSkill(a.getText());
+			Element spec = skyll.getChild("specialization");
+			String special = null;
+			if (spec != null)
+				special = spec.getText();
+			float ranks = Float.parseFloat(skyll.getChild("ranks").getText());
+			SpecializableRank<D20Skill> rank = new SpecializableRank<D20Skill>(skill, special);
+			skillRanks.put(rank, ranks);			
+		}
+		
+		List fe = e.getChildren("feat");
+		for (int i = 0; i < fe.size(); i++) { 
+			Element skyll = (Element)sk.get(i);
+			Element a = skyll.getChild("ability");
+			D20Feat skill = D20Library.getLibrary().lookupFeat(a.getText());
+			Element spec = skyll.getChild("specialization");
+			String special = null;
+			if (spec != null)
+				special = spec.getText();
+			int ranks = Integer.parseInt(skyll.getChild("ranks").getText());
+			SpecializableRank<D20Feat> rank = new SpecializableRank<D20Feat>(skill, special);
+			feats.put(rank, ranks);			
+		}
+		
+		List ab = e.getChildren("ability");
+		for (int i = 0; i < fe.size(); i++) { 
+			Element skyll = (Element)ab.get(i);
+			Element a = skyll.getChild("ability");
+			D20Feat skill = D20Library.getLibrary().lookupFeat(a.getText());
+			Element spec = skyll.getChild("specialization");
+			String special = null;
+			if (spec != null)
+				special = spec.getText();
+			int ranks = Integer.parseInt(skyll.getChild("ranks").getText());
+			SpecializableRank<D20Feat> rank = new SpecializableRank<D20Feat>(skill, special);
+			abilities.put(rank, ranks);			
+		}
+		
 		
 	}
 }

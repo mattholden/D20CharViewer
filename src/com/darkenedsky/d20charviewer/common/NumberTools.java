@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.darkenedsky.d20charviewer;
+package com.darkenedsky.d20charviewer.common;
 
 import java.text.DecimalFormat;
 

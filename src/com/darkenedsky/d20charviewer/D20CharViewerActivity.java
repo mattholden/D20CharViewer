@@ -3,6 +3,8 @@ package com.darkenedsky.d20charviewer;
 import java.util.regex.Pattern;
 
 import com.darkenedsky.d20charviewer.d20objects.D20Character;
+import com.darkenedsky.d20charviewer.d20objects.D20Library;
+import com.darkenedsky.d20charviewer.d20srd.D20SRD;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -17,6 +19,12 @@ public class D20CharViewerActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        // load up the SRD
+        D20Library.getLibrary().loadClasses(D20SRD.Classes.getClasses());
+        D20Library.getLibrary().loadRaces(D20SRD.Races.getRaces());
+        D20Library.getLibrary().loadSkills(D20SRD.Skills.getSkills());
+        
         setContentView(R.layout.main);
     }
     

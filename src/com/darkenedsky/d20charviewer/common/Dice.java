@@ -1,4 +1,4 @@
-package com.darkenedsky.d20charviewer;
+package com.darkenedsky.d20charviewer.common;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;

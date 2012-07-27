@@ -1,12 +1,13 @@
-package com.darkenedsky.d20charviewer.d20objects;
+package com.darkenedsky.d20charviewer.common;
 
 import java.util.ArrayList;
 
 import org.jdom.Element;
 
-import com.darkenedsky.d20charviewer.d20objects.prereq.Prerequisite;
+import com.darkenedsky.d20charviewer.common.prereq.Prerequisite;
+import com.darkenedsky.d20charviewer.d20objects.D20Character;
 
-public abstract class RuleObject implements java.io.Serializable {
+public abstract class RuleObject implements java.io.Serializable, Comparable<RuleObject> {
 
 	/**
 	 * 
@@ -60,4 +61,7 @@ public abstract class RuleObject implements java.io.Serializable {
 		return e;
 	}
 	
+	public int compareTo(RuleObject other) { 
+		return name.compareToIgnoreCase(other.name);
+	}
 }

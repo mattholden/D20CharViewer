@@ -1,5 +1,6 @@
 package com.darkenedsky.d20charviewer.d20objects;
-import com.darkenedsky.d20charviewer.Dice;
+import com.darkenedsky.d20charviewer.common.Dice;
+import com.darkenedsky.d20charviewer.common.RuleObject;
 
 public class D20Race extends RuleObject implements D20Stats {
 
