@@ -2,6 +2,7 @@ package com.darkenedsky.d20charviewer.common;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+import com.darkenedsky.d20charviewer.common.modifier.Modifier;
 
 public class Dice {
 	
@@ -10,17 +11,21 @@ public class Dice {
 	public static Random rand = new Random();
   
 	private int dice, sides;
-	private ArrayList<DiceModifier> modifiers = new ArrayList<DiceModifier>();
+	private ArrayList<Modifier> modifiers = new ArrayList<Modifier>();
+	
+	public void addModifier(Modifier mod) { 
+		modifiers.add(mod);		
+	}
 	
 	public Dice(int die, int side) { 
 		dice = die;
 		sides = side;
 	}
-	public Dice(int die, int side, DiceModifier... mods) { 
+	public Dice(int die, int side, Modifier... mods) { 
 		this(die, side);
 		
 		if (mods != null) { 
-			for (DiceModifier m : mods)
+			for (Modifier m : mods)
 				modifiers.add(m);
 		}
 	}
@@ -28,13 +33,13 @@ public class Dice {
 	private int modify(int value) { 
 		int val = value;
 		
-		for (DiceModifier m : modifiers)
+		for (Modifier m : modifiers)
 			val = m.modify(val);
 		
 		return val;
 	}
 	
-	private void addToStringModifier(StringBuffer current, DiceModifier newMod) {
+	private void addToStringModifier(StringBuffer current, Modifier newMod) {
 		String cur = current.toString();
 		current.delete(0, current.length());
 		current.append("(");
@@ -114,46 +119,6 @@ public class Dice {
         return modify(total);
     }
 
-	public static abstract class DiceModifier {
-		protected int amount;
-		public abstract int modify(int value);
-		public DiceModifier(int amt) { 
-			this.amount = amt;
-		}
-	}
-	
-	public static class Plus extends DiceModifier {
-		public Plus(int amt) { super(amt); 	}
-		public int modify(int value) { 	return value + amount; 	}
-		public String toString() { 	return " + " + amount; }
-	}
-	public static class Minus extends DiceModifier {
-		public Minus(int amt) { super(amt); 	}
-		public int modify(int value) { 	return value - amount; 	}
-		public String toString() { 	return " - " + amount; }
-	}
-	public static class Times extends DiceModifier {
-		public Times(int amt) { super(amt); 	}
-		public int modify(int value) { 	return value * amount; 	}
-		public String toString() { 	return " * " + amount; }
-	}
-	public static class DividedBy extends DiceModifier {
-		public DividedBy(int amt) { super(amt); 	}
-		public int modify(int value) {
-			if (amount == 0) return value;
-			return value / amount; 	
-		}
-		public String toString() { 	return " / " + amount; }
-	}
-	public static class DividedBy_RoundUp extends DiceModifier {
-		public DividedBy_RoundUp(int amt) { super(amt); 	}
-		public int modify(int value) {
-			if (amount == 0) return value;			
-			return (value / amount) + (value % 2);
-		}
-		public String toString() { 	return " / " + amount; }
-	}
-	
 	 public static boolean flipCoin() { 
 		 
 		 // for better randomness than rand(0,1)

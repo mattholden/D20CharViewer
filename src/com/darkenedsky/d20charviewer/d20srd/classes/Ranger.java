@@ -6,8 +6,14 @@ import com.darkenedsky.d20charviewer.d20objects.D20Character;
 import com.darkenedsky.d20charviewer.d20objects.D20Class;
 import com.darkenedsky.d20charviewer.d20objects.D20Race;
 import com.darkenedsky.d20charviewer.d20srd.D20SRD;
+import com.darkenedsky.d20charviewer.common.modifier.Times;
 
 public class Ranger extends D20Class {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7233516754646135330L;
 
 	public Ranger() {
 		super("Ranger", "");
@@ -15,6 +21,9 @@ public class Ranger extends D20Class {
 		hitDice = new Dice(1,8);
 		skillPoints = 4;
 		babProgression = Progression.FIGHTER_BAB;
+		startingGold = new Dice(6,4);
+		startingGold.addModifier(new Times(10));
+		
 	}
 	
 	@Override

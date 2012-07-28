@@ -6,6 +6,8 @@ import org.jdom.Element;
 import com.darkenedsky.d20charviewer.common.NumberTools;
 import com.darkenedsky.d20charviewer.common.RuleObject;
 import com.darkenedsky.d20charviewer.common.XMLTools;
+import com.darkenedsky.d20charviewer.common.modifier.Bonus;
+import com.darkenedsky.d20charviewer.common.modifier.Modifier;
 
 public class D20Character implements D20Stats, Serializable {
 
@@ -29,10 +31,87 @@ public class D20Character implements D20Stats, Serializable {
 	private Map<SpecializableRank<D20Feat>, Integer> feats = new HashMap<SpecializableRank<D20Feat>, Integer>();
 	private Map<SpecializableRank<D20Feat>, Integer> abilities = new HashMap<SpecializableRank<D20Feat>, Integer>();
 	
+	private Map<D20Skill, List<Bonus>> skillBonuses = new HashMap<D20Skill,List<Bonus>>();
+	private Map<Integer, List<Bonus>> saveBonuses = new HashMap<Integer, List<Bonus>>();	
+	private Map<Integer, List<Bonus>> abilityBonuses = new HashMap<Integer, List<Bonus>>();	
+	private List<Bonus> attackBonuses = new ArrayList<Bonus>();
+	private List<Bonus> dodgeBonuses = new ArrayList<Bonus>();
+	
 	// temp variables used during chargen/levelup
 	private int skillsAvailable, featsAvailable;
 	private int ageClass;
 	private int levelsToGain = 1;
+	
+	public void addSkillBonus(D20Skill skill, RuleObject reason, Modifier mod, String conditional) {
+		List<Bonus> list = skillBonuses.get(skill);
+		if (list == null) { 
+			list = new ArrayList<Bonus>();
+			skillBonuses.put(skill, list);
+		}
+		list.add(new Bonus(reason, mod, conditional));
+	
+	}
+	
+	public void addAttackBonus(RuleObject reason, Modifier mod, String conditional) {		
+		attackBonuses.add(new Bonus(reason, mod, conditional));
+	}
+	public void addDodgeBonus(RuleObject reason, Modifier mod, String conditional) {		
+		dodgeBonuses.add(new Bonus(reason, mod, conditional));
+	}
+	
+	public void addSaveBonus(int save, RuleObject reason, Modifier mod, String conditional) {
+		List<Bonus> list = saveBonuses.get(save);
+		if (list == null) { 
+			list = new ArrayList<Bonus>();
+			saveBonuses.put(save, list);
+		}
+		list.add(new Bonus(reason, mod, conditional));
+	}
+	public void addAbilityBonus(int score, RuleObject reason, Modifier mod, String conditional) {
+		List<Bonus> list = abilityBonuses.get(score);
+		if (list == null) { 
+			list = new ArrayList<Bonus>();
+			abilityBonuses.put(score, list);
+		}
+		list.add(new Bonus(reason, mod, conditional));
+	}
+	
+	public List<Bonus> getAttackBonuses() { 
+		return attackBonuses;
+	}
+	public List<Bonus> getDodgeBonuses() { 
+		return dodgeBonuses;
+	}
+	
+
+	public List<Bonus> getAbilityBonuses(int score) { 
+		List<Bonus> l = new ArrayList<Bonus>();
+		List<Bonus> a = abilityBonuses.get(score);
+		if (a != null) l.addAll(a);
+		
+		// All saves
+		List<Bonus> b = abilityBonuses.get(-1);
+		if (b != null) l.addAll(b);
+		
+		return l;
+	}
+	
+	public List<Bonus> getSaveBonuses(int save) { 
+		List<Bonus> l = new ArrayList<Bonus>();
+		List<Bonus> a = saveBonuses.get(save);
+		if (a != null) l.addAll(a);
+		
+		// All saves
+		List<Bonus> b = saveBonuses.get(-1);
+		if (b != null) l.addAll(b);
+		
+		return l;
+	}
+	
+	public List<Bonus> getSkillBonuses(D20Skill skill) {
+		List<Bonus> l = skillBonuses.get(skill);
+		return (l == null) ? new ArrayList<Bonus>() : l;
+	}
 	
 	public float getSkillRanks(D20Skill skill, String spec) { 
 		

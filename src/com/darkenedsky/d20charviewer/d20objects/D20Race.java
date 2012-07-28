@@ -1,4 +1,6 @@
 package com.darkenedsky.d20charviewer.d20objects;
+import java.util.ArrayList;
+
 import com.darkenedsky.d20charviewer.common.Dice;
 import com.darkenedsky.d20charviewer.common.RuleObject;
 
@@ -13,17 +15,23 @@ public class D20Race extends RuleObject implements D20Stats {
 		super(name, sRDURL);
 	}
 	
-	private int baseSpeed = 30;
-	private D20Size size = D20Size.MEDIUM;
+	protected ArrayList<String> bonusLanguages = new ArrayList<String>();
+	
+	protected int baseSpeed = 30;
+	protected D20Size size = D20Size.MEDIUM;
+	protected D20Class favoredClass = null;
 	
 	// for monster races. SRD stuff will mostly ignore.	
-	private int eCL = 1;
+	protected int eCL = 1;
 	
-	private int[] mods = new int[6];
-	private int[] ageRanges = new int[5];
-	private int baseHeightM, baseHeightF, baseWeightM, baseWeightF;
-	private Dice modHeightM, modHeightF, modWeightM, modWeightF;
-	private Dice[] ageModsByClass = new Dice[3];
+	protected int[] mods = new int[6];
+	protected int[] ageRanges = new int[5];
+	protected int baseHeightM, baseHeightF, baseWeightM, baseWeightF;
+	protected Dice modHeightM, modHeightF, modWeightM, modWeightF;
+	protected Dice[] ageModsByClass = new Dice[3];
+	protected Dice maxAge;
+	
+	protected final int ht(int ft, int in) { return (ft*12)+in; }
 	
 	D20Size getSize() {
 		return size;

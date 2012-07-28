@@ -1,5 +1,7 @@
 package com.darkenedsky.d20charviewer.d20objects;
 
+import com.darkenedsky.d20charviewer.common.modifier.Plus;
+
 /**
  * Constants for indexing arrays. Just easier this way. 
  * @author Matt Holden
@@ -7,6 +9,13 @@ package com.darkenedsky.d20charviewer.d20objects;
  */
 public interface D20Stats {
 
+	// for bonuses
+	public static final int ALL = -1;
+	
+	// a bonus so big, you're immune
+	public static final int IMMUNE = 999999;
+	public static final Plus IMMUNITY = new Plus(IMMUNE);
+	
 	// ability scores
 	public static final int
 		STR = 0,

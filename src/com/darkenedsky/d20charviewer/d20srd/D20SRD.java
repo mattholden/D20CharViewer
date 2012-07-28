@@ -6,6 +6,7 @@ import com.darkenedsky.d20charviewer.d20srd.skills.*;
 import com.darkenedsky.d20charviewer.d20srd.abilities.*;
 
 import com.darkenedsky.d20charviewer.d20objects.D20Class;
+import com.darkenedsky.d20charviewer.d20objects.D20Feat;
 import com.darkenedsky.d20charviewer.d20objects.D20Race;
 import com.darkenedsky.d20charviewer.d20objects.D20Skill;
 
@@ -176,5 +177,19 @@ public abstract class D20SRD {
 					WILDERNESS_LORE
 			};
 		};				
+	}
+	
+	public static final class Abilities { 
+		
+		public static final D20Feat 
+			DARKVISION60 = null,
+			LOWLIGHTVISION = null,
+			FULL_MOVE_SPEED_MEDIUM_LOAD = null,
+			FULL_MOVE_SPEED_HEAVY_LOAD = null,
+			INTUIT_DEPTH = null,
+			SLEEP_IMMUNITY = null,
+			ELF_BLOOD = null,
+			ORC_BLOOD = null;
+		
 	}
 }

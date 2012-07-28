@@ -23,6 +23,7 @@ public class D20Class extends RuleObject implements D20Stats {
 	protected Dice hitDice;
 	protected int ageClass;	
 	protected int skillPoints;
+	protected Dice startingGold = null;
 	
 	
 	public D20Class(String name, String sRDURL) {
