@@ -1,6 +1,7 @@
 package com.darkenedsky.d20charviewer;
 
-import com.darkenedsky.d20charviewer.d20objects.D20Character;
+import com.darkenedsky.d20charviewer.R;
+import com.darkenedsky.gemini.d20system.D20Character;
 
 import android.app.Activity;
 import android.os.Bundle;

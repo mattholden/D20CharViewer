@@ -1,29 +1,38 @@
 package com.darkenedsky.d20charviewer;
 
-import java.util.regex.Pattern;
 
-import com.darkenedsky.d20charviewer.d20objects.D20Character;
-import com.darkenedsky.d20charviewer.d20objects.D20Library;
-import com.darkenedsky.d20charviewer.d20srd.D20SRD;
+import com.darkenedsky.d20charviewer.R;
+import com.darkenedsky.gemini.common.Library;
+import com.darkenedsky.gemini.d20fantasy.D20SRD;
+import com.darkenedsky.gemini.d20system.D20Character;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.view.View;
+/*
+import java.util.regex.Pattern;
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.util.Patterns;
+ */
 
 public class D20CharViewerActivity extends Activity {
-    /** Called when the activity is first created. */
+    
+	private Library library;
+	
+	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         // load up the SRD
-        D20Library.getLibrary().loadClasses(D20SRD.Classes.getClasses());
-        D20Library.getLibrary().loadRaces(D20SRD.Races.getRaces());
-        D20Library.getLibrary().loadSkills(D20SRD.Skills.getSkills());
+        try {
+        	library = D20SRD.getLibrary();
+        }
+        catch (Exception x) { 
+        	x.printStackTrace();
+        }
         
         setContentView(R.layout.main);
     }
@@ -32,12 +41,13 @@ public class D20CharViewerActivity extends Activity {
     
     public void doNewCharacter(View view) {
     	System.out.println("Doing new character!");
-    	character = new D20Character("jjj");
+    	character = new D20Character("jjj", library);
     	Intent intent = new Intent(this, AbilityScoreActivity.class);
     	intent.putExtra("CHARACTER", character);    			
     	startActivity(intent);	
     }
     
+    /*
     private String getGoogleAccount() { 
     	Pattern emailPattern = Patterns.EMAIL_ADDRESS; // API level 8+
     	Account[] accounts = AccountManager.get(this).getAccounts();
@@ -49,6 +59,7 @@ public class D20CharViewerActivity extends Activity {
     	}
     	return null;
     }
+    */
     
         
 }
