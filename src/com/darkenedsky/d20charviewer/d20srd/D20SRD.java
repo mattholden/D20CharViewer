@@ -9,6 +9,7 @@ import com.darkenedsky.d20charviewer.d20objects.D20Class;
 import com.darkenedsky.d20charviewer.d20objects.D20Feat;
 import com.darkenedsky.d20charviewer.d20objects.D20Race;
 import com.darkenedsky.d20charviewer.d20objects.D20Skill;
+import com.darkenedsky.d20charviewer.d20objects.D20Spell;
 
 public abstract class D20SRD {
 
@@ -124,6 +125,7 @@ public abstract class D20SRD {
 			SPEAK_LANGUAGE = null,
 			SPELLCRAFT = null,
 			SPOT = null,
+			SURVIVAL = null,
 			SWIM = null,
 			TUMBLE = null,
 			USE_MAGIC_DEVICE = null,
@@ -192,4 +194,27 @@ public abstract class D20SRD {
 			ORC_BLOOD = null;
 		
 	}
+	
+	public static final class Feats { 
+		
+		public static final D20Feat
+			SIMPLE_WEAPON_PROFICIENCY = null,
+			MARTIAL_WEAPON_PROFICIENCY = null,
+			EXOTIC_WEAPON_PROFICIENCY = null,
+			LIGHT_ARMOR_PROFICIENCY = null,
+			MEDIUM_ARMOR_PROFICIENCY = null,
+			HEAVY_ARMOR_PROFICIENCY = null,
+			SHIELD_PROFICIENCY = null,
+			TOWER_SHIELD_PROFICIENCY = null;
+	}
+	
+	public static final class Spells { 
+		
+		public static final D20Spell 
+			SPEAK_WITH_ANIMALS = null,
+			DANCING_LIGHTS = null,
+			PRESTIDIGITATION = null,
+			GHOST_SOUND = null;
+	}
+	
 }

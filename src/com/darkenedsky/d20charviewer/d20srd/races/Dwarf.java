@@ -43,6 +43,8 @@ public class Dwarf extends D20Race {
 	public void onGain(D20Character character) {		
 		super.onGain(character);
 		// Dwarves can treat dwarven waraxes and dwarven urgroshes as martial weapons rather than exotic
+		// this will be a special case in the onGain for martial weapon proficiency feat
+		
 		character.addSkillRank(D20SRD.Skills.SPEAK_LANGUAGE, "Dwarven", false, true);
 		character.addSkillRank(D20SRD.Skills.SPEAK_LANGUAGE, "Common", false, true);
 		character.addAbility(D20SRD.Abilities.DARKVISION60, null);
@@ -69,7 +71,5 @@ public class Dwarf extends D20Race {
 		character.addDodgeBonus(this, new Plus(4), "trolls");
 		
 	}
-	
-	
 
 }

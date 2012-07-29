@@ -1,6 +1,8 @@
 package com.darkenedsky.d20charviewer.d20objects;
 
 import com.darkenedsky.d20charviewer.common.RuleObject;
+import com.darkenedsky.d20charviewer.common.modifier.Plus;
+import com.darkenedsky.d20charviewer.d20srd.D20SRD;
 
 public class D20Size extends RuleObject {
 
@@ -38,6 +40,13 @@ public class D20Size extends RuleObject {
 	public static final D20Size HUGE = new D20Size("Huge", "http://www.d20srd.org/srd/combat/movementPositionAndDistance.htm#tableCreatureSizeAndScale", -2, 8);
 	public static final D20Size GARGANTUAN = new D20Size("Gargantuan", "http://www.d20srd.org/srd/combat/movementPositionAndDistance.htm#tableCreatureSizeAndScale", -4, 12);
 	public static final D20Size COLOSSAL = new D20Size("Colossal", "http://www.d20srd.org/srd/combat/movementPositionAndDistance.htm#tableCreatureSizeAndScale", -8, 16);
+	
+	@Override
+	public void onGain(D20Character character) { 
+		character.addDodgeBonus(this, new Plus(attackModifier),null);
+		character.addAttackBonus(this, new Plus(attackModifier),null);
+		character.addSkillBonus(D20SRD.Skills.HIDE, this, new Plus(getHideModifier()), null);
+	}
 	
 	public static final D20Size load(String sz) {				
 		if (sz.equals("Fine")) return FINE;

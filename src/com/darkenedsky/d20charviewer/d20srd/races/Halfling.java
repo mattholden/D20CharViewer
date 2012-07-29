@@ -1,6 +1,7 @@
 package com.darkenedsky.d20charviewer.d20srd.races;
 
 import com.darkenedsky.d20charviewer.common.Dice;
+import com.darkenedsky.d20charviewer.common.modifier.Plus;
 import com.darkenedsky.d20charviewer.d20objects.D20Character;
 import com.darkenedsky.d20charviewer.d20objects.D20Race;
 import com.darkenedsky.d20charviewer.d20objects.D20Size;
@@ -47,6 +48,14 @@ public class Halfling extends D20Race {
 		super.onGain(character);
 		character.addSkillRank(D20SRD.Skills.SPEAK_LANGUAGE, "Halfling", false, true);
 		character.addSkillRank(D20SRD.Skills.SPEAK_LANGUAGE, "Common", false, true);
+		character.addSaveBonus(ALL, this, new Plus(1), null);
+		character.addSaveBonus(ALL, this, new Plus(2), "fear");
+		character.addAttackBonus(this, new Plus(1), "slings");
+		character.addAttackBonus(this, new Plus(1), "thrown weapons");
+		character.addSkillBonus(D20SRD.Skills.CLIMB, this, new Plus(2), null);
+		character.addSkillBonus(D20SRD.Skills.JUMP, this, new Plus(2), null);
+		character.addSkillBonus(D20SRD.Skills.LISTEN, this, new Plus(2), null);	
+		character.addSkillBonus(D20SRD.Skills.MOVE_SILENTLY, this, new Plus(2), null);
 		
 	}
 	

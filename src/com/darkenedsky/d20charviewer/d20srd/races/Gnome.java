@@ -1,10 +1,14 @@
 package com.darkenedsky.d20charviewer.d20srd.races;
 
 import com.darkenedsky.d20charviewer.common.Dice;
+import com.darkenedsky.d20charviewer.common.Frequency;
+import com.darkenedsky.d20charviewer.common.TimeUnit;
+import com.darkenedsky.d20charviewer.common.modifier.Plus;
 import com.darkenedsky.d20charviewer.d20objects.D20Character;
 import com.darkenedsky.d20charviewer.d20objects.D20Race;
 import com.darkenedsky.d20charviewer.d20objects.D20Size;
 import com.darkenedsky.d20charviewer.d20srd.D20SRD;
+import com.darkenedsky.d20charviewer.d20srd.abilities.SpellLikeAbility;
 
 public class Gnome extends D20Race {
 
@@ -48,6 +52,36 @@ public class Gnome extends D20Race {
 		super.onGain(character);
 		character.addSkillRank(D20SRD.Skills.SPEAK_LANGUAGE, "Gnome", false, true);
 		character.addSkillRank(D20SRD.Skills.SPEAK_LANGUAGE, "Common", false, true);
+		character.addAbility(D20SRD.Abilities.LOWLIGHTVISION, null);
+		character.addSaveBonus(ALL, this, new Plus(2), "illusions");
+		character.addSkillBonus(D20SRD.Skills.LISTEN, this, new Plus(2), null);
+		character.addSkillBonus(D20SRD.Skills.CRAFT, this, new Plus(2), "alchemy");
+		character.addAttackBonus(this, new Plus(1), "kobolds");
+		character.addAttackBonus(this, new Plus(1), "goblins");
+		character.addAttackBonus(this, new Plus(1), "bugbears");
+		character.addAttackBonus(this, new Plus(1), "hobgoblins");
+		character.addDodgeBonus(this, new Plus(4), "giants");
+		character.addDodgeBonus(this, new Plus(4), "ogres");
+		character.addDodgeBonus(this, new Plus(4), "trolls");
+		
+		// gnomes can treat gnome hooked hammers as martial weapons rather than exotic
+		// this will be a special case in the onGain for martial weapon proficiency feat
+		
+		// +1 to illusion spell efficacy - not sure how to do this.
+		
+		
+		// spell like abilities
+		Frequency once = new Frequency(1,TimeUnit.DAY);
+		character.addAbility(new SpellLikeAbility(D20SRD.Spells.SPEAK_WITH_ANIMALS), "burrowing mammal", 
+				once);
+		
+		if (character.getAbilityScore(CHA) > 10) { 
+			character.addAbility(new SpellLikeAbility(D20SRD.Spells.DANCING_LIGHTS), null, once);
+			character.addAbility(new SpellLikeAbility(D20SRD.Spells.GHOST_SOUND), null, once);
+			character.addAbility(new SpellLikeAbility(D20SRD.Spells.PRESTIDIGITATION), null, once);
+				
+		}
+		
 	
 	}
 	

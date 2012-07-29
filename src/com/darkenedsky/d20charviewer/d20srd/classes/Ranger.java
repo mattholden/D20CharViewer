@@ -8,6 +8,7 @@ import com.darkenedsky.d20charviewer.d20objects.D20Race;
 import com.darkenedsky.d20charviewer.d20srd.D20SRD;
 import com.darkenedsky.d20charviewer.common.modifier.Times;
 
+// NOT DONE!
 public class Ranger extends D20Class {
 
 	/**
@@ -35,12 +36,7 @@ public class Ranger extends D20Class {
 		int totalLevel = character.getCharacterLevel();
 		
 		if (classLevel == 1) { 
-			
-			// everything that isn't a barbarian can read and write
-			if (character.getSkillRanks(D20SRD.Skills.READING_WRITING, null) == 0)
-				character.addSkillRank(D20SRD.Skills.READING_WRITING, null, false, true);
-			
-			
+					
 		}
 		
 	}

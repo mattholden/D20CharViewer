@@ -3,9 +3,12 @@ import java.io.Serializable;
 import java.util.*;
 import org.jdom.Element;
 
-import com.darkenedsky.d20charviewer.common.NumberTools;
+import com.darkenedsky.d20charviewer.common.Frequency;
 import com.darkenedsky.d20charviewer.common.RuleObject;
+import com.darkenedsky.d20charviewer.common.Specialized;
 import com.darkenedsky.d20charviewer.common.XMLTools;
+import com.darkenedsky.d20charviewer.common.event.CharacterEvent;
+import com.darkenedsky.d20charviewer.common.event.CharacterListener;
 import com.darkenedsky.d20charviewer.common.modifier.Bonus;
 import com.darkenedsky.d20charviewer.common.modifier.Modifier;
 
@@ -27,10 +30,10 @@ public class D20Character implements D20Stats, Serializable {
 	private int xp = 0;
 	
 	private ArrayList<D20Class> levels = new ArrayList<D20Class>();
-	private Map<SpecializableRank<D20Skill>, Float> skillRanks = new HashMap<SpecializableRank<D20Skill>, Float>();
-	private Map<SpecializableRank<D20Feat>, Integer> feats = new HashMap<SpecializableRank<D20Feat>, Integer>();
-	private Map<SpecializableRank<D20Feat>, Integer> abilities = new HashMap<SpecializableRank<D20Feat>, Integer>();
-	
+	private Map<Specialized<D20Skill>, Float> skillRanks = new HashMap<Specialized<D20Skill>, Float>();
+	private Map<Specialized<D20Feat>, Integer> feats = new HashMap<Specialized<D20Feat>, Integer>();
+	private Map<Specialized<D20Feat>, Frequency> abilities = new HashMap<Specialized<D20Feat>, Frequency>();
+	private ArrayList<CharacterListener<?>> uiListeners = new ArrayList<CharacterListener<?>>();
 	private Map<D20Skill, List<Bonus>> skillBonuses = new HashMap<D20Skill,List<Bonus>>();
 	private Map<Integer, List<Bonus>> saveBonuses = new HashMap<Integer, List<Bonus>>();	
 	private Map<Integer, List<Bonus>> abilityBonuses = new HashMap<Integer, List<Bonus>>();	
@@ -38,10 +41,16 @@ public class D20Character implements D20Stats, Serializable {
 	private List<Bonus> dodgeBonuses = new ArrayList<Bonus>();
 	
 	// temp variables used during chargen/levelup
-	private int skillsAvailable, featsAvailable;
+	private int skillsAvailable, featsAvailable, fighterBonusFeats;
 	private int ageClass;
 	private int levelsToGain = 1;
 	
+	public void fireUIEvent(CharacterEvent uiEvent) { 
+		for (CharacterListener<?> ui : uiListeners) {
+			ui.actionPerformed(uiEvent);
+		}
+	}
+		
 	public void addSkillBonus(D20Skill skill, RuleObject reason, Modifier mod, String conditional) {
 		List<Bonus> list = skillBonuses.get(skill);
 		if (list == null) { 
@@ -116,7 +125,7 @@ public class D20Character implements D20Stats, Serializable {
 	public float getSkillRanks(D20Skill skill, String spec) { 
 		
 		float ranks = 0;
-		for (Map.Entry<SpecializableRank<D20Skill>, Float> entry : skillRanks.entrySet()) { 
+		for (Map.Entry<Specialized<D20Skill>, Float> entry : skillRanks.entrySet()) { 
 			if (entry.getKey().ability.equals(skill)) { 
 				if (spec == null || (spec.equalsIgnoreCase(entry.getKey().specialization))) { 
 					ranks += entry.getValue();
@@ -129,13 +138,6 @@ public class D20Character implements D20Stats, Serializable {
 	public boolean addSkillRank(D20Skill skill, String spec, boolean crossClass, boolean free) { 
 		float toAdd = (crossClass)? 0.5f : 1f;
 		boolean added = false;
-		
-		// need points?
-		if (!free) {
-			if (skillsAvailable <= 0)
-				return false;
-			skillsAvailable--;
-		}
 				
 		// can't add if we're at max.
 		float max = this.getCharacterLevel() + 3.0f;
@@ -143,8 +145,15 @@ public class D20Character implements D20Stats, Serializable {
 			max /= 2;
 		if (getSkillRanks(skill,spec) >= max)
 			return false;
+
+		// need points?
+		if (!free) {
+			if (skillsAvailable <= 0)
+				return false;
+			skillsAvailable--;
+		}
 		
-		for (Map.Entry<SpecializableRank<D20Skill>, Float> entry : skillRanks.entrySet()) { 
+		for (Map.Entry<Specialized<D20Skill>, Float> entry : skillRanks.entrySet()) { 
 			if (entry.getKey().ability.equals(skill)) { 
 				if (spec == null && entry.getKey().specialization == null) { 
 					skillRanks.put(entry.getKey(), entry.getValue() + toAdd);
@@ -160,7 +169,7 @@ public class D20Character implements D20Stats, Serializable {
 		}
 		
 		if (!added) { 
-			SpecializableRank<D20Skill> rank = new SpecializableRank<D20Skill>(skill, spec);
+			Specialized<D20Skill> rank = new Specialized<D20Skill>(skill, spec);
 			skillRanks.put(rank, toAdd);
 		}
 		
@@ -170,7 +179,7 @@ public class D20Character implements D20Stats, Serializable {
 	
 	public int getFeatRanks(D20Feat feat, String spec) { 
 		int ranks = 0;
-		for (Map.Entry<SpecializableRank<D20Feat>, Integer> entry : feats.entrySet()) { 
+		for (Map.Entry<Specialized<D20Feat>, Integer> entry : feats.entrySet()) { 
 			if (entry.getKey().ability.equals(feat)) { 
 				if (spec == null || (spec.equalsIgnoreCase(entry.getKey().specialization))) { 
 					ranks += entry.getValue();
@@ -183,13 +192,6 @@ public class D20Character implements D20Stats, Serializable {
 	public boolean addFeat(D20Feat feat, String spec, boolean free) { 
 		boolean added = false;
 		
-		// need points?
-		if (!free) {
-			if (featsAvailable <= 0)
-				return false;
-			featsAvailable--;
-		}
-		
 		// see if i can even do it
 		if (!feat.hasPrerequisites(this))
 			return false;
@@ -197,7 +199,19 @@ public class D20Character implements D20Stats, Serializable {
 		if (!feat.isStacks() && getFeatRanks(feat,spec) > 0)
 			return false;
 		
-		for (Map.Entry<SpecializableRank<D20Feat>, Integer> entry : feats.entrySet()) { 
+		// need points?
+		if (!free) {
+			boolean legitFighter = (fighterBonusFeats > 0 && feat.isFighterBonusFeat());
+			if (featsAvailable <= 0 && !legitFighter)
+				return false;
+			
+			// use a fighter bonus feat if we can.
+			if (legitFighter)
+				fighterBonusFeats--;
+			else
+				featsAvailable--;
+		}
+		for (Map.Entry<Specialized<D20Feat>, Integer> entry : feats.entrySet()) { 
 			if (entry.getKey().ability.equals(feat)) { 
 				if (spec == null && entry.getKey().specialization == null) { 
 					feats.put(entry.getKey(), entry.getValue() + 1);
@@ -213,7 +227,7 @@ public class D20Character implements D20Stats, Serializable {
 		}
 		
 		if (!added) { 
-			SpecializableRank<D20Feat> rank = new SpecializableRank<D20Feat>(feat, spec);
+			Specialized<D20Feat> rank = new Specialized<D20Feat>(feat, spec);
 			feats.put(rank, 1);
 		}
 		
@@ -221,48 +235,41 @@ public class D20Character implements D20Stats, Serializable {
 		return true;
 	}
 	
-	public int getAbilityRanks(D20Feat feat, String spec) { 
-		int ranks = 0;
-		for (Map.Entry<SpecializableRank<D20Feat>, Integer> entry : abilities.entrySet()) { 
+	public Frequency getAbilityFrequency(D20Feat feat, String spec) { 
+		for (Map.Entry<Specialized<D20Feat>, Frequency> entry : abilities.entrySet()) { 
 			if (entry.getKey().ability.equals(feat)) { 
-				if (spec == null || (spec.equalsIgnoreCase(entry.getKey().specialization))) { 
-					ranks += entry.getValue();
+				if ((spec == null && entry.getKey().specialization == null)
+						|| (spec.equalsIgnoreCase(entry.getKey().specialization))) {
+					return entry.getValue();
+					
 				}
 			}
 		}
-		return ranks;
+		return null;
 	}
 	
-	public boolean addAbility(D20Feat feat, String spec) { 
-		boolean added = false;
+	public boolean addAbility(D20Feat feat, String spec) { return addAbility(feat,spec,Frequency.AT_WILL); }
+	public boolean addAbility(D20Feat feat, String spec, Frequency freq) { 
 		
 		// see if i can even do it
 		if (!feat.hasPrerequisites(this))
 			return false;
+		
 		// can't take more than once.
-		if (!feat.isStacks() && getFeatRanks(feat,spec) > 0)
+		Frequency freqNow = getAbilityFrequency(feat, spec);
+		if (!feat.isStacks() && freqNow != null)
 			return false;
 		
-		for (Map.Entry<SpecializableRank<D20Feat>, Integer> entry : feats.entrySet()) { 
-			if (entry.getKey().ability.equals(feat)) { 
-				if (spec == null && entry.getKey().specialization == null) { 
-					abilities.put(entry.getKey(), entry.getValue() + 1);
-					added = true;
-					break;
-				}
-				else if (spec != null && spec.equalsIgnoreCase(entry.getKey().specialization)) {
-					abilities.put(entry.getKey(), entry.getValue() + 1);
-					added = true;
-					break;
-				}						
-			}	
+		if (freqNow != null) { 
+			if (freqNow.getUnit().toString().equals(freq.getUnit().toString())) { 
+				freqNow.setUses(freqNow.getUses() + freq.getUses());
+			}
+			else 
+				freqNow = freq;			
 		}
+		else freqNow = freq;
 		
-		if (!added) { 
-			SpecializableRank<D20Feat> rank = new SpecializableRank<D20Feat>(feat, spec);
-			abilities.put(rank, 1);
-		}
-		
+		this.abilities.put(new Specialized<D20Feat>(feat,spec), freqNow);
 		feat.onGain(this);
 		return true;
 	}
@@ -303,12 +310,19 @@ public class D20Character implements D20Stats, Serializable {
 		return levels.size();
 	}
 	
-	public boolean addLevel(D20Class level) { 
-		if (!level.hasPrerequisites(this)) return false;
-		
-		levels.add(level);
-		level.onGain(this);
-		return true;
+	public boolean addLevel(Class<D20Class> clazz) { 
+		try {
+			D20Class level = clazz.newInstance();
+			
+			if (!level.hasPrerequisites(this)) return false;
+			levels.add(level);
+			level.onGain(this);
+			return true;
+		}
+		catch (Exception x) { 
+			x.printStackTrace();
+			return false;
+		}
 	}
 	
 	public Map<D20Class, Integer> getLevelMap() { 		
@@ -526,41 +540,6 @@ public class D20Character implements D20Stats, Serializable {
 	}
 
 
-	private static class SpecializableRank<T extends RuleObject> { 
-		public T ability;
-		public String specialization;
-		public SpecializableRank(T f, String spec) { 
-			ability = f;
-			specialization = spec;
-		}
-		public Element toXML(String root, Integer ranks) { 
-			Element e = new Element(root);
-			e.addContent(ability.toXML("ability"));
-			
-			if (specialization != null) { 
-				Element sp = new Element("specialization");
-				sp.setText(specialization);
-				e.addContent(sp);
-			}
-			
-			e.addContent(XMLTools.xml("ranks", ranks));
-			return e;
-		}
-		public Element toXML(String root, Float ranks) { 
-			Element e = new Element(root);
-			e.addContent(ability.toXML("ability"));
-			
-			if (specialization != null) { 
-				Element sp = new Element("specialization");
-				sp.setText(specialization);
-				e.addContent(sp);
-			}
-			
-			e.addContent(XMLTools.xml("ranks", NumberTools.trimFloat(ranks, 1,1,true)));
-			return e;
-		}
-		
-	}
 	
 	
 	
@@ -577,6 +556,7 @@ public class D20Character implements D20Stats, Serializable {
 		e.addContent(XMLTools.xml("male", male));
 		e.addContent(XMLTools.xml("skillsavailable", skillsAvailable));
 		e.addContent(XMLTools.xml("featsavailable", featsAvailable));
+		e.addContent(XMLTools.xml("fighterbonusfeats", fighterBonusFeats));
 		e.addContent(XMLTools.xml("levelstogain", levelsToGain));
 		e.addContent(XMLTools.xml("ageclass", ageClass));
 		e.addContent(XMLTools.xml("strength", abilityScores[0]));
@@ -601,11 +581,11 @@ public class D20Character implements D20Stats, Serializable {
 		for (D20Class lvl : levels) 
 			e.addContent(lvl.toXML("level"));
 		
-		for (Map.Entry<SpecializableRank<D20Skill>, Float> entry : skillRanks.entrySet()) 
+		for (Map.Entry<Specialized<D20Skill>, Float> entry : skillRanks.entrySet()) 
 			e.addContent(entry.getKey().toXML("skill", entry.getValue()));
-		for (Map.Entry<SpecializableRank<D20Feat>, Integer> entry : feats.entrySet()) 
+		for (Map.Entry<Specialized<D20Feat>, Integer> entry : feats.entrySet()) 
 			e.addContent(entry.getKey().toXML("feat", entry.getValue()));
-		for (Map.Entry<SpecializableRank<D20Feat>, Integer> entry : abilities.entrySet())  
+		for (Map.Entry<Specialized<D20Feat>, Frequency> entry : abilities.entrySet())  
 			e.addContent(entry.getKey().toXML("ability", entry.getValue()));
 			
 		return e;
@@ -624,6 +604,7 @@ public class D20Character implements D20Stats, Serializable {
 		male = XMLTools.getBoolean(e,"male");
 		skillsAvailable = XMLTools.getInt(e,"skillsavailable");
 		featsAvailable = XMLTools.getInt(e,"featsavailable");
+		fighterBonusFeats = XMLTools.getInt(e,"fighterbonusfeats");
 		levelsToGain = XMLTools.getInt(e,"levelstogain");
 		abilityScores[0] = XMLTools.getInt(e,"strength");
 		abilityScores[1] = XMLTools.getInt(e,"dexterity");
@@ -660,7 +641,7 @@ public class D20Character implements D20Stats, Serializable {
 			if (spec != null)
 				special = spec.getText();
 			float ranks = Float.parseFloat(skyll.getChild("ranks").getText());
-			SpecializableRank<D20Skill> rank = new SpecializableRank<D20Skill>(skill, special);
+			Specialized<D20Skill> rank = new Specialized<D20Skill>(skill, special);
 			skillRanks.put(rank, ranks);			
 		}
 		
@@ -674,7 +655,7 @@ public class D20Character implements D20Stats, Serializable {
 			if (spec != null)
 				special = spec.getText();
 			int ranks = Integer.parseInt(skyll.getChild("ranks").getText());
-			SpecializableRank<D20Feat> rank = new SpecializableRank<D20Feat>(skill, special);
+			Specialized<D20Feat> rank = new Specialized<D20Feat>(skill, special);
 			feats.put(rank, ranks);			
 		}
 		
@@ -687,11 +668,19 @@ public class D20Character implements D20Stats, Serializable {
 			String special = null;
 			if (spec != null)
 				special = spec.getText();
-			int ranks = Integer.parseInt(skyll.getChild("ranks").getText());
-			SpecializableRank<D20Feat> rank = new SpecializableRank<D20Feat>(skill, special);
-			abilities.put(rank, ranks);			
+			Frequency f = Frequency.load(skyll.getChild("frequency"));
+			Specialized<D20Feat> rank = new Specialized<D20Feat>(skill, special);
+			abilities.put(rank, f);			
 		}
 		
 		
+	}
+
+	public void setFighterBonusFeats(int fighterBonusFeats) {
+		this.fighterBonusFeats = fighterBonusFeats;
+	}
+
+	public int getFighterBonusFeats() {
+		return fighterBonusFeats;
 	}
 }

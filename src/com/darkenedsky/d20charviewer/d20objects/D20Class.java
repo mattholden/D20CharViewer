@@ -6,6 +6,8 @@ import java.util.Map;
 import com.darkenedsky.d20charviewer.common.Dice;
 import com.darkenedsky.d20charviewer.common.Progression;
 import com.darkenedsky.d20charviewer.common.RuleObject;
+import com.darkenedsky.d20charviewer.common.Specialized;
+import com.darkenedsky.d20charviewer.d20srd.D20SRD;
 
 public class D20Class extends RuleObject implements D20Stats {
 
@@ -17,22 +19,35 @@ public class D20Class extends RuleObject implements D20Stats {
 	protected Progression fortSaveProgression, reflexSaveProgression, willSaveProgression, babProgression;
 	protected Progression spellProgression = Progression.ZERO;
 	
-	protected ArrayList<D20Skill> classSkills = new ArrayList<D20Skill>();
-	protected ArrayList<D20Skill> forbiddenSkills = new ArrayList<D20Skill>();
-		
+	private ArrayList<Specialized<D20Skill>> classSkills = new ArrayList<Specialized<D20Skill>>();
+	private ArrayList<Specialized<D20Skill>> forbiddenSkills = new ArrayList<Specialized<D20Skill>>();
+	private boolean literacy = true;
 	protected Dice hitDice;
 	protected int ageClass;	
 	protected int skillPoints;
+	protected Integer skillPointsAfter1 = null;
 	protected Dice startingGold = null;
-	
-	
+		
 	public D20Class(String name, String sRDURL) {
 		super(name, sRDURL);
 	}
 
-	public ArrayList<D20Skill> getClassSkills() { return classSkills; }
-	public ArrayList<D20Skill> getForbiddenSkills() { return forbiddenSkills; }
+	public ArrayList<Specialized<D20Skill>> getClassSkills() { return classSkills; }
+	public ArrayList<Specialized<D20Skill>> getForbiddenSkills() { return forbiddenSkills; }
 
+	public void addClassSkill(D20Skill skill, String spec) { 
+		classSkills.add(new Specialized<D20Skill>(skill,spec));
+	}
+	public void addClassSkill(D20Skill skill) { 
+		addClassSkill(skill,null);
+	}
+	public void addForbiddenSkill(D20Skill skill, String spec) { 
+		forbiddenSkills.add(new Specialized<D20Skill>(skill,spec));
+	}
+	public void addForbiddenSkill(D20Skill skill) { 
+		addForbiddenSkill(skill,null);
+	}
+	
 	public Progression getFortSaveProgression() {
 		return fortSaveProgression;
 	}
@@ -72,8 +87,34 @@ public class D20Class extends RuleObject implements D20Stats {
 		return skillPoints;
 	}
 	
+	protected int getClassSkillCount() { 
+		return classSkills.size();
+	}
+	protected void addClassSkills(D20Class other) { 
+		classSkills.addAll(other.classSkills);
+	}
+	
+	protected void setIlliterate() { 
+		literacy = false;
+		
+		// allow reading/writing to be taken as a skill
+		for (Specialized<D20Skill> sk : forbiddenSkills) { 
+			if (sk.ability.equals(D20SRD.Skills.READING_WRITING)) { 
+				forbiddenSkills.remove(sk);
+				return;
+			}
+		}
+	}
+	
 	public void onGain(D20Character character) { 
 			
+		// don't want to add reading and writing as a skill to EVERYTHING not a barbarian
+		if (literacy) { 			
+			if (character.getSkillRanks(D20SRD.Skills.READING_WRITING, null) == 0) {
+				character.addSkillRank(D20SRD.Skills.READING_WRITING, null, false, true);
+			}
+		}
+		
 		// better have already checked for ability score gain, because if they pick int, 
 		// the extra point of int goes to skill points, and if they pick con, it goes to HP
 		
@@ -92,7 +133,13 @@ public class D20Class extends RuleObject implements D20Stats {
 						
 		// add skill points
 		int totalLevel = character.getCharacterLevel();
+			
 		int skills = this.skillPoints;
+		
+		// a tiny handful of classes have different values for skills after 1.. use them if appropriate
+		if (this.skillPointsAfter1 != null && totalLevel > 1)
+			skills = skillPointsAfter1.intValue();
+		
 		skills += character.getModifier(INT);
 		
 		// 1st levels get *4 skills
