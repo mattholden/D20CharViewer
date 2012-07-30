@@ -11,14 +11,22 @@ import com.darkenedsky.gemini.d20fantasy.D20SRD;
 
 public class D20Class extends RuleObject implements D20, D20ClassInterface {
 
+	public static final Progression
+	SAVE_BONUS_LOW = new Progression(0,0,1,1,1,2,2,2,3,3,3,4,4,4,5,5,5,6),
+	SAVE_BONUS_HIGH = new Progression(2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12),
+	BAB_HIGH = new Progression(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20),
+	BAB_AVERAGE = new Progression(0,1,2,3,3,4,5,6,6,7,8,9,9,10,11,12,12,13,14,15),
+	BAB_LOW = new Progression(0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10);
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -8981668795309213519L;
 	
 	protected Progression fortSaveProgression, reflexSaveProgression, willSaveProgression, babProgression;
-	protected Progression spellProgression[] = new Progression[10];
-	
+	protected Progression spellsPerDay[] = new Progression[10];
+	protected Progression spellsKnown[] = new Progression[10];
+		
 	private ArrayList<Specialized<D20Skill>> classSkills = new ArrayList<Specialized<D20Skill>>();
 	private ArrayList<Specialized<D20Skill>> forbiddenSkills = new ArrayList<Specialized<D20Skill>>();
 	private boolean literacy = true;
@@ -31,7 +39,8 @@ public class D20Class extends RuleObject implements D20, D20ClassInterface {
 	public D20Class(String name, String sRDURL) {
 		super(name, sRDURL);
 		for (int i = 0; i < 10; i++) { 
-			spellProgression[i] = Progression.ZERO;
+			spellsPerDay[i] = Progression.ZERO;
+			spellsKnown[i] = Progression.ZERO;
 		}
 	}
 
@@ -124,7 +133,7 @@ public class D20Class extends RuleObject implements D20, D20ClassInterface {
 	@Override
 	public Progression getSpellProgression(int level) {
 		if (level < 0 || level > 9) return null;
-		return spellProgression[level];
+		return spellsPerDay[level];
 	}
 	
 	/* (non-Javadoc)
@@ -223,7 +232,15 @@ public class D20Class extends RuleObject implements D20, D20ClassInterface {
 		if (this.skillPointsAfter1 != null && totalLevel > 1)
 			skills = skillPointsAfter1.intValue();
 		
+		// intelligence bonus
 		skills += character.getModifier(INT);
+		
+		// bonus skill points for your race
+		if (totalLevel == 1)
+			skills += character.getRace().getBonusSkillPointsLevel1();
+		else
+			skills += character.getRace().getBonusSkillPointsAfter1();
+		
 		
 		// 1st levels get *4 skills
 		if (totalLevel == 1)

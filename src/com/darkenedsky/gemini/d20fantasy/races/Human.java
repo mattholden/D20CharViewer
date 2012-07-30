@@ -30,6 +30,8 @@ public class Human extends D20Race implements D20Fantasy {
 			new Dice(1,4), new Dice(1,6), new Dice(2,6)
 		};
 		bonusLanguages.add("*");
+		this.bonusSkillPointsAfter1 = 1;
+		this.bonusSkillPointsLevel1 = 1;
 	}
 	
 	@Override

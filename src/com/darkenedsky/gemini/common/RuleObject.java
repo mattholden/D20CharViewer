@@ -4,10 +4,11 @@ import java.util.ArrayList;
 
 import org.jdom.Element;
 
+import com.darkenedsky.gemini.common.prereq.HasPrerequisites;
 import com.darkenedsky.gemini.common.prereq.Prerequisite;
 import com.darkenedsky.gemini.d20system.D20Character;
 
-public abstract class RuleObject implements java.io.Serializable, Comparable<RuleObject> {
+public abstract class RuleObject implements java.io.Serializable, HasPrerequisites, Comparable<RuleObject> {
 
 	/**
 	 * 
@@ -47,9 +48,18 @@ public abstract class RuleObject implements java.io.Serializable, Comparable<Rul
 	public void onGain(D20Character character) {		
 	}
 	
-	private ArrayList<Prerequisite> prerequisites = new ArrayList<Prerequisite>();
+	private ArrayList<Prerequisite> prerequisites;
 	
-	public final boolean hasPrerequisites(D20Character character) { 
+	@Override
+	public final void addPrerequisite(Prerequisite pre) { 
+		if (prerequisites == null)
+			prerequisites = new ArrayList<Prerequisite>();
+		prerequisites.add(pre);
+	}
+	
+	@Override
+	public final boolean hasPrerequisites(D20Character character) {
+		if (prerequisites == null) return true;
 		for (Prerequisite req : prerequisites) { 
 			if (!req.satisfies(character)) return false;
 		}

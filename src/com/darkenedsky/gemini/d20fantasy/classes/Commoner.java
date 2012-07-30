@@ -1,6 +1,5 @@
 package com.darkenedsky.gemini.d20fantasy.classes;
 import com.darkenedsky.gemini.common.Dice;
-import com.darkenedsky.gemini.common.Progression;
 import com.darkenedsky.gemini.common.event.CharacterEvent;
 import com.darkenedsky.gemini.common.event.CharacterListener;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
@@ -8,7 +7,6 @@ import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.D20Character;
 import com.darkenedsky.gemini.d20system.D20Feat;
 import com.darkenedsky.gemini.d20system.D20NPCClass;
-import com.darkenedsky.gemini.d20system.D20Race;
 import com.darkenedsky.gemini.d20system.D20UIEvents;
 
 public class Commoner extends D20NPCClass implements CharacterListener<D20Feat>, D20Fantasy {
@@ -20,14 +18,12 @@ public class Commoner extends D20NPCClass implements CharacterListener<D20Feat>,
 
 	public Commoner() {
 		super("Commoner", "http://www.d20srd.org/srd/classes/commoner.htm");
-		ageClass = (D20Race.AGE_MOD_FIGHTER);
 		hitDice = new Dice(1,4);
 		skillPoints = 2;
-		babProgression = Progression.WIZARD_BAB;
-		this.fortSaveProgression = Progression.SAVE_BONUS_LOW;
-		this.reflexSaveProgression = Progression.SAVE_BONUS_LOW;
-		this.willSaveProgression = Progression.SAVE_BONUS_LOW;		
-		startingGold = new Dice(5,4);
+		babProgression = BAB_LOW;
+		this.fortSaveProgression = SAVE_BONUS_LOW;
+		this.reflexSaveProgression = SAVE_BONUS_LOW;
+		this.willSaveProgression = SAVE_BONUS_LOW;		
 		
 		addClassSkill(D20SRD.Skills.CLIMB);
 		addClassSkill(D20SRD.Skills.CRAFT,"*");
@@ -45,7 +41,11 @@ public class Commoner extends D20NPCClass implements CharacterListener<D20Feat>,
 	@Override
 	public void onGain(D20Character character) { 		
 		super.onGain(character);
-		character.fireUIEvent(new CharacterEvent<D20Feat>(character, D20UIEvents.CHOOSE_SIMPLE_WEAPON, this));					
+		
+		int classLevel = character.getLevelOfClass(getClass());
+		if (classLevel == 1) { 
+			character.fireUIEvent(new CharacterEvent<D20Feat>(character, D20UIEvents.CHOOSE_SIMPLE_WEAPON, this));
+		}
 	}
 
 	public void actionPerformed(CharacterEvent<D20Feat> evt) { 

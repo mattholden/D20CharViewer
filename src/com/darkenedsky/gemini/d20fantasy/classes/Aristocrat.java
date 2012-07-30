@@ -1,13 +1,10 @@
 package com.darkenedsky.gemini.d20fantasy.classes;
 
 import com.darkenedsky.gemini.common.Dice;
-import com.darkenedsky.gemini.common.Progression;
-import com.darkenedsky.gemini.common.modifier.Times;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.D20Character;
 import com.darkenedsky.gemini.d20system.D20NPCClass;
-import com.darkenedsky.gemini.d20system.D20Race;
 
 public class Aristocrat extends D20NPCClass implements D20Fantasy{
 
@@ -18,17 +15,13 @@ public class Aristocrat extends D20NPCClass implements D20Fantasy{
 
 	public Aristocrat() {
 		super("Aristocrat", "http://www.d20srd.org/srd/classes/aristocrat.htm");
-		ageClass = (D20Race.AGE_MOD_FIGHTER);
 		hitDice = new Dice(1,8);
 		skillPoints = 4;
-		babProgression = Progression.CLERIC_BAB;
-		this.fortSaveProgression = Progression.SAVE_BONUS_LOW;
-		this.reflexSaveProgression = Progression.SAVE_BONUS_LOW;
-		this.willSaveProgression = Progression.SAVE_BONUS_HIGH;		
+		babProgression = BAB_AVERAGE;
+		this.fortSaveProgression = SAVE_BONUS_LOW;
+		this.reflexSaveProgression = SAVE_BONUS_LOW;
+		this.willSaveProgression = SAVE_BONUS_HIGH;		
 	
-		startingGold = new Dice(6,4);
-		startingGold.addModifier(new Times(10));
-		
 		addClassSkill(D20SRD.Skills.APPRAISE);
 		addClassSkill(D20SRD.Skills.BLUFF);
 		addClassSkill(D20SRD.Skills.DIPLOMACY);
@@ -52,7 +45,7 @@ public class Aristocrat extends D20NPCClass implements D20Fantasy{
 		super.onGain(character);
 		
 		// it's already been added to the object, so this should never be below 1
-		Integer classLevel = character.getLevelMap().get(this);
+		Integer classLevel = character.getLevelOfClass(getClass());
 				
 		if (classLevel == 1) { 
 			

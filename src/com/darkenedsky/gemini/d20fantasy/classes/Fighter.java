@@ -1,7 +1,6 @@
 package com.darkenedsky.gemini.d20fantasy.classes;
 
 import com.darkenedsky.gemini.common.Dice;
-import com.darkenedsky.gemini.common.Progression;
 import com.darkenedsky.gemini.common.modifier.Times;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
@@ -18,13 +17,13 @@ public class Fighter extends D20Class implements D20Fantasy {
 
 	public Fighter() {
 		super("Fighter", "http://www.d20srd.org/srd/classes/fighter.htm");
-		ageClass = (D20Race.AGE_MOD_FIGHTER);
+		ageClass = (D20Race.AGE_MOD_ADULT);
 		hitDice = new Dice(1,10);
 		skillPoints = 2;
-		babProgression = Progression.FIGHTER_BAB;
-		this.fortSaveProgression = Progression.SAVE_BONUS_HIGH;
-		this.reflexSaveProgression = Progression.SAVE_BONUS_LOW;
-		this.willSaveProgression = Progression.SAVE_BONUS_LOW;		
+		babProgression = BAB_HIGH;
+		this.fortSaveProgression = SAVE_BONUS_HIGH;
+		this.reflexSaveProgression = SAVE_BONUS_LOW;
+		this.willSaveProgression = SAVE_BONUS_LOW;		
 		startingGold = new Dice(6,4);
 		startingGold.addModifier(new Times(10));
 				
@@ -43,7 +42,7 @@ public class Fighter extends D20Class implements D20Fantasy {
 		super.onGain(character);
 		
 		// it's already been added to the object, so this should never be below 1
-		Integer classLevel = character.getLevelMap().get(this);
+		Integer classLevel = character.getLevelOfClass(getClass());
 		
 		if (classLevel == 1 || classLevel %2 == 0) { 
 			character.setFighterBonusFeats(character.getFighterBonusFeats() + 1);

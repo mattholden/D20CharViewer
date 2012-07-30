@@ -175,6 +175,7 @@ public abstract class D20SRD implements D20Fantasy {
 			READING_WRITING = null,
 			SEARCH = null,
 			SENSE_MOTIVE = null,
+			SLEIGHT_OF_HAND = null,
 			SPEAK_LANGUAGE = null,
 			SPELLCRAFT = null,
 			SPOT = null,
@@ -207,17 +208,50 @@ public abstract class D20SRD implements D20Fantasy {
 	public static final class Abilities { 
 		
 		public static final D20Feat 
+			
+			// RACIAL ABILITIES
 			DARKVISION60 = null,
 			LOWLIGHTVISION = null,
 			FULL_MOVE_SPEED_MEDIUM_LOAD = null,
 			FULL_MOVE_SPEED_HEAVY_LOAD = null,
 			INTUIT_DEPTH = null,
-			SLEEP_IMMUNITY = null,
 			
 			// bloodlines (for identifying half- and variant- races)
 			ELF_BLOOD = null,
 			ORC_BLOOD = null,
-			DWARF_BLOOD = null;
+			DWARF_BLOOD = null,
+		
+			// BARBARIAN ABILITIES
+			FAST_MOVEMENT = null,
+			UNCANNY_DODGE = null,
+			IMPROVED_UNCANNY_DODGE = null,
+			RAGE = null,
+			GREATER_RAGE = null,
+			TIRELESS_RAGE = null,
+			MIGHTY_RAGE = null,
+			INDOMITABLE_WILL = null,
+					
+			// BARD ABILITIES
+			BARDIC_KNOWLEDGE = null,
+			COUNTERSONG = null,
+			FASCINATE = null,
+			INSPIRE_COURAGE = null,
+			INSPIRE_COMPETENCE = null,
+			INSPIRE_GREATNESS = null,
+			INSPIRE_HEROICS = null,
+			SONG_OF_FREEDOM = null,
+			MASS_SUGGESTION = null,
+			SUGGESTION = null,
+		
+			// CLERIC ABILITIES
+			TURN_CREATURE = null,
+			REBUKE_CREATURE = null,
+			AURA = null,
+			
+			// sorcerer
+			SUMMON_FAMILIAR = null;
+			
+		
 			
 		public static final D20Feat[] buildArray() throws IllegalArgumentException, IllegalAccessException {
 			ArrayList<D20Feat> feet = new ArrayList<D20Feat>();

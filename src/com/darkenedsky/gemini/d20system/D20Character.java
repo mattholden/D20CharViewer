@@ -7,6 +7,7 @@ import com.darkenedsky.gemini.common.Frequency;
 import com.darkenedsky.gemini.common.Library;
 import com.darkenedsky.gemini.common.RuleObject;
 import com.darkenedsky.gemini.common.Specialized;
+import com.darkenedsky.gemini.common.Statistic;
 import com.darkenedsky.gemini.common.XMLTools;
 import com.darkenedsky.gemini.common.event.CharacterEvent;
 import com.darkenedsky.gemini.common.event.CharacterListener;
@@ -36,11 +37,21 @@ public class D20Character implements D20, Serializable {
 	private Map<Specialized<D20Feat>, Integer> feats = new HashMap<Specialized<D20Feat>, Integer>();
 	private Map<Specialized<D20Feat>, Frequency> abilities = new HashMap<Specialized<D20Feat>, Frequency>();
 	private ArrayList<CharacterListener<?>> uiListeners = new ArrayList<CharacterListener<?>>();
+	
+	/*
+	private Map<D20Skill, Statistic> skills = new HashMap<D20Skill, Statistic>(20);
+	private Statistic[] saves = new Statistic[4];
+	private Statistic[] abilityScores = new Statistic[6];
+	private Statistic[] attack, dodge, damageReduction, damage;
+	*/
+	
 	private Map<D20Skill, List<Bonus>> skillBonuses = new HashMap<D20Skill,List<Bonus>>();
 	private Map<Integer, List<Bonus>> saveBonuses = new HashMap<Integer, List<Bonus>>();	
 	private Map<Integer, List<Bonus>> abilityBonuses = new HashMap<Integer, List<Bonus>>();	
 	private List<Bonus> attackBonuses = new ArrayList<Bonus>();
 	private List<Bonus> dodgeBonuses = new ArrayList<Bonus>();
+	private List<Bonus> damageReduction = new ArrayList<Bonus>();
+	private List<Bonus> damageBonuses = new ArrayList<Bonus>();
 	
 	// temp variables used during chargen/levelup
 	private int skillsAvailable, featsAvailable, fighterBonusFeats;
@@ -71,6 +82,12 @@ public class D20Character implements D20, Serializable {
 	public void addDodgeBonus(RuleObject reason, Modifier mod, String conditional) {		
 		dodgeBonuses.add(new Bonus(reason, mod, conditional));
 	}
+	public void addDamageBonus(RuleObject reason, Modifier mod, String conditional) {		
+		damageBonuses.add(new Bonus(reason, mod, conditional));
+	}	
+	public void addDamageReduction(RuleObject reason, Modifier mod, String conditional) {		
+		damageReduction.add(new Bonus(reason, mod, conditional));
+	}	
 	
 	public void addSaveBonus(int save, RuleObject reason, Modifier mod, String conditional) {
 		List<Bonus> list = saveBonuses.get(save);
@@ -95,8 +112,54 @@ public class D20Character implements D20, Serializable {
 	public List<Bonus> getDodgeBonuses() { 
 		return dodgeBonuses;
 	}
+	public List<Bonus> getDamageBonuses() { 
+		return damageBonuses;
+	}
+	public List<Bonus> getDamageReduction() { 
+		return damageBonuses;
+	}
 	
 
+	public void dropEffects(RuleObject source) { 
+		for (Map.Entry<Integer, List<Bonus>> e : abilityBonuses.entrySet()) {
+			for (Bonus b : e.getValue()) { 
+				if (b.getSource().equals(source))
+					e.getValue().remove(b);
+			}
+		}
+		for (Map.Entry<Integer, List<Bonus>> e : saveBonuses.entrySet()) {
+			for (Bonus b : e.getValue()) { 
+				if (b.getSource().equals(source))
+					e.getValue().remove(b);
+			}
+		}
+		for (Map.Entry<D20Skill, List<Bonus>> e : skillBonuses.entrySet()) {
+			for (Bonus b : e.getValue()) { 
+				if (b.getSource().equals(source))
+					e.getValue().remove(b);
+			}
+		}
+		for (Bonus b: attackBonuses) { 
+			if (b.getSource().equals(source))
+				attackBonuses.remove(b);
+		}
+		for (Bonus b: dodgeBonuses) { 
+			if (b.getSource().equals(source))
+				dodgeBonuses.remove(b);
+		}	
+		for (Bonus b: damageBonuses) { 
+			if (b.getSource().equals(source))
+				damageBonuses.remove(b);
+		}
+		for (Bonus b: damageReduction) { 
+			if (b.getSource().equals(source))
+				damageReduction.remove(b);
+		}
+		
+		
+	}
+	
+	
 	public List<Bonus> getAbilityBonuses(int score) { 
 		List<Bonus> l = new ArrayList<Bonus>();
 		List<Bonus> a = abilityBonuses.get(score);
@@ -197,7 +260,7 @@ public class D20Character implements D20, Serializable {
 		boolean added = false;
 		
 		// see if i can even do it
-		if (!feat.hasPrerequisites(this))
+		if (!free && !feat.hasPrerequisites(this))
 			return false;
 		// can't take more than once.
 		if (!feat.isStacks() && getFeatRanks(feat,spec) > 0)
@@ -328,6 +391,15 @@ public class D20Character implements D20, Serializable {
 			x.printStackTrace();
 			return false;
 		}
+	}
+	
+	public int getLevelOfClass(Class<? extends D20Class> clazz) { 
+		int i = 0;
+		for (D20Class c : levels) { 
+			if (clazz.isInstance(c))
+				i++;			
+		}
+		return i;
 	}
 	
 	public Map<D20Class, Integer> getLevelMap() { 		

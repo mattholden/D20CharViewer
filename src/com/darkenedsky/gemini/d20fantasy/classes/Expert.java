@@ -3,17 +3,14 @@ import java.util.Map;
 
 import com.darkenedsky.gemini.common.Dice;
 import com.darkenedsky.gemini.common.Library;
-import com.darkenedsky.gemini.common.Progression;
 import com.darkenedsky.gemini.common.RuleObject;
 import com.darkenedsky.gemini.common.event.CharacterEvent;
 import com.darkenedsky.gemini.common.event.CharacterListener;
-import com.darkenedsky.gemini.common.modifier.Times;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.D20Character;
 import com.darkenedsky.gemini.d20system.D20Class;
 import com.darkenedsky.gemini.d20system.D20NPCClass;
-import com.darkenedsky.gemini.d20system.D20Race;
 import com.darkenedsky.gemini.d20system.D20Skill;
 import com.darkenedsky.gemini.d20system.D20UIEvents;
 
@@ -26,16 +23,13 @@ public class Expert extends D20NPCClass implements CharacterListener<D20Skill>, 
 
 	public Expert() {
 		super("Expert", "http://www.d20srd.org/srd/classes/expert");
-		ageClass = (D20Race.AGE_MOD_ROGUE);
 		hitDice = new Dice(1,6);
 		skillPoints = 6;
-		babProgression = Progression.CLERIC_BAB;
-		this.fortSaveProgression = Progression.SAVE_BONUS_LOW;
-		this.reflexSaveProgression = Progression.SAVE_BONUS_LOW;
-		this.willSaveProgression = Progression.SAVE_BONUS_HIGH;		
-		
-		startingGold = new Dice(5,4);
-		startingGold.addModifier(new Times(10));				
+		babProgression = BAB_AVERAGE;
+		this.fortSaveProgression = SAVE_BONUS_LOW;
+		this.reflexSaveProgression = SAVE_BONUS_LOW;
+		this.willSaveProgression = SAVE_BONUS_HIGH;		
+						
 	}
 
 	/** Ask for the first class skill */
@@ -44,7 +38,7 @@ public class Expert extends D20NPCClass implements CharacterListener<D20Skill>, 
 		super.onGain(character);
 		
 		// it's already been added to the object, so this should never be below 1
-		Integer classLevel = character.getLevelMap().get(this);
+		Integer classLevel = character.getLevelOfClass(getClass());
 				
 		// if we need to pick class skills
 		if (classLevel == 1) {

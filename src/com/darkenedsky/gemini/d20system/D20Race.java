@@ -30,7 +30,17 @@ public class D20Race extends RuleObject implements D20 {
 	protected Dice modHeightM, modHeightF, modWeightM, modWeightF;
 	protected Dice[] ageModsByClass = new Dice[3];
 	protected Dice maxAge;
+	protected int bonusSkillPointsLevel1 = 0;
+	protected int bonusSkillPointsAfter1 = 0;
 	
+	public int getBonusSkillPointsLevel1() {
+		return bonusSkillPointsLevel1;
+	}
+
+	public int getBonusSkillPointsAfter1() {
+		return bonusSkillPointsAfter1;
+	}
+
 	protected final int ht(int ft, int in) { return (ft*12)+in; }
 	
 	D20Size getSize() {
@@ -47,20 +57,10 @@ public class D20Race extends RuleObject implements D20 {
 		return (stat < 0 || stat > 5) ? -1 : mods[stat];
 	}
 	
-	// Constants to index which age modifier we want based on class.
-	// looks a little goofy to do it this way, but there's really nowhere good for this info to live.
 	public static final int
-		AGE_MOD_BARBARIAN = 0,
-		AGE_MOD_ROGUE = 0,
-		AGE_MOD_SORCERER = 0,
-		AGE_MOD_BARD = 1,
-		AGE_MOD_FIGHTER = 1,
-		AGE_MOD_PALADIN = 1,
-		AGE_MOD_RANGER = 1,
-		AGE_MOD_CLERIC = 2,
-		AGE_MOD_DRUID = 2,
-		AGE_MOD_MONK = 2,
-		AGE_MOD_WIZARD = 2;
+		AGE_MOD_YOUNG = 0,
+		AGE_MOD_ADULT = 1,
+		AGE_MOD_OLD = 2;
 	
 	/** 
 	 * Roll height, weight, and age for a character
@@ -98,14 +98,14 @@ public class D20Race extends RuleObject implements D20 {
 		int baseA = ageRanges[desiredAgeRange];
 		
 		D20Class ageC = character.getClassForLevel(1);
-		int ageClass = AGE_MOD_RANGER;
+		int ageClass = AGE_MOD_ADULT;
 		
 		if (ageC != null)
 			ageClass = ageC.getAgeClass();
 		
 		// if invalid, split the difference
-		if (ageClass < AGE_MOD_BARBARIAN || ageClass > AGE_MOD_WIZARD) { 
-			ageClass = AGE_MOD_RANGER;
+		if (ageClass < AGE_MOD_YOUNG || ageClass > AGE_MOD_OLD) { 
+			ageClass = AGE_MOD_ADULT;
 		}
 		
 		Dice ageMod = ageModsByClass[ageClass];

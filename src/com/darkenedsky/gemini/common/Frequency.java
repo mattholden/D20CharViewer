@@ -8,7 +8,7 @@ public class Frequency {
 	private int uses;
 	
 	public String toString() { 
-		return uses + " times/" + unit;
+		return "(" + uses + " times/" + unit + ")";
 	}
 	
 	public Frequency(int use, TimeUnit tUnit) { 
@@ -35,7 +35,14 @@ public class Frequency {
 	public static final Frequency AT_WILL = new Frequency(100, TimeUnit.SECOND) { 
 		@Override
 		public String toString() { 
-			return "at will";
+			return "(at will)";
+		}
+	};
+	
+	public static final Frequency MODIFIER = new Frequency(0, TimeUnit.SECOND) { 
+		@Override
+		public String toString() { 
+			return "(ability modifier)";
 		}
 	};
 	
@@ -50,7 +57,7 @@ public class Frequency {
 		String u = e.getChild("unit").getText();
 		String times = e.getChild("uses").getText();
 		int x = Integer.parseInt(times);
-		
+				
 		if (u.equals("second"))
 			return new Frequency(x, TimeUnit.SECOND);
 		else if (u.equals("minute"))
