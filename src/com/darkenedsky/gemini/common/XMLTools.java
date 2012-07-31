@@ -4,6 +4,7 @@
 package com.darkenedsky.gemini.common;
 import java.io.IOException;
 import java.io.StringReader;
+import java.lang.reflect.Constructor;
 import java.sql.*;
 import org.jdom.*;
 
@@ -21,6 +22,21 @@ import org.jdom.output.XMLOutputter;
 public abstract class XMLTools {
 
 	/** No constructor, please */ private XMLTools() { }
+	
+	public static Object dynamicLoad(Element e) throws Exception { 
+	
+		String clasz = e.getChildText("class");
+		if (clasz == null)
+			throw new Exception("No classpath defined for element " + e.getName());
+		
+		Class<?> clazz = Class.forName(clasz);
+		if (!clazz.isAssignableFrom(XMLSerializable.class))
+			throw new Exception(clasz + " is not XML Serializable.");
+		
+		Constructor<?> con = clazz.getConstructor(Element.class);
+		return con.newInstance(e);
+	}
+	
 	
 	public static Element xml(String name, Integer value) { return xml(name, Integer.toString(value)); }
 	public static Element xml(String name, Boolean value) { return xml(name, Boolean.toString(value)); }

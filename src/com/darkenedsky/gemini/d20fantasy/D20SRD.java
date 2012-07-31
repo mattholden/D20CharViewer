@@ -6,6 +6,7 @@ import com.darkenedsky.gemini.common.Library;
 import com.darkenedsky.gemini.common.LibrarySection;
 import com.darkenedsky.gemini.d20fantasy.classes.*;
 import com.darkenedsky.gemini.d20fantasy.races.*;
+import com.darkenedsky.gemini.d20system.D20Alignment;
 import com.darkenedsky.gemini.d20system.D20Class;
 import com.darkenedsky.gemini.d20system.D20Feat;
 import com.darkenedsky.gemini.d20system.D20Race;
@@ -336,6 +337,11 @@ public abstract class D20SRD implements D20Fantasy {
 		l.getSection(Library.RACES).add(Races.buildArray());
 		l.getSection(Library.SPELLS).add(Spells.buildArray());
 		l.getSection(Library.ABILITIES).add(Abilities.buildArray());
+		
+		LibrarySection align = l.addSection(ALIGNMENT);
+		align.add(new D20Alignment[] {D20Alignment.CHAOTIC_EVIL, D20Alignment.CHAOTIC_GOOD, D20Alignment.CHAOTIC_NEUTRAL, 
+			D20Alignment.NEUTRAL_EVIL, D20Alignment.NEUTRAL_GOOD, D20Alignment.TRUE_NEUTRAL, 
+			D20Alignment.LAWFUL_EVIL, D20Alignment.LAWFUL_GOOD, D20Alignment.LAWFUL_NEUTRAL });
 		
 		D20Class[] classes = Classes.buildArray();
 		l.getSection(Library.CLASSES).add(classes);

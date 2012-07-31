@@ -1,10 +1,7 @@
 package com.darkenedsky.gemini.d20fantasy.classes;
 
 import com.darkenedsky.gemini.common.Dice;
-import com.darkenedsky.gemini.common.Frequency;
 import com.darkenedsky.gemini.common.Progression;
-import com.darkenedsky.gemini.common.TimeUnit;
-import com.darkenedsky.gemini.common.modifier.Plus;
 import com.darkenedsky.gemini.common.modifier.Times;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;

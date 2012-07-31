@@ -1,6 +1,5 @@
 package com.darkenedsky.gemini.d20fantasy.classes;
-
-import com.darkenedsky.gemini.common.prereq.Prerequisite;
+import com.darkenedsky.gemini.common.prereq.TransientPrerequisite;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.D20Alignment;
@@ -23,7 +22,7 @@ public class Monk extends D20Class implements D20Fantasy {
 	
 
 	// monks must be lawful
-	private static final Prerequisite lawful = new Prerequisite() { 
+	private static final TransientPrerequisite lawful = new TransientPrerequisite() { 
 	
 		@Override
 		public boolean satisfies(D20Character character) { 

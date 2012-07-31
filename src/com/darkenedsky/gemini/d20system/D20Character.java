@@ -8,55 +8,44 @@ import com.darkenedsky.gemini.common.Library;
 import com.darkenedsky.gemini.common.RuleObject;
 import com.darkenedsky.gemini.common.Specialized;
 import com.darkenedsky.gemini.common.Statistic;
+import com.darkenedsky.gemini.common.XMLSerializable;
 import com.darkenedsky.gemini.common.XMLTools;
 import com.darkenedsky.gemini.common.event.CharacterEvent;
 import com.darkenedsky.gemini.common.event.CharacterListener;
 import com.darkenedsky.gemini.common.modifier.Bonus;
 import com.darkenedsky.gemini.common.modifier.Modifier;
 
-public class D20Character implements D20, Serializable {
+public class D20Character implements D20, Serializable, XMLSerializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2435348998743374460L;
-	private int[] abilityScores = new int[6];
-	private int[] saves = new int[3];
-	private int hp, maxHp, bab;
+	
+	private int hp, maxHp;
 	private String name, hair, eyes, player;
 	private boolean male;
 	private D20Race race;
 	private D20Size size;
 	private D20Alignment alignment;
-	private int height, weight, age, baseSpeed;
+	private int height, weight, age;
 	private int xp = 0;
 	private Library library;
 	
+	
 	private ArrayList<D20Class> levels = new ArrayList<D20Class>();
-	private Map<Specialized<D20Skill>, Float> skillRanks = new HashMap<Specialized<D20Skill>, Float>();
 	private Map<Specialized<D20Feat>, Integer> feats = new HashMap<Specialized<D20Feat>, Integer>();
 	private Map<Specialized<D20Feat>, Frequency> abilities = new HashMap<Specialized<D20Feat>, Frequency>();
 	private ArrayList<CharacterListener<?>> uiListeners = new ArrayList<CharacterListener<?>>();
 	
-	/*
-	private Map<D20Skill, Statistic> skills = new HashMap<D20Skill, Statistic>(20);
-	private Statistic[] saves = new Statistic[4];
-	private Statistic[] abilityScores = new Statistic[6];
-	private Statistic[] attack, dodge, damageReduction, damage;
-	*/
-	
-	private Map<D20Skill, List<Bonus>> skillBonuses = new HashMap<D20Skill,List<Bonus>>();
-	private Map<Integer, List<Bonus>> saveBonuses = new HashMap<Integer, List<Bonus>>();	
-	private Map<Integer, List<Bonus>> abilityBonuses = new HashMap<Integer, List<Bonus>>();	
-	private List<Bonus> attackBonuses = new ArrayList<Bonus>();
-	private List<Bonus> dodgeBonuses = new ArrayList<Bonus>();
-	private List<Bonus> damageReduction = new ArrayList<Bonus>();
-	private List<Bonus> damageBonuses = new ArrayList<Bonus>();
-	
+	private Map<Specialized<D20Skill>, SkillRank> skills = new HashMap<Specialized<D20Skill>, SkillRank>(20);
+	private Map<Integer, Statistic> statistics = new HashMap<Integer, Statistic>(20);
+		
 	// temp variables used during chargen/levelup
 	private int skillsAvailable, featsAvailable, fighterBonusFeats;
 	private int ageClass;
 	private int levelsToGain = 1;
+	private int bonusLanguages = 0;
 	
 	public void fireUIEvent(CharacterEvent uiEvent) { 
 		for (CharacterListener<?> ui : uiListeners) {
@@ -66,151 +55,72 @@ public class D20Character implements D20, Serializable {
 		
 	public Library getLibrary() { return library; }
 	
-	public void addSkillBonus(D20Skill skill, RuleObject reason, Modifier mod, String conditional) {
-		List<Bonus> list = skillBonuses.get(skill);
-		if (list == null) { 
-			list = new ArrayList<Bonus>();
-			skillBonuses.put(skill, list);
+	public SkillRank getSkill(D20Skill skill) { return getSkill(skill,null);}
+	
+	public SkillRank getSkill(D20Skill skill, String spec) { 
+		Specialized<D20Skill> key = new Specialized<D20Skill>(skill, spec);
+		SkillRank rank = skills.get(key);
+		
+		// if there's no rank, add it with 0 ranks.
+		// do this so we can record bonuses even if we have no rank
+		// we dont do this in the constructor because we never know what specializations we'll see
+		if (rank == null) { 
+			rank = new SkillRank(skill, this);						
+			skills.put(key, rank);			
 		}
-		list.add(new Bonus(reason, mod, conditional));
-	
+		return rank;
 	}
 	
-	public void addAttackBonus(RuleObject reason, Modifier mod, String conditional) {		
-		attackBonuses.add(new Bonus(reason, mod, conditional));
-	}
-	public void addDodgeBonus(RuleObject reason, Modifier mod, String conditional) {		
-		dodgeBonuses.add(new Bonus(reason, mod, conditional));
-	}
-	public void addDamageBonus(RuleObject reason, Modifier mod, String conditional) {		
-		damageBonuses.add(new Bonus(reason, mod, conditional));
+	public Statistic getStat(int stat) { 
+		return statistics.get(stat);
 	}	
-	public void addDamageReduction(RuleObject reason, Modifier mod, String conditional) {		
-		damageReduction.add(new Bonus(reason, mod, conditional));
-	}	
-	
-	public void addSaveBonus(int save, RuleObject reason, Modifier mod, String conditional) {
-		List<Bonus> list = saveBonuses.get(save);
-		if (list == null) { 
-			list = new ArrayList<Bonus>();
-			saveBonuses.put(save, list);
-		}
-		list.add(new Bonus(reason, mod, conditional));
-	}
-	public void addAbilityBonus(int score, RuleObject reason, Modifier mod, String conditional) {
-		List<Bonus> list = abilityBonuses.get(score);
-		if (list == null) { 
-			list = new ArrayList<Bonus>();
-			abilityBonuses.put(score, list);
-		}
-		list.add(new Bonus(reason, mod, conditional));
-	}
-	
-	public List<Bonus> getAttackBonuses() { 
-		return attackBonuses;
-	}
-	public List<Bonus> getDodgeBonuses() { 
-		return dodgeBonuses;
-	}
-	public List<Bonus> getDamageBonuses() { 
-		return damageBonuses;
-	}
-	public List<Bonus> getDamageReduction() { 
-		return damageBonuses;
-	}
-	
 
-	public void dropEffects(RuleObject source) { 
-		for (Map.Entry<Integer, List<Bonus>> e : abilityBonuses.entrySet()) {
-			for (Bonus b : e.getValue()) { 
-				if (b.getSource().equals(source))
-					e.getValue().remove(b);
-			}
-		}
-		for (Map.Entry<Integer, List<Bonus>> e : saveBonuses.entrySet()) {
-			for (Bonus b : e.getValue()) { 
-				if (b.getSource().equals(source))
-					e.getValue().remove(b);
-			}
-		}
-		for (Map.Entry<D20Skill, List<Bonus>> e : skillBonuses.entrySet()) {
-			for (Bonus b : e.getValue()) { 
-				if (b.getSource().equals(source))
-					e.getValue().remove(b);
-			}
-		}
-		for (Bonus b: attackBonuses) { 
-			if (b.getSource().equals(source))
-				attackBonuses.remove(b);
-		}
-		for (Bonus b: dodgeBonuses) { 
-			if (b.getSource().equals(source))
-				dodgeBonuses.remove(b);
-		}	
-		for (Bonus b: damageBonuses) { 
-			if (b.getSource().equals(source))
-				damageBonuses.remove(b);
-		}
-		for (Bonus b: damageReduction) { 
-			if (b.getSource().equals(source))
-				damageReduction.remove(b);
-		}
-		
-		
+	public Map<Integer,Statistic> getStats() { 
+		return statistics;
+	}
+	
+	public void dropBonuses(RuleObject source) { 
+		for (Statistic e : statistics.values()) 
+			e.removeBonusesFromSource(source);
+		for (Statistic rank : skills.values())
+			rank.removeBonusesFromSource(source);
 	}
 	
 	
-	public List<Bonus> getAbilityBonuses(int score) { 
-		List<Bonus> l = new ArrayList<Bonus>();
-		List<Bonus> a = abilityBonuses.get(score);
-		if (a != null) l.addAll(a);
-		
-		// All saves
-		List<Bonus> b = abilityBonuses.get(-1);
-		if (b != null) l.addAll(b);
-		
-		return l;
-	}
-	
-	public List<Bonus> getSaveBonuses(int save) { 
-		List<Bonus> l = new ArrayList<Bonus>();
-		List<Bonus> a = saveBonuses.get(save);
-		if (a != null) l.addAll(a);
-		
-		// All saves
-		List<Bonus> b = saveBonuses.get(-1);
-		if (b != null) l.addAll(b);
-		
-		return l;
-	}
-	
-	public List<Bonus> getSkillBonuses(D20Skill skill) {
-		List<Bonus> l = skillBonuses.get(skill);
-		return (l == null) ? new ArrayList<Bonus>() : l;
-	}
-	
-	public float getSkillRanks(D20Skill skill, String spec) { 
-		
-		float ranks = 0;
-		for (Map.Entry<Specialized<D20Skill>, Float> entry : skillRanks.entrySet()) { 
-			if (entry.getKey().ability.equals(skill)) { 
-				if (spec == null || (spec.equalsIgnoreCase(entry.getKey().specialization))) { 
-					ranks += entry.getValue();
-				}
-			}
+	public void addBonus(int stat, Bonus b) { 
+			
+		if (stat == ALL_SAVES) { 
+			getStat(FORT).addBonus(b);
+			getStat(REFLEX).addBonus(b);
+			getStat(WILL).addBonus(b);
 		}
-		return ranks;
+		else if (stat == ALL_ABILITY_SCORES) { 
+			getStat(STR).addBonus(b);
+			getStat(DEX).addBonus(b);
+			getStat(CON).addBonus(b);
+			getStat(INT).addBonus(b);
+			getStat(WIS).addBonus(b);
+			getStat(CHA).addBonus(b);
+		}
+		else {
+			Statistic s = statistics.get(stat);
+			if (s != null)
+				s.addBonus(b);
+		}
+	}
+	public void addBonus(int stat, RuleObject source, Modifier mod, String conditional) { 
+		addBonus(stat, new Bonus(source, mod, conditional));
 	}
 	
 	public boolean addSkillRank(D20Skill skill, String spec, boolean crossClass, boolean free) { 
-		float toAdd = (crossClass)? 0.5f : 1f;
-		boolean added = false;
 				
+		SkillRank existing = getSkill(skill,spec);
+		
 		// can't add if we're at max.
-		float max = this.getCharacterLevel() + 3.0f;
+		int max = this.getCharacterLevel() + 3;
 		if (crossClass)
 			max /= 2;
-		if (getSkillRanks(skill,spec) >= max)
+		if (existing != null && existing.getBaseValue() >= max)
 			return false;
 
 		// need points?
@@ -219,26 +129,17 @@ public class D20Character implements D20, Serializable {
 				return false;
 			skillsAvailable--;
 		}
-		
-		for (Map.Entry<Specialized<D20Skill>, Float> entry : skillRanks.entrySet()) { 
-			if (entry.getKey().ability.equals(skill)) { 
-				if (spec == null && entry.getKey().specialization == null) { 
-					skillRanks.put(entry.getKey(), entry.getValue() + toAdd);
-					added = true;
-					break;
-				}
-				else if (spec != null && spec.equalsIgnoreCase(entry.getKey().specialization)) {
-					skillRanks.put(entry.getKey(), entry.getValue() + toAdd);
-					added = true;
-					break;
-				}						
-			}	
+
+		if (existing == null) { 
+			existing = new SkillRank(skill, this);
+			Specialized<D20Skill> key = new Specialized<D20Skill>(skill, spec);
+			skills.put(key, existing);
 		}
-		
-		if (!added) { 
-			Specialized<D20Skill> rank = new Specialized<D20Skill>(skill, spec);
-			skillRanks.put(rank, toAdd);
-		}
+				
+		if (crossClass)
+			existing.addHalfRank();
+		else
+			existing.setBaseValue(existing.getBaseValue()+1);
 		
 		skill.onGain(this);
 		return true;
@@ -341,37 +242,40 @@ public class D20Character implements D20, Serializable {
 		return true;
 	}
 	
-	/** 
-	 * Calculate the modifier for a score
-	 * @param score
-	 * @return
-	 */
-	private static int calculateModifier(int score) { 
-		return ((score/2) - 5);
-	}
 
-	public int getAbilityScore(int score) { 
-		if (score < 0 || score > 5) return -1;
-		return abilityScores[score];
-	}
-	
-	public void setAbilityScore(int score, int value) { 
-		if (score < 0 || score > 5) return;
-		abilityScores[score] = value;
-	}
-	
 	/** 
 	 * Get the modifier for an ability score
 	 * @param score the ability score to check
 	 */
-	public int getModifier(int score) { 
+	public int getAbilityScoreModifier(int score) { 
 		if (score < 0 || score > 5) return 0;
-		return calculateModifier(abilityScores[score]);
+		return ((statistics.get(score).getBaseValue())/2) - 5;
 	}
 	
 	public D20Character(String player, Library lib) {
 		this.player = player;
 		library = lib;
+		
+		// CORE STATS
+		statistics.put(STR,new Statistic());
+		statistics.put(DEX,new Statistic());
+		statistics.put(CON,new Statistic());
+		statistics.put(INT,new Statistic());
+		statistics.put(WIS,new Statistic());
+		statistics.put(CHA,new Statistic());
+		statistics.put(FORT,new Statistic());
+		statistics.put(REFLEX,new Statistic());
+		statistics.put(WILL,new Statistic());
+		statistics.put(ATTACK,new Statistic());
+		statistics.put(DODGE,new Statistic());
+		statistics.put(DAMAGE,new Statistic());
+		statistics.put(DAMAGE_REDUCTION,new Statistic());
+		statistics.put(INITIATIVE,new Statistic());
+		statistics.put(BASE_SPEED,new Statistic());
+		statistics.put(ARMOR_CLASS,new Statistic());
+		statistics.put(RANGED_ATTACK, new Statistic());
+		statistics.put(GRAPPLE_ATTACK, new Statistic());
+		
 	}
 	
 	public int getCharacterLevel() { 
@@ -418,28 +322,6 @@ public class D20Character implements D20, Serializable {
 		int level = lvl - 1;
 		if (level < 0 || level >= levels.size()) return null;		
 		return levels.get(level);
-	}
-	
-	public int getModifiedSave(int save) { 
-		if (save == FORT)
-			return saves[save] + getModifier(CON);
-		else if (save == REFLEX)
-			return saves[save] + getModifier(DEX);
-		else if (save == WILL)
-			return saves[save] + getModifier(WIS);
-		else
-			return -1;
-	}
-	
-	
-	public int getSave(int save) { 
-		if (save < 0 || save > 3) return -1;
-		return this.saves[save];
-	}
-	
-	public void setSave(int save, int value) { 
-		if (save < 0 || save > 3) return;
-		saves[save] = value;
 	}
 	
 	public boolean isMale() { 
@@ -506,6 +388,23 @@ public class D20Character implements D20, Serializable {
 		return true;
 	}
 
+
+	public void setFighterBonusFeats(int fighterBonusFeats) {
+		this.fighterBonusFeats = fighterBonusFeats;
+	}
+
+	public int getFighterBonusFeats() {
+		return fighterBonusFeats;
+	}
+
+	public void setBonusLanguages(int bonusLanguages) {
+		this.bonusLanguages = bonusLanguages;
+	}
+
+	public int getBonusLanguages() {
+		return bonusLanguages;
+	}
+
 	public D20Alignment getAlignment() {
 		return alignment;
 	}
@@ -561,22 +460,6 @@ public class D20Character implements D20, Serializable {
 		this.male = male;
 	}
 
-	public void setBAB(int bab) {
-		this.bab = bab;
-	}
-
-	public int getBAB() {
-		return bab;
-	}
-
-	public void setBaseSpeed(int baseSpeed) {
-		this.baseSpeed = baseSpeed;
-	}
-
-	public int getBaseSpeed() {
-		return baseSpeed;
-	}
-
 	public boolean setSize(D20Size size) {
 		if (!size.hasPrerequisites(this)) return false;
 		this.size = size;
@@ -620,9 +503,10 @@ public class D20Character implements D20, Serializable {
 	
 	
 	
-	
-	public Element toXML() { 
-		Element e = new Element("character");
+	@Override
+	public Element toXML(String root) { 
+		Element e = new Element(root);
+		e.addContent(XMLTools.xml("class", getClass().getName()));
 		e.addContent(XMLTools.xml("player", player));
 		e.addContent(XMLTools.xml("name", name));
 		e.addContent(XMLTools.xml("hair", hair));
@@ -636,30 +520,26 @@ public class D20Character implements D20, Serializable {
 		e.addContent(XMLTools.xml("fighterbonusfeats", fighterBonusFeats));
 		e.addContent(XMLTools.xml("levelstogain", levelsToGain));
 		e.addContent(XMLTools.xml("ageclass", ageClass));
-		e.addContent(XMLTools.xml("strength", abilityScores[0]));
-		e.addContent(XMLTools.xml("dexterity", abilityScores[1]));
-		e.addContent(XMLTools.xml("constitution", abilityScores[2]));
-		e.addContent(XMLTools.xml("intelligence", abilityScores[3]));
-		e.addContent(XMLTools.xml("wisdom", abilityScores[4]));
-		e.addContent(XMLTools.xml("charisma", abilityScores[5]));
-		e.addContent(XMLTools.xml("fortitude", saves[0]));
-		e.addContent(XMLTools.xml("reflex", saves[1]));
-		e.addContent(XMLTools.xml("willpower", saves[2]));
-		e.addContent(XMLTools.xml("bab", bab));
-		e.addContent(XMLTools.xml("basespeed", baseSpeed));
+		e.addContent(XMLTools.xml("bonusLanguages", bonusLanguages));
+		
 		e.addContent(XMLTools.xml("hp", hp));
 		e.addContent(XMLTools.xml("maxhp", maxHp));
 		e.addContent(XMLTools.xml("xp", xp));
 		
-		e.addContent(race.toXML("race"));
-		e.addContent(size.toXML("size"));
-		e.addContent(alignment.toXML("alignment"));
+		e.addContent(XMLTools.xml("race", race.getUniqueID()));
+		e.addContent(XMLTools.xml("size", size.getUniqueID()));
+		e.addContent(XMLTools.xml("alignment", alignment.getUniqueID()));
 		
+		// todo: deal with cleric, expert problem
 		for (D20Class lvl : levels) 
-			e.addContent(lvl.toXML("level"));
+			e.addContent(XMLTools.xml("classlevel", lvl.getUniqueID()));
 		
-		for (Map.Entry<Specialized<D20Skill>, Float> entry : skillRanks.entrySet()) 
-			e.addContent(entry.getKey().toXML("skill", entry.getValue()));
+		for (Map.Entry<Specialized<D20Skill>, SkillRank> skill : skills.entrySet()) { 
+			Element s = new Element("skillrank");
+			s.addContent(XMLTools.xml("skill", skill.getKey().ability.getUniqueID()));
+			s.addContent(XMLTools.xml("specialization", skill.getKey().specialization));
+			s.addContent(skill.getValue().toXML("statistic"));
+		}
 		for (Map.Entry<Specialized<D20Feat>, Integer> entry : feats.entrySet()) 
 			e.addContent(entry.getKey().toXML("feat", entry.getValue()));
 		for (Map.Entry<Specialized<D20Feat>, Frequency> entry : abilities.entrySet())  
@@ -669,8 +549,10 @@ public class D20Character implements D20, Serializable {
 	}
 
 	@SuppressWarnings("rawtypes")
-	public D20Character(Element e) { 
-		player = XMLTools.getString(e, "player");
+	public D20Character(Element e) throws Exception {
+		
+		library = Library.instance;
+		player = XMLTools.getString(e, "player");		
 		name = XMLTools.getString(e, "name");
 		hair = XMLTools.getString(e, "hair");
 		eyes = XMLTools.getString(e, "eyes");
@@ -683,46 +565,39 @@ public class D20Character implements D20, Serializable {
 		featsAvailable = XMLTools.getInt(e,"featsavailable");
 		fighterBonusFeats = XMLTools.getInt(e,"fighterbonusfeats");
 		levelsToGain = XMLTools.getInt(e,"levelstogain");
-		abilityScores[0] = XMLTools.getInt(e,"strength");
-		abilityScores[1] = XMLTools.getInt(e,"dexterity");
-		abilityScores[2] = XMLTools.getInt(e,"constitution");
-		abilityScores[3] = XMLTools.getInt(e,"intelligence");
-		abilityScores[4] = XMLTools.getInt(e,"wisdom");
-		abilityScores[5] = XMLTools.getInt(e,"charisma");
-		saves[0] = XMLTools.getInt(e,"fortitude");
-		saves[1] = XMLTools.getInt(e,"reflex");
-		saves[2] = XMLTools.getInt(e,"willpower");
-		bab = XMLTools.getInt(e,"bab");
 		hp = XMLTools.getInt(e,"hp");
 		maxHp = XMLTools.getInt(e,"maxhp");
 		xp = XMLTools.getInt(e,"xp");
-		baseSpeed = XMLTools.getInt(e,"basespeed");
-		
+		race = (D20Race)library.getSection("races").get(XMLTools.getString(e,"race"));
 		size = D20Size.load(XMLTools.getString(e,"size"));
 		alignment = D20Alignment.load(XMLTools.getString(e,"alignment"));
-		race = (D20Race)library.getSection("races").get(XMLTools.getString(e,"race"));
-	
+		
+		List<?> stats = e.getChildren("statistic");
+		for (int i = 0; i < stats.size(); i++) {
+			Element stat = (Element)stats.get(i);
+			statistics.put(XMLTools.getInt(stat, "score"), (Statistic)XMLTools.dynamicLoad(stat));
+		}
+				
 		List lv = e.getChildren("level");
 		for (int i = 0; i < lv.size(); i++) { 
 			Element lvl = (Element)lv.get(i);
 			
 			// TODO: replace this with loading the actual class from the XML file because of things like
 			// Expert where the class object itself is mutable
-			levels.add((D20Class)library.getSection("class").get(lvl.getText()));
+			levels.add((D20Class)library.getByID(XMLTools.getString(lvl, "classlevel")));
 		}
 		
 		List sk = e.getChildren("skill");
 		for (int i = 0; i < sk.size(); i++) { 
 			Element skyll = (Element)sk.get(i);
-			Element a = skyll.getChild("ability");
-			D20Skill skill = (D20Skill)library.getSection(Library.SKILLS).get(a.getText());
+			Element a = skyll.getChild("skill");
+			D20Skill skill = (D20Skill)library.getByID(a.getText());			
 			Element spec = skyll.getChild("specialization");
 			String special = null;
 			if (spec != null)
 				special = spec.getText();
-			float ranks = Float.parseFloat(skyll.getChild("ranks").getText());
-			Specialized<D20Skill> rank = new Specialized<D20Skill>(skill, special);
-			skillRanks.put(rank, ranks);			
+			Specialized<D20Skill> key = new Specialized<D20Skill>(skill, special);
+			skills.put(key, (SkillRank)XMLTools.dynamicLoad(skyll.getChild("statistic")));					
 		}
 		
 		List fe = e.getChildren("feat");
@@ -748,19 +623,11 @@ public class D20Character implements D20, Serializable {
 			String special = null;
 			if (spec != null)
 				special = spec.getText();
-			Frequency f = Frequency.load(skyll.getChild("frequency"));
+			Frequency f = new Frequency(skyll.getChild("frequency"));
 			Specialized<D20Feat> rank = new Specialized<D20Feat>(skill, special);
 			abilities.put(rank, f);			
 		}
 		
 		
-	}
-
-	public void setFighterBonusFeats(int fighterBonusFeats) {
-		this.fighterBonusFeats = fighterBonusFeats;
-	}
-
-	public int getFighterBonusFeats() {
-		return fighterBonusFeats;
 	}
 }

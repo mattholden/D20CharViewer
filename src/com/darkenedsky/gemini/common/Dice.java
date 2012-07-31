@@ -1,12 +1,36 @@
 package com.darkenedsky.gemini.common;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
+
+import org.jdom.Element;
 
 import com.darkenedsky.gemini.common.modifier.Modifier;
 
-public class Dice {
+public class Dice implements XMLSerializable {
 	
+	public Dice(Element e) throws Exception { 
+		dice = XMLTools.getInt(e,"dice");
+		sides = XMLTools.getInt(e,"sides");
+		
+		List<?> modz = e.getChildren("modifier");
+		for (int i = 0; i < modz.size(); i++) { 
+			Element m = (Element)modz.get(i);
+			modifiers.add((Modifier)XMLTools.dynamicLoad(m));
+		}
+	}
+	
+	public Element toXML(String root) { 
+		Element e= new Element(root);
+		e.addContent(XMLTools.xml("class", getClass().getName()));
+		e.addContent(XMLTools.xml("dice", dice));
+		e.addContent(XMLTools.xml("sides", sides));
+		for (Modifier m : modifiers) { 
+			e.addContent(m.toXML("modifier"));
+		}
+		return e;
+	}
   /** Make a Random object to get random numbers from. 
     * We only need one...    */ 
 	public static Random rand = new Random();

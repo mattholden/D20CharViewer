@@ -11,15 +11,15 @@ public class D20Skill extends RuleObject implements D20 {
 	
 	private boolean specialized = false;
 	private boolean untrained = true;
-	private int keyStat;
+	private Integer keyStat;
 	private boolean armorCheckPenalty = false;
 	
-	public int getKeyStat() { return keyStat; }
+	public Integer getKeyStat() { return keyStat; }
 	public boolean useUntrained() { return untrained; }
 	public boolean isSpecialized() { return specialized; }
 	
 	public D20Skill(String name, String sRDURL, boolean specialized,
-			boolean untrained, int keyStat, boolean armorCheck) {
+			boolean untrained, Integer keyStat, boolean armorCheck) {
 		super(name, sRDURL);
 		this.specialized = specialized;
 		this.untrained = untrained;

@@ -2,11 +2,26 @@ package com.darkenedsky.gemini.common;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jdom.Element;
+
 import com.darkenedsky.gemini.common.modifier.Bonus;
+import com.darkenedsky.gemini.common.modifier.Modifier;
+import com.darkenedsky.gemini.d20system.D20Character;
 
 
-public abstract class Statistic {
-
+public class Statistic implements XMLSerializable { 
+	
+	public Statistic() { } 
+	
+	public int getValueWithPermanentBonuses(D20Character c) { 
+		int total = baseValue;
+		for (Bonus b : getBonuses()) { 
+			if (!b.isConditional())
+				total = b.modify(c,total);
+		}
+		return total;
+	}
 
 	public int getBaseValue() {
 		return baseValue;
@@ -28,14 +43,17 @@ public abstract class Statistic {
 
 	private Dice diceCheck = new Dice(1,20);
 	
-	protected List<Bonus> bonuses = new ArrayList<Bonus>();
+	private List<Bonus> bonuses = new ArrayList<Bonus>();
 	
+	public void addBonus(RuleObject source, Modifier mod, String conditional) { 
+		bonuses.add(new Bonus(source, mod, conditional));
+	}
 	public void addBonus(Bonus b) { 
 		bonuses.add(b);
 	}
 	
 	public void removeBonusesFromSource(RuleObject ro) { 
-		for (Bonus b : bonuses) { 
+		for (Bonus b : getBonuses()) { 
 			if (b.getSource().equals(ro)) { 
 				bonuses.remove(b);
 			}
@@ -46,8 +64,30 @@ public abstract class Statistic {
 		return bonuses;
 	}
 	
-	public Roll roll() { 
-		return new Roll(baseValue, diceCheck, bonuses);
+	public Statistic (Element e) throws Exception { 
+		baseValue = XMLTools.getInt(e,"basevalue");
+		diceCheck = new Dice(e.getChild("dicecheck"));
+		
+		List<?> modz = e.getChildren("bonus");
+		for (int i = 0; i < modz.size(); i++) { 
+			Element m = (Element)modz.get(i);
+			bonuses.add((Bonus)XMLTools.dynamicLoad(m));
+		}
+	}
+	
+	
+	@Override
+	public Element toXML(String root) {
+		Element e = new Element(root);
+		e.addContent(XMLTools.xml("class", getClass().getName()));
+		e.addContent(XMLTools.xml("basevalue", baseValue));
+		e.addContent(diceCheck.toXML("dicecheck"));
+		
+		for (Bonus b : bonuses) { 
+			e.addContent(b.toXML("bonus"));
+		}
+		
+		return e;
 	}
 	 
 }

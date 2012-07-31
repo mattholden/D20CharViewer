@@ -42,10 +42,11 @@ public class D20Size extends RuleObject implements D20 {
 	public static final D20Size COLOSSAL = new D20Size("Colossal", "http://www.d20srd.org/srd/combat/movementPositionAndDistance.htm#tableCreatureSizeAndScale", -8, 16);
 	
 	@Override
-	public void onGain(D20Character character) { 
-		character.addDodgeBonus(this, new Plus(attackModifier),null);
-		character.addAttackBonus(this, new Plus(attackModifier),null);
-		character.addSkillBonus(D20SRD.Skills.HIDE, this, new Plus(getHideModifier()), null);
+	public void onGain(D20Character character) {
+		character.getStat(DODGE).addBonus(this, new Plus(attackModifier), null);
+		character.getStat(ATTACK).addBonus(this, new Plus(attackModifier),null);
+		character.getStat(GRAPPLE_ATTACK).addBonus(this, new Plus(attackModifier),null);
+		character.getSkill(D20SRD.Skills.HIDE,null).addBonus(this, new Plus(getHideModifier()), null);
 	}
 	
 	public static final D20Size load(String sz) {				

@@ -54,16 +54,16 @@ public class Gnome extends D20Race implements D20Fantasy {
 		character.addSkillRank(D20SRD.Skills.SPEAK_LANGUAGE, "Gnome", false, true);
 		character.addSkillRank(D20SRD.Skills.SPEAK_LANGUAGE, "Common", false, true);
 		character.addAbility(D20SRD.Abilities.LOWLIGHTVISION, null);
-		character.addSaveBonus(ALL, this, new Plus(2), "illusions");
-		character.addSkillBonus(D20SRD.Skills.LISTEN, this, new Plus(2), null);
-		character.addSkillBonus(D20SRD.Skills.CRAFT, this, new Plus(2), "alchemy");
-		character.addAttackBonus(this, new Plus(1), "kobolds");
-		character.addAttackBonus(this, new Plus(1), "goblins");
-		character.addAttackBonus(this, new Plus(1), "bugbears");
-		character.addAttackBonus(this, new Plus(1), "hobgoblins");
-		character.addDodgeBonus(this, new Plus(4), "giants");
-		character.addDodgeBonus(this, new Plus(4), "ogres");
-		character.addDodgeBonus(this, new Plus(4), "trolls");
+		character.addBonus(ALL_SAVES, this, new Plus(2), "illusions");
+		character.getSkill(D20SRD.Skills.LISTEN).addBonus(this, new Plus(2), null);
+		character.getSkill(D20SRD.Skills.CRAFT,null).addBonus(this, new Plus(2), "alchemy");
+		character.addBonus(ATTACK, this, new Plus(1), "kobolds");
+		character.addBonus(ATTACK, this, new Plus(1), "goblins");
+		character.addBonus(ATTACK, this, new Plus(1), "bugbears");
+		character.addBonus(ATTACK, this, new Plus(1), "hobgoblins");
+		character.addBonus(DODGE, this, new Plus(4), "giants");
+		character.addBonus(DODGE, this, new Plus(4), "ogres");
+		character.addBonus(DODGE, this, new Plus(4), "trolls");
 		
 		// gnomes can treat gnome hooked hammers as martial weapons rather than exotic
 		// this will be a special case in the onGain for martial weapon proficiency feat
@@ -76,7 +76,7 @@ public class Gnome extends D20Race implements D20Fantasy {
 		character.addAbility(new SpellLikeAbility(D20SRD.Spells.SPEAK_WITH_ANIMALS), "burrowing mammal", 
 				once);
 		
-		if (character.getAbilityScore(CHA) > 10) { 
+		if (character.getStat(CHA).getValueWithPermanentBonuses(character) > 10) { 
 			character.addAbility(new SpellLikeAbility(D20SRD.Spells.DANCING_LIGHTS), null, once);
 			character.addAbility(new SpellLikeAbility(D20SRD.Spells.GHOST_SOUND), null, once);
 			character.addAbility(new SpellLikeAbility(D20SRD.Spells.PRESTIDIGITATION), null, once);

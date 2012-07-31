@@ -1,4 +1,6 @@
 package com.darkenedsky.gemini.d20system;
+import org.jdom.Element;
+
 import com.darkenedsky.gemini.common.modifier.Modifier;
 
 public class AbilityModifier extends Modifier {
@@ -14,8 +16,9 @@ public class AbilityModifier extends Modifier {
 
 	@Override
 	public int modify(int value) {
-		return value + character.getModifier(scoreToUse);
+		return value + character.getAbilityScoreModifier(scoreToUse);
 	}
 	
-
+	public AbilityModifier(Element e) { super(e); }
+	
 }

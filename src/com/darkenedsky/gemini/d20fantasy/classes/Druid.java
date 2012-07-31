@@ -1,6 +1,5 @@
 package com.darkenedsky.gemini.d20fantasy.classes;
-
-import com.darkenedsky.gemini.common.prereq.Prerequisite;
+import com.darkenedsky.gemini.common.prereq.TransientPrerequisite;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.D20Alignment;
@@ -24,7 +23,7 @@ public class Druid extends D20Class implements D20SpellcasterClass, D20Fantasy {
 
 
 	// druids must have some kind of neutral
-	private Prerequisite neutral = new Prerequisite() { 
+	private TransientPrerequisite neutral = new TransientPrerequisite() { 
 	
 		@Override
 		public boolean satisfies(D20Character character) { 

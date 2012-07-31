@@ -53,24 +53,24 @@ public class Dwarf extends D20Race implements D20Fantasy {
 		character.addAbility(D20SRD.Abilities.INTUIT_DEPTH, null);
 		character.addAbility(D20SRD.Abilities.FULL_MOVE_SPEED_MEDIUM_LOAD, null);
 		character.addAbility(D20SRD.Abilities.FULL_MOVE_SPEED_HEAVY_LOAD, null);
-		character.addAbilityBonus(ALL, this, new Plus(4), "resist bull rush when standing");
-		character.addAbilityBonus(ALL, this, new Plus(4), "resist trip when standing");		
-		character.addSkillBonus(D20SRD.Skills.SEARCH, this, new Plus(2), "unusual stonework");
-		character.addSkillBonus(D20SRD.Skills.APPRAISE, this, new Plus(2), "stone");
-		character.addSkillBonus(D20SRD.Skills.APPRAISE, this, new Plus(2), "metal");
-		character.addSkillBonus(D20SRD.Skills.CRAFT, this, new Plus(2), "stone");
-		character.addSkillBonus(D20SRD.Skills.CRAFT, this, new Plus(2), "metal");
-		character.addSaveBonus(-1, this, new Plus(2), "poison");
-		character.addSaveBonus(-1, this, new Plus(2), "spells");
-		character.addSaveBonus(-1, this, new Plus(2), "spell-like effects");
-		character.addAttackBonus(this, new Plus(1), "orcs");
-		character.addAttackBonus(this, new Plus(1), "half-orcs");		
-		character.addAttackBonus(this, new Plus(1), "goblins");
-		character.addAttackBonus(this, new Plus(1), "bugbears");
-		character.addAttackBonus(this, new Plus(1), "hobgoblins");
-		character.addDodgeBonus(this, new Plus(4), "giants");
-		character.addDodgeBonus(this, new Plus(4), "ogres");
-		character.addDodgeBonus(this, new Plus(4), "trolls");
+		character.addBonus(ALL_ABILITY_SCORES, this, new Plus(4), "resist bull rush when standing");
+		character.addBonus(ALL_ABILITY_SCORES, this, new Plus(4), "resist trip when standing");		
+		character.getSkill(D20SRD.Skills.SEARCH).addBonus(this, new Plus(2), "unusual stonework");
+		character.getSkill(D20SRD.Skills.APPRAISE).addBonus(this, new Plus(2), "stone");
+		character.getSkill(D20SRD.Skills.APPRAISE).addBonus(this, new Plus(2), "metal");
+		character.getSkill(D20SRD.Skills.CRAFT).addBonus(this, new Plus(2), "stone");
+		character.getSkill(D20SRD.Skills.CRAFT).addBonus(this, new Plus(2), "metal");
+		character.addBonus(ALL_SAVES, this, new Plus(2), "poison");
+		character.addBonus(ALL_SAVES, this, new Plus(2), "spells");
+		character.addBonus(ALL_SAVES, this, new Plus(2), "spell-like effects");
+		character.addBonus(ATTACK, this, new Plus(1), "orcs");
+		character.addBonus(ATTACK, this, new Plus(1), "half-orcs");		
+		character.addBonus(ATTACK, this, new Plus(1), "goblins");
+		character.addBonus(ATTACK, this, new Plus(1), "bugbears");
+		character.addBonus(ATTACK, this, new Plus(1), "hobgoblins");
+		character.addBonus(DODGE, this, new Plus(4), "giants");
+		character.addBonus(DODGE, this, new Plus(4), "ogres");
+		character.addBonus(DODGE, this, new Plus(4), "trolls");
 		
 	}
 

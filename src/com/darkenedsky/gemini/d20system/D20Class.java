@@ -34,7 +34,7 @@ public class D20Class extends RuleObject implements D20, D20ClassInterface {
 	protected int ageClass;	
 	protected int skillPoints;
 	protected Integer skillPointsAfter1 = null;
-	protected Dice startingGold = null;
+	protected Dice startingGold = new Dice(0,1);
 		
 	public D20Class(String name, String sRDURL) {
 		super(name, sRDURL);
@@ -202,7 +202,7 @@ public class D20Class extends RuleObject implements D20, D20ClassInterface {
 			
 		// don't want to add reading and writing as a skill to EVERYTHING not a barbarian
 		if (literacy) { 			
-			if (character.getSkillRanks(D20SRD.Skills.READING_WRITING, null) == 0) {
+			if (character.getSkill(D20SRD.Skills.READING_WRITING, null).getBaseValue() == 0) {
 				character.addSkillRank(D20SRD.Skills.READING_WRITING, null, false, true);
 			}
 		}
@@ -218,10 +218,12 @@ public class D20Class extends RuleObject implements D20, D20ClassInterface {
 			ref += levels.getKey().getReflexSaveProgression().getProgression(levels.getValue());
 			will += levels.getKey().getWillSaveProgression().getProgression(levels.getValue());			
 		}
-		character.setBAB(bab);
-		character.setSave(FORT, fort);
-		character.setSave(REFLEX, ref);
-		character.setSave(WILL, ref);
+		character.getStat(ATTACK).setBaseValue(bab);
+		character.getStat(RANGED_ATTACK).setBaseValue(bab);
+		character.getStat(GRAPPLE_ATTACK).setBaseValue(bab);
+		character.getStat(FORT).setBaseValue(fort);
+		character.getStat(REFLEX).setBaseValue(ref);
+		character.getStat(WILL).setBaseValue(ref);
 						
 		// add skill points
 		int totalLevel = character.getCharacterLevel();
@@ -233,7 +235,7 @@ public class D20Class extends RuleObject implements D20, D20ClassInterface {
 			skills = skillPointsAfter1.intValue();
 		
 		// intelligence bonus
-		skills += character.getModifier(INT);
+		skills += character.getAbilityScoreModifier(INT);
 		
 		// bonus skill points for your race
 		if (totalLevel == 1)
@@ -260,7 +262,7 @@ public class D20Class extends RuleObject implements D20, D20ClassInterface {
 		else
 			hp = this.getHitDice().roll();
 		
-		hp += character.getModifier(CON);
+		hp += character.getAbilityScoreModifier(CON);
 		character.setHp(character.getHp() + hp);
 		character.setMaxHp(character.getMaxHp() + hp);
 		

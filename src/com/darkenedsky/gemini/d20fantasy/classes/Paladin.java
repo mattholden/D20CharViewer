@@ -1,6 +1,5 @@
 package com.darkenedsky.gemini.d20fantasy.classes;
-
-import com.darkenedsky.gemini.common.prereq.Prerequisite;
+import com.darkenedsky.gemini.common.prereq.TransientPrerequisite;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.D20Alignment;
@@ -20,7 +19,7 @@ public class Paladin extends D20Class implements D20SpellcasterClass, D20Fantasy
 		// middle
 	
 		// paladins must be LG
-		addPrerequisite(new Prerequisite() { 
+		addPrerequisite(new TransientPrerequisite() { 
 			@Override
 			public boolean satisfies(D20Character character) { 
 				return (character.getAlignment().equals(D20Alignment.LAWFUL_GOOD));

@@ -17,7 +17,8 @@ public interface D20 {
 		SPELLCASTER_TYPES = "spellcaster_types";
 	
 	// for bonuses
-	public static final int ALL = -1;
+	public static final int ALL_SAVES = -1;
+	public static final int ALL_ABILITY_SCORES = -2;
 	
 	// a bonus so big, you're immune
 	public static final int IMMUNE = 999999;
@@ -34,9 +35,22 @@ public interface D20 {
 	
 	// saves
 	public static final int
-		FORT = 0,
-		REFLEX = 1,
-		WILL = 2;
+		FORT = 10,
+		REFLEX = 11,
+		WILL = 12;
+	
+	// other things there might be bonuses to
+	public static final int
+		ATTACK = 20,
+		DODGE = 21,
+		DAMAGE = 22,
+		DAMAGE_REDUCTION = 23,
+		ARMOR_CLASS = 24,
+		INITIATIVE = 25,
+		BASE_SPEED = 26,
+		RANGED_ATTACK = 27,
+		RANGED_DAMAGE = 28,
+		GRAPPLE_ATTACK = 29;
 	
 	// age ranges
 	public static final int
@@ -60,4 +74,13 @@ public interface D20 {
 		ABILITY_SPELL_LIKE = 6,
 		ABILITY_NATURAL = 7;
 
+	/*
+	bard,barb 4d4x10
+	cleric,rog 5d4x10
+	dru 2d4x10
+	fight,pal, rgr 6d4x10
+	mnk 5d4
+	wiz,src 3d4x10
+	*/
+	
 }

@@ -3,6 +3,8 @@ import java.util.ArrayList;
 
 import com.darkenedsky.gemini.common.Dice;
 import com.darkenedsky.gemini.common.RuleObject;
+import com.darkenedsky.gemini.common.modifier.Bonus;
+import com.darkenedsky.gemini.common.modifier.Plus;
 
 public class D20Race extends RuleObject implements D20 {
 
@@ -114,28 +116,29 @@ public class D20Race extends RuleObject implements D20 {
 		// apply aging modifiers to ability scores
 		// these are deliberately cumulative
 		if (desiredAgeRange >= MIDDLEAGE) { 
-			character.setAbilityScore(STR, character.getAbilityScore(STR) -1);
-			character.setAbilityScore(DEX, character.getAbilityScore(DEX) -1);
-			character.setAbilityScore(CON, character.getAbilityScore(CON) -1);
-			character.setAbilityScore(INT, character.getAbilityScore(INT) +1);
-			character.setAbilityScore(WIS, character.getAbilityScore(WIS) +1);
-			character.setAbilityScore(CHA, character.getAbilityScore(CHA) +1);
+			character.getStat(STR).setBaseValue(character.getStat(STR).getBaseValue() - 1);
+			character.getStat(DEX).setBaseValue(character.getStat(DEX).getBaseValue() - 1);
+			character.getStat(CON).setBaseValue(character.getStat(CON).getBaseValue() - 1);
+			character.getStat(INT).setBaseValue(character.getStat(INT).getBaseValue() - 1);
+			character.getStat(WIS).setBaseValue(character.getStat(WIS).getBaseValue() - 1);
+			character.getStat(CHA).setBaseValue(character.getStat(CHA).getBaseValue() - 1);
+			
 		}
 		if (desiredAgeRange >= OLD) { 
-			character.setAbilityScore(STR, character.getAbilityScore(STR) -2);
-			character.setAbilityScore(DEX, character.getAbilityScore(DEX) -2);
-			character.setAbilityScore(CON, character.getAbilityScore(CON) -2);
-			character.setAbilityScore(INT, character.getAbilityScore(INT) +1);
-			character.setAbilityScore(WIS, character.getAbilityScore(WIS) +1);
-			character.setAbilityScore(CHA, character.getAbilityScore(CHA) +1);			
+			character.getStat(STR).setBaseValue(character.getStat(STR).getBaseValue() - 2);
+			character.getStat(DEX).setBaseValue(character.getStat(DEX).getBaseValue() - 2);
+			character.getStat(CON).setBaseValue(character.getStat(CON).getBaseValue() - 2);
+			character.getStat(INT).setBaseValue(character.getStat(INT).getBaseValue() - 1);
+			character.getStat(WIS).setBaseValue(character.getStat(WIS).getBaseValue() - 1);
+			character.getStat(CHA).setBaseValue(character.getStat(CHA).getBaseValue() - 1);
 		}
 		if (desiredAgeRange >= VENERABLE) { 
-			character.setAbilityScore(STR, character.getAbilityScore(STR) -3);
-			character.setAbilityScore(DEX, character.getAbilityScore(DEX) -3);
-			character.setAbilityScore(CON, character.getAbilityScore(CON) -3);
-			character.setAbilityScore(INT, character.getAbilityScore(INT) +1);
-			character.setAbilityScore(WIS, character.getAbilityScore(WIS) +1);
-			character.setAbilityScore(CHA, character.getAbilityScore(CHA) +1);
+			character.getStat(STR).setBaseValue(character.getStat(STR).getBaseValue() - 3);
+			character.getStat(DEX).setBaseValue(character.getStat(DEX).getBaseValue() - 3);
+			character.getStat(CON).setBaseValue(character.getStat(CON).getBaseValue() - 3);
+			character.getStat(INT).setBaseValue(character.getStat(INT).getBaseValue() - 1);
+			character.getStat(WIS).setBaseValue(character.getStat(WIS).getBaseValue() - 1);
+			character.getStat(CHA).setBaseValue(character.getStat(CHA).getBaseValue() - 1);
 		}
 		
 	}
@@ -147,11 +150,11 @@ public class D20Race extends RuleObject implements D20 {
 		character.setSize(this.size);
 		size.onGain(character);
 		
-		character.setBaseSpeed(this.baseSpeed);
+		character.getStat(BASE_SPEED).setBaseValue(this.baseSpeed);
 		
 		// ability score mods.
 		for (int i = STR; i < CHA; i++) { 
-			character.setAbilityScore(i, character.getAbilityScore(i) + this.mods[i]);
+			character.getStat(i).addBonus(new Bonus(this, new Plus(this.mods[i]), null));
 		}
 		
 		

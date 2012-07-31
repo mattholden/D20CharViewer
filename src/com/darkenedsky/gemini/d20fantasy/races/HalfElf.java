@@ -41,13 +41,13 @@ public class HalfElf extends D20Race implements D20Fantasy {
 		character.addSkillRank(D20SRD.Skills.SPEAK_LANGUAGE, "Common", false, true);
 		character.addAbility(D20SRD.Abilities.ELF_BLOOD, null);
 		character.addAbility(D20SRD.Abilities.LOWLIGHTVISION, null);
-		character.addSaveBonus(ALL, this, IMMUNITY, "sleep spells or effects");
-		character.addSaveBonus(ALL, this, new Plus(2), "enchantment spells or effects");
-		character.addSkillBonus(D20SRD.Skills.DIPLOMACY, this, new Plus(2), null);
-		character.addSkillBonus(D20SRD.Skills.GATHER_INFORMATION, this, new Plus(2), null);
-		character.addSkillBonus(D20SRD.Skills.LISTEN, this, new Plus(1), null);
-		character.addSkillBonus(D20SRD.Skills.SEARCH, this, new Plus(1), null);
-		character.addSkillBonus(D20SRD.Skills.SPOT, this, new Plus(1), null);
+		character.addBonus(ALL_SAVES, this, IMMUNITY, "sleep spells or effects");
+		character.addBonus(ALL_SAVES, this, new Plus(2), "enchantment spells or effects");
+		character.getSkill(D20SRD.Skills.DIPLOMACY).addBonus(this, new Plus(2), null);
+		character.getSkill(D20SRD.Skills.GATHER_INFORMATION).addBonus(this, new Plus(2), null);
+		character.getSkill(D20SRD.Skills.LISTEN).addBonus(this, new Plus(1), null);
+		character.getSkill(D20SRD.Skills.SEARCH).addBonus(this, new Plus(1), null);
+		character.getSkill(D20SRD.Skills.SPOT).addBonus(this, new Plus(1), null);
 		
 			
 	}

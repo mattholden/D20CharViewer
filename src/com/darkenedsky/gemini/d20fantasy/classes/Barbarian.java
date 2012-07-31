@@ -4,7 +4,7 @@ import com.darkenedsky.gemini.common.Frequency;
 import com.darkenedsky.gemini.common.TimeUnit;
 import com.darkenedsky.gemini.common.modifier.Plus;
 import com.darkenedsky.gemini.common.modifier.Times;
-import com.darkenedsky.gemini.common.prereq.Prerequisite;
+import com.darkenedsky.gemini.common.prereq.TransientPrerequisite;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.D20Alignment;
@@ -35,7 +35,7 @@ public class Barbarian extends D20Class implements D20Fantasy {
 		setIlliterate();
 		
 		// barbs can't be lawful
-		Prerequisite notLawful = new Prerequisite() { 
+		TransientPrerequisite notLawful = new TransientPrerequisite() { 
 		
 			@Override
 			public boolean satisfies(D20Character character) { 
@@ -45,8 +45,7 @@ public class Barbarian extends D20Class implements D20Fantasy {
 		};
 		addPrerequisite(notLawful);
 	}
-	
-	
+		
 	@Override
 	public void onGain(D20Character character) { 		
 		super.onGain(character);
@@ -77,8 +76,8 @@ public class Barbarian extends D20Class implements D20Fantasy {
 			break;
 		case 3:
 			// trapsense
-			character.addDodgeBonus(this, new Plus(1), "traps");
-			character.addSaveBonus(REFLEX, this, new Plus(1), "traps");
+			character.getStat(DODGE).addBonus(this, new Plus(1), "traps");
+			character.getStat(REFLEX).addBonus(this, new Plus(1), "traps");
 			break;
 		case 4:
 			character.addAbility(D20SRD.Abilities.RAGE, null,once);
@@ -91,46 +90,46 @@ public class Barbarian extends D20Class implements D20Fantasy {
 			break;
 		case 6:
 			// trapsense
-			character.addDodgeBonus(this, new Plus(1), "traps");
-			character.addSaveBonus(REFLEX, this, new Plus(1), "traps");
+			character.getStat(DODGE).addBonus(this, new Plus(1), "traps");
+			character.getStat(REFLEX).addBonus(this, new Plus(1), "traps");
 			break;
 		case 7:
-			character.addDamageReduction(this, new Plus(-1), "weapons or natural attacks");
+			character.getStat(DAMAGE_REDUCTION).addBonus(this, new Plus(-1), "weapons or natural attacks");
 			break;
 		case 8:
 			character.addAbility(D20SRD.Abilities.RAGE, null,once);
 			break;
 		case 9:
 			// trapsense
-			character.addDodgeBonus(this, new Plus(1), "traps");
-			character.addSaveBonus(REFLEX, this, new Plus(1), "traps");
+			character.getStat(DODGE).addBonus(this, new Plus(1), "traps");
+			character.getStat(REFLEX).addBonus(this, new Plus(1), "traps");
 			break;
 		case 10:
-			character.addDamageReduction(this, new Plus(-1), "weapons or natural attacks");
+			character.getStat(DAMAGE_REDUCTION).addBonus(this, new Plus(-1), "weapons or natural attacks");
 			break;
 		case 11:
 			character.addAbility(D20SRD.Abilities.GREATER_RAGE, null, Frequency.MODIFIER);
 			break;
 		case 12:
 			// trapsense
-			character.addDodgeBonus(this, new Plus(1), "traps");
-			character.addSaveBonus(REFLEX, this, new Plus(1), "traps");
+			character.getStat(DODGE).addBonus(this, new Plus(1), "traps");
+			character.getStat(REFLEX).addBonus(this, new Plus(1), "traps");
 			character.addAbility(D20SRD.Abilities.RAGE, null,once);
 			break;
 		case 13:
-			character.addDamageReduction(this, new Plus(-1), "weapons or natural attacks");
+			character.getStat(DAMAGE_REDUCTION).addBonus(this, new Plus(-1), "weapons or natural attacks");
 			break;
 		case 14:
 			character.addAbility(D20SRD.Abilities.INDOMITABLE_WILL, null, Frequency.MODIFIER);
 			break;
 		case 15:
 			// trapsense
-			character.addDodgeBonus(this, new Plus(1), "traps");
-			character.addSaveBonus(REFLEX, this, new Plus(1), "traps");
+			character.getStat(DODGE).addBonus(this, new Plus(1), "traps");
+			character.getStat(REFLEX).addBonus(this, new Plus(1), "traps");
 			break;
 		case 16:
 			character.addAbility(D20SRD.Abilities.RAGE, null,once);
-			character.addDamageReduction(this, new Plus(-1), "weapons or natural attacks");
+			character.getStat(DAMAGE_REDUCTION).addBonus(this, new Plus(-1), "weapons or natural attacks");
 			
 			break;
 		case 17:
@@ -138,11 +137,11 @@ public class Barbarian extends D20Class implements D20Fantasy {
 			break;
 		case 18:
 			// trapsense
-			character.addDodgeBonus(this, new Plus(1), "traps");
-			character.addSaveBonus(REFLEX, this, new Plus(1), "traps");
+			character.getStat(DODGE).addBonus(this, new Plus(1), "traps");
+			character.getStat(REFLEX).addBonus(this, new Plus(1), "traps");
 			break;
 		case 19:
-			character.addDamageReduction(this, new Plus(-1), "weapons or natural attacks");
+			character.getStat(DAMAGE_REDUCTION).addBonus(this, new Plus(-1), "weapons or natural attacks");
 			break;
 		case 20:
 			character.addAbility(D20SRD.Abilities.MIGHTY_RAGE, null, Frequency.MODIFIER);

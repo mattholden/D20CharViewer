@@ -2,7 +2,7 @@ package com.darkenedsky.gemini.common;
 
 import org.jdom.Element;
 
-public class Frequency {
+public class Frequency implements XMLSerializable {
 
 	private TimeUnit unit;
 	private int uses;
@@ -46,37 +46,20 @@ public class Frequency {
 		}
 	};
 	
-	public Element toXML() { 
-		Element e= new Element("frequency");
+	@Override
+	public Element toXML(String root) { 
+		Element e= new Element(root);
+		e.addContent(XMLTools.xml("class", getClass().getName()));
 		e.addContent(XMLTools.xml("uses", uses));
 		e.addContent(XMLTools.xml("unit", unit.toString()));
 		return e;
 	}
 	
-	public static Frequency load(Element e) { 
+	public Frequency(Element e) { 
 		String u = e.getChild("unit").getText();
 		String times = e.getChild("uses").getText();
-		int x = Integer.parseInt(times);
-				
-		if (u.equals("second"))
-			return new Frequency(x, TimeUnit.SECOND);
-		else if (u.equals("minute"))
-			return new Frequency(x, TimeUnit.MINUTE);
-		else if (u.equals("hour"))
-			return new Frequency(x, TimeUnit.HOUR);
-		else if (u.equals("day"))
-			return new Frequency(x, TimeUnit.DAY);
-		else if (u.equals("week"))
-			return new Frequency(x, TimeUnit.WEEK);
-		else if (u.equals("month"))
-			return new Frequency(x, TimeUnit.MONTH);
-		else if (u.equals("year"))
-			return new Frequency(x, TimeUnit.YEAR);
-		else if (u.equals("at will"))
-			return Frequency.AT_WILL;
-		else 
-			return null;
-		
+		uses = Integer.parseInt(times);
+		unit = TimeUnit.stringToUnit(u);
 	}
 	
 }

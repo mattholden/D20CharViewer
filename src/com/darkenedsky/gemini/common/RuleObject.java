@@ -1,9 +1,5 @@
 package com.darkenedsky.gemini.common;
-
 import java.util.ArrayList;
-
-import org.jdom.Element;
-
 import com.darkenedsky.gemini.common.prereq.HasPrerequisites;
 import com.darkenedsky.gemini.common.prereq.Prerequisite;
 import com.darkenedsky.gemini.d20system.D20Character;
@@ -36,7 +32,7 @@ public abstract class RuleObject implements java.io.Serializable, HasPrerequisit
 	
 	public boolean equals(Object other) { 
 		if (other instanceof RuleObject)
-			return ((RuleObject)other).sRDURL.equalsIgnoreCase(sRDURL);
+			return ((RuleObject)other).sRDURL.equalsIgnoreCase(sRDURL) && getClass().equals(other.getClass());
 		else return false;
 	}
 	public RuleObject(String name, String sRDURL) {
@@ -66,10 +62,8 @@ public abstract class RuleObject implements java.io.Serializable, HasPrerequisit
 		return true;
 	}
 	
-	public Element toXML(String root) { 
-		Element e = new Element(root);
-		e.setText(getName());
-		return e;
+	public String getUniqueID() { 
+		return getClass().getName() + "&" + getName();
 	}
 	
 	public int compareTo(RuleObject other) { 

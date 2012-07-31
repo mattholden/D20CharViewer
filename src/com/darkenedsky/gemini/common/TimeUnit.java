@@ -1,5 +1,8 @@
 package com.darkenedsky.gemini.common;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class TimeUnit {
 	
 	private String unit;
@@ -19,4 +22,19 @@ public class TimeUnit {
 		MONTH = new TimeUnit("month"),
 		YEAR = new TimeUnit("year");
 	
+	public static Map<String,TimeUnit> timeUnits;
+	static { 
+		timeUnits  = new HashMap<String, TimeUnit>(7);
+		timeUnits.put("day", DAY);
+		timeUnits.put("week", WEEK);
+		timeUnits.put("month", MONTH);
+		timeUnits.put("year", YEAR);
+		timeUnits.put("hour", HOUR);
+		timeUnits.put("minute", MINUTE);
+		timeUnits.put("second", SECOND);
+	}
+	
+	public static final TimeUnit stringToUnit(String tu) { 
+		return timeUnits.get(tu);
+	}
 }
