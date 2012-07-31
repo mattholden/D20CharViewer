@@ -2,6 +2,7 @@ package com.darkenedsky.gemini.d20fantasy.classes;
 import java.util.Map;
 
 import com.darkenedsky.gemini.common.Dice;
+import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.Library;
 import com.darkenedsky.gemini.common.RuleObject;
 import com.darkenedsky.gemini.common.event.CharacterEvent;
@@ -34,7 +35,8 @@ public class Expert extends D20NPCClass implements CharacterListener<D20Skill>, 
 
 	/** Ask for the first class skill */
 	@Override
-	public void onGain(D20Character character) { 		
+	public void onGain(GameCharacter chara) { 
+		D20Character character = (D20Character)chara;
 		super.onGain(character);
 		
 		// it's already been added to the object, so this should never be below 1

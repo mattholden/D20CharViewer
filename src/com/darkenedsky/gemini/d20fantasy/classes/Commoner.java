@@ -1,5 +1,6 @@
 package com.darkenedsky.gemini.d20fantasy.classes;
 import com.darkenedsky.gemini.common.Dice;
+import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.event.CharacterEvent;
 import com.darkenedsky.gemini.common.event.CharacterListener;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
@@ -39,7 +40,8 @@ public class Commoner extends D20NPCClass implements CharacterListener<D20Feat>,
 	}
 	
 	@Override
-	public void onGain(D20Character character) { 		
+	public void onGain(GameCharacter chara) { 
+		D20Character character = (D20Character)chara;
 		super.onGain(character);
 		
 		int classLevel = character.getLevelOfClass(getClass());

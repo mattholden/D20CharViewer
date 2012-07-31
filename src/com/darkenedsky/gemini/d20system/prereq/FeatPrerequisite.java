@@ -1,9 +1,11 @@
-package com.darkenedsky.gemini.common.prereq;
+package com.darkenedsky.gemini.d20system.prereq;
 
 import org.jdom.Element;
 
+import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.Library;
 import com.darkenedsky.gemini.common.XMLTools;
+import com.darkenedsky.gemini.common.prereq.Prerequisite;
 import com.darkenedsky.gemini.d20system.D20Character;
 import com.darkenedsky.gemini.d20system.D20Feat;
 
@@ -43,7 +45,8 @@ public class FeatPrerequisite implements Prerequisite {
 		return e;
 	}
 	
-	public boolean satisfies(D20Character character) { 
+	public boolean satisfies(GameCharacter charactr) {
+		D20Character character = (D20Character)charactr;
 		return character.getFeatRanks(feat, special) >= timesTaken;
 	}
 

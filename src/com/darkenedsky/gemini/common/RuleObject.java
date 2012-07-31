@@ -2,7 +2,6 @@ package com.darkenedsky.gemini.common;
 import java.util.ArrayList;
 import com.darkenedsky.gemini.common.prereq.HasPrerequisites;
 import com.darkenedsky.gemini.common.prereq.Prerequisite;
-import com.darkenedsky.gemini.d20system.D20Character;
 
 public abstract class RuleObject implements java.io.Serializable, HasPrerequisites, Comparable<RuleObject> {
 
@@ -41,7 +40,7 @@ public abstract class RuleObject implements java.io.Serializable, HasPrerequisit
 		this.sRDURL = sRDURL;
 	}
 	
-	public void onGain(D20Character character) {		
+	public void onGain(GameCharacter character) {		
 	}
 	
 	private ArrayList<Prerequisite> prerequisites;
@@ -54,7 +53,7 @@ public abstract class RuleObject implements java.io.Serializable, HasPrerequisit
 	}
 	
 	@Override
-	public final boolean hasPrerequisites(D20Character character) {
+	public final boolean hasPrerequisites(GameCharacter character) {
 		if (prerequisites == null) return true;
 		for (Prerequisite req : prerequisites) { 
 			if (!req.satisfies(character)) return false;

@@ -1,8 +1,9 @@
 package com.darkenedsky.gemini.common.prereq;
 
 import org.jdom.Element;
+
+import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.XMLTools;
-import com.darkenedsky.gemini.d20system.D20Character;
 
 public class StatisticPrerequisite implements Prerequisite { 
 	
@@ -13,7 +14,7 @@ public class StatisticPrerequisite implements Prerequisite {
 	}
 	
 	@Override
-	public boolean satisfies(D20Character character) { 
+	public boolean satisfies(GameCharacter character) { 
 		return (character.getStat(score).getBaseValue() >= value);
 	}
 

@@ -1,4 +1,5 @@
 package com.darkenedsky.gemini.d20fantasy.classes;
+import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.prereq.TransientPrerequisite;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
@@ -26,7 +27,8 @@ public class Druid extends D20Class implements D20SpellcasterClass, D20Fantasy {
 	private TransientPrerequisite neutral = new TransientPrerequisite() { 
 	
 		@Override
-		public boolean satisfies(D20Character character) { 
+		public boolean satisfies(GameCharacter c) {
+			D20Character character = (D20Character)c;
 			D20Alignment a = character.getAlignment();
 			return (a.getLawAxis().equals(D20Alignment.NEUTRAL) || 
 					a.getMoralityAxis().equals(D20Alignment.NEUTRAL));
@@ -34,7 +36,8 @@ public class Druid extends D20Class implements D20SpellcasterClass, D20Fantasy {
 	};
 	
 	@Override
-	public void onGain(D20Character character) { 		
+	public void onGain(GameCharacter chara) { 
+		D20Character character = (D20Character)chara;
 		super.onGain(character);
 		
 		// it's already been added to the object, so this should never be below 1

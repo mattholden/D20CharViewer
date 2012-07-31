@@ -1,7 +1,8 @@
-package com.darkenedsky.gemini.d20system;
+package com.darkenedsky.gemini.d20system.bonus;
 import org.jdom.Element;
 
 import com.darkenedsky.gemini.common.modifier.Modifier;
+import com.darkenedsky.gemini.d20system.D20Character;
 
 public class AbilityModifier extends Modifier {
 

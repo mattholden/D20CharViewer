@@ -1,6 +1,7 @@
 package com.darkenedsky.gemini.d20fantasy.classes;
 
 import com.darkenedsky.gemini.common.Dice;
+import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.Progression;
 import com.darkenedsky.gemini.common.modifier.Times;
 import com.darkenedsky.gemini.common.prereq.TransientPrerequisite;
@@ -35,7 +36,8 @@ public class Bard extends D20Class implements D20SpellcasterClass, D20Fantasy{
 		TransientPrerequisite notLawful = new TransientPrerequisite() { 
 		
 			@Override
-			public boolean satisfies(D20Character character) { 
+			public boolean satisfies(GameCharacter c) {
+				D20Character character = (D20Character)c;
 				D20Alignment a = character.getAlignment();
 				return !(a.getLawAxis().equals(D20Alignment.LAWFUL));
 			}
@@ -88,7 +90,8 @@ public class Bard extends D20Class implements D20SpellcasterClass, D20Fantasy{
 	
 	
 	@Override
-	public void onGain(D20Character character) { 		
+	public void onGain(GameCharacter chara) { 
+		D20Character character = (D20Character)chara;
 		super.onGain(character);
 		
 		// it's already been added to the object, so this should never be below 1

@@ -7,14 +7,13 @@ import org.jdom.Element;
 
 import com.darkenedsky.gemini.common.modifier.Bonus;
 import com.darkenedsky.gemini.common.modifier.Modifier;
-import com.darkenedsky.gemini.d20system.D20Character;
 
 
 public class Statistic implements XMLSerializable { 
 	
 	public Statistic() { } 
 	
-	public int getValueWithPermanentBonuses(D20Character c) { 
+	public int getValueWithPermanentBonuses(GameCharacter c) { 
 		int total = baseValue;
 		for (Bonus b : getBonuses()) { 
 			if (!b.isConditional())
@@ -52,7 +51,7 @@ public class Statistic implements XMLSerializable {
 		bonuses.add(b);
 	}
 	
-	public void removeBonusesFromSource(RuleObject ro) { 
+	public void dropBonuses(RuleObject ro) { 
 		for (Bonus b : getBonuses()) { 
 			if (b.getSource().equals(ro)) { 
 				bonuses.remove(b);

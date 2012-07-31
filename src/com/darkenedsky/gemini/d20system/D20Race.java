@@ -2,6 +2,7 @@ package com.darkenedsky.gemini.d20system;
 import java.util.ArrayList;
 
 import com.darkenedsky.gemini.common.Dice;
+import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.RuleObject;
 import com.darkenedsky.gemini.common.modifier.Bonus;
 import com.darkenedsky.gemini.common.modifier.Plus;
@@ -144,7 +145,8 @@ public class D20Race extends RuleObject implements D20 {
 	}
 	
 	@Override
-	public void onGain(D20Character character) { 
+	public void onGain(GameCharacter chara) { 
+		D20Character character = (D20Character)chara;
 		
 		// take on the size. (might be some special stuffs there)
 		character.setSize(this.size);

@@ -1,5 +1,6 @@
 package com.darkenedsky.gemini.d20fantasy.races;
 import com.darkenedsky.gemini.common.Dice;
+import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.D20Character;
@@ -40,7 +41,8 @@ public class HalfOrc extends D20Race implements D20Fantasy {
 	}
 
 	@Override
-	public void onGain(D20Character character) {		
+	public void onGain(GameCharacter chara) { 
+		D20Character character = (D20Character)chara;
 		super.onGain(character);
 		character.addSkillRank(D20SRD.Skills.SPEAK_LANGUAGE, "Orc", false, true);
 		character.addSkillRank(D20SRD.Skills.SPEAK_LANGUAGE, "Common", false, true);

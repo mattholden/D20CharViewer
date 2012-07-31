@@ -1,10 +1,10 @@
 package com.darkenedsky.gemini.common.prereq;
 
-import com.darkenedsky.gemini.d20system.D20Character;
+import com.darkenedsky.gemini.common.GameCharacter;
 
 public interface HasPrerequisites {
 
-	public boolean hasPrerequisites(D20Character character);
+	public boolean hasPrerequisites(GameCharacter character);
 	
 	public void addPrerequisite(Prerequisite pre);
 	

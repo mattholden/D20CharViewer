@@ -1,5 +1,6 @@
 package com.darkenedsky.gemini.d20fantasy.races;
 import com.darkenedsky.gemini.common.Dice;
+import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.modifier.Plus;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
@@ -41,7 +42,8 @@ public class Dwarf extends D20Race implements D20Fantasy {
 	}
 
 	@Override
-	public void onGain(D20Character character) {		
+	public void onGain(GameCharacter chara) { 
+		D20Character character = (D20Character)chara;
 		super.onGain(character);
 		// Dwarves can treat dwarven waraxes and dwarven urgroshes as martial weapons rather than exotic
 		// this will be a special case in the onGain for martial weapon proficiency feat

@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 import org.jdom.Element;
 
+import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.RuleObject;
 import com.darkenedsky.gemini.common.XMLSerializable;
 import com.darkenedsky.gemini.common.XMLTools;
 import com.darkenedsky.gemini.common.prereq.HasPrerequisites;
 import com.darkenedsky.gemini.common.prereq.Prerequisite;
-import com.darkenedsky.gemini.d20system.D20Character;
 
 public class Bonus implements HasPrerequisites, XMLSerializable {
 
@@ -28,7 +28,7 @@ public class Bonus implements HasPrerequisites, XMLSerializable {
 	}
 	
 	@Override
-	public boolean hasPrerequisites(D20Character d20) { 
+	public boolean hasPrerequisites(GameCharacter d20) { 
 		if (prerequisites == null) return true;
 		for (Prerequisite p : prerequisites) { 
 			if (!p.satisfies(d20)) return false;
@@ -43,7 +43,7 @@ public class Bonus implements HasPrerequisites, XMLSerializable {
 		this.conditional = conditional;
 	}
 
-	public int modify(D20Character character, int value) {
+	public int modify(GameCharacter character, int value) {
 		if (!hasPrerequisites(character)) 
 			return value;
 		return modifier.modify(value);

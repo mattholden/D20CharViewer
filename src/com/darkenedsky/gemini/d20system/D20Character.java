@@ -1,120 +1,54 @@
 package com.darkenedsky.gemini.d20system;
-import java.io.Serializable;
 import java.util.*;
 import org.jdom.Element;
-
 import com.darkenedsky.gemini.common.Frequency;
+import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.Library;
 import com.darkenedsky.gemini.common.RuleObject;
 import com.darkenedsky.gemini.common.Specialized;
 import com.darkenedsky.gemini.common.Statistic;
-import com.darkenedsky.gemini.common.XMLSerializable;
 import com.darkenedsky.gemini.common.XMLTools;
-import com.darkenedsky.gemini.common.event.CharacterEvent;
-import com.darkenedsky.gemini.common.event.CharacterListener;
 import com.darkenedsky.gemini.common.modifier.Bonus;
-import com.darkenedsky.gemini.common.modifier.Modifier;
 
-public class D20Character implements D20, Serializable, XMLSerializable {
+public class D20Character extends GameCharacter implements D20 {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2435348998743374460L;
 	
-	private int hp, maxHp;
-	private String name, hair, eyes, player;
-	private boolean male;
-	private D20Race race;
 	private D20Size size;
 	private D20Alignment alignment;
-	private int height, weight, age;
-	private int xp = 0;
-	private Library library;
-	
-	
 	private ArrayList<D20Class> levels = new ArrayList<D20Class>();
 	private Map<Specialized<D20Feat>, Integer> feats = new HashMap<Specialized<D20Feat>, Integer>();
 	private Map<Specialized<D20Feat>, Frequency> abilities = new HashMap<Specialized<D20Feat>, Frequency>();
-	private ArrayList<CharacterListener<?>> uiListeners = new ArrayList<CharacterListener<?>>();
+	private Map<Specialized<D20Skill>, D20SkillRank> skills = new HashMap<Specialized<D20Skill>, D20SkillRank>(20);
 	
-	private Map<Specialized<D20Skill>, SkillRank> skills = new HashMap<Specialized<D20Skill>, SkillRank>(20);
-	private Map<Integer, Statistic> statistics = new HashMap<Integer, Statistic>(20);
-		
 	// temp variables used during chargen/levelup
 	private int skillsAvailable, featsAvailable, fighterBonusFeats;
 	private int ageClass;
 	private int levelsToGain = 1;
 	private int bonusLanguages = 0;
 	
-	public void fireUIEvent(CharacterEvent uiEvent) { 
-		for (CharacterListener<?> ui : uiListeners) {
-			ui.actionPerformed(uiEvent);
-		}
-	}
-		
-	public Library getLibrary() { return library; }
+	public D20SkillRank getSkill(D20Skill skill) { return getSkill(skill,null);}
 	
-	public SkillRank getSkill(D20Skill skill) { return getSkill(skill,null);}
-	
-	public SkillRank getSkill(D20Skill skill, String spec) { 
+	public D20SkillRank getSkill(D20Skill skill, String spec) { 
 		Specialized<D20Skill> key = new Specialized<D20Skill>(skill, spec);
-		SkillRank rank = skills.get(key);
+		D20SkillRank rank = skills.get(key);
 		
 		// if there's no rank, add it with 0 ranks.
 		// do this so we can record bonuses even if we have no rank
 		// we dont do this in the constructor because we never know what specializations we'll see
 		if (rank == null) { 
-			rank = new SkillRank(skill, this);						
+			rank = new D20SkillRank(skill, this);						
 			skills.put(key, rank);			
 		}
 		return rank;
 	}
 	
-	public Statistic getStat(int stat) { 
-		return statistics.get(stat);
-	}	
-
-	public Map<Integer,Statistic> getStats() { 
-		return statistics;
-	}
-	
-	public void dropBonuses(RuleObject source) { 
-		for (Statistic e : statistics.values()) 
-			e.removeBonusesFromSource(source);
-		for (Statistic rank : skills.values())
-			rank.removeBonusesFromSource(source);
-	}
-	
-	
-	public void addBonus(int stat, Bonus b) { 
-			
-		if (stat == ALL_SAVES) { 
-			getStat(FORT).addBonus(b);
-			getStat(REFLEX).addBonus(b);
-			getStat(WILL).addBonus(b);
-		}
-		else if (stat == ALL_ABILITY_SCORES) { 
-			getStat(STR).addBonus(b);
-			getStat(DEX).addBonus(b);
-			getStat(CON).addBonus(b);
-			getStat(INT).addBonus(b);
-			getStat(WIS).addBonus(b);
-			getStat(CHA).addBonus(b);
-		}
-		else {
-			Statistic s = statistics.get(stat);
-			if (s != null)
-				s.addBonus(b);
-		}
-	}
-	public void addBonus(int stat, RuleObject source, Modifier mod, String conditional) { 
-		addBonus(stat, new Bonus(source, mod, conditional));
-	}
-	
 	public boolean addSkillRank(D20Skill skill, String spec, boolean crossClass, boolean free) { 
 				
-		SkillRank existing = getSkill(skill,spec);
+		D20SkillRank existing = getSkill(skill,spec);
 		
 		// can't add if we're at max.
 		int max = this.getCharacterLevel() + 3;
@@ -131,7 +65,7 @@ public class D20Character implements D20, Serializable, XMLSerializable {
 		}
 
 		if (existing == null) { 
-			existing = new SkillRank(skill, this);
+			existing = new D20SkillRank(skill, this);
 			Specialized<D20Skill> key = new Specialized<D20Skill>(skill, spec);
 			skills.put(key, existing);
 		}
@@ -145,6 +79,33 @@ public class D20Character implements D20, Serializable, XMLSerializable {
 		return true;
 	}
 	
+	@Override
+	public void dropBonuses(RuleObject source) { 
+		super.dropBonuses(source);
+		for (Statistic rank : skills.values())
+			rank.dropBonuses(source);
+	}
+
+	@Override
+	public void addBonus(int stat, Bonus b) { 
+			
+		if (stat == ALL_SAVES) { 
+			getStat(FORT).addBonus(b);
+			getStat(REFLEX).addBonus(b);
+			getStat(WILL).addBonus(b);
+		}
+		else if (stat == ALL_ABILITY_SCORES) { 
+			getStat(STR).addBonus(b);
+			getStat(DEX).addBonus(b);
+			getStat(CON).addBonus(b);
+			getStat(INT).addBonus(b);
+			getStat(WIS).addBonus(b);
+			getStat(CHA).addBonus(b);
+		}
+		else {
+			super.addBonus(stat, b);
+		}
+	}
 	public int getFeatRanks(D20Feat feat, String spec) { 
 		int ranks = 0;
 		for (Map.Entry<Specialized<D20Feat>, Integer> entry : feats.entrySet()) { 
@@ -324,58 +285,6 @@ public class D20Character implements D20, Serializable, XMLSerializable {
 		return levels.get(level);
 	}
 	
-	public boolean isMale() { 
-		return male;		
-	}
-
-	public int getHp() {
-		return hp;
-	}
-
-	public void setHp(int hp) {
-		this.hp = hp;
-	}
-
-	public int getMaxHp() {
-		return maxHp;
-	}
-
-	public void setMaxHp(int maxHp) {
-		this.maxHp = maxHp;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getHair() {
-		return hair;
-	}
-
-	public void setHair(String hair) {
-		this.hair = hair;
-	}
-
-	public String getEyes() {
-		return eyes;
-	}
-
-	public void setEyes(String eyes) {
-		this.eyes = eyes;
-	}
-
-	public String getPlayer() {
-		return player;
-	}
-
-	public void setPlayer(String player) {
-		this.player = player;
-	}
-
 	public D20Race getRace() {
 		return race;
 	}
@@ -432,34 +341,6 @@ public class D20Character implements D20, Serializable, XMLSerializable {
 		this.featsAvailable = featsAvailable;
 	}
 
-	public int getHeight() {
-		return height;
-	}
-
-	public void setHeight(int height) {
-		this.height = height;
-	}
-
-	public int getWeight() {
-		return weight;
-	}
-
-	public void setWeight(int weight) {
-		this.weight = weight;
-	}
-
-	public int getAge() {
-		return age;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
-	}
-
-	public void setMale(boolean male) {
-		this.male = male;
-	}
-
 	public boolean setSize(D20Size size) {
 		if (!size.hasPrerequisites(this)) return false;
 		this.size = size;
@@ -491,21 +372,9 @@ public class D20Character implements D20, Serializable, XMLSerializable {
 
 
 
-	public void setXp(int xp) {
-		this.xp = xp;
-	}
-
-	public int getXp() {
-		return xp;
-	}
-
-
-	
-	
-	
 	@Override
 	public Element toXML(String root) { 
-		Element e = new Element(root);
+		Element e = super.toXML(root);
 		e.addContent(XMLTools.xml("class", getClass().getName()));
 		e.addContent(XMLTools.xml("player", player));
 		e.addContent(XMLTools.xml("name", name));
@@ -534,7 +403,7 @@ public class D20Character implements D20, Serializable, XMLSerializable {
 		for (D20Class lvl : levels) 
 			e.addContent(XMLTools.xml("classlevel", lvl.getUniqueID()));
 		
-		for (Map.Entry<Specialized<D20Skill>, SkillRank> skill : skills.entrySet()) { 
+		for (Map.Entry<Specialized<D20Skill>, D20SkillRank> skill : skills.entrySet()) { 
 			Element s = new Element("skillrank");
 			s.addContent(XMLTools.xml("skill", skill.getKey().ability.getUniqueID()));
 			s.addContent(XMLTools.xml("specialization", skill.getKey().specialization));
@@ -550,34 +419,18 @@ public class D20Character implements D20, Serializable, XMLSerializable {
 
 	@SuppressWarnings("rawtypes")
 	public D20Character(Element e) throws Exception {
+		super(e);
 		
-		library = Library.instance;
-		player = XMLTools.getString(e, "player");		
-		name = XMLTools.getString(e, "name");
-		hair = XMLTools.getString(e, "hair");
-		eyes = XMLTools.getString(e, "eyes");
-		height = XMLTools.getInt(e,"height");
-		weight = XMLTools.getInt(e,"weight");
-		age = XMLTools.getInt(e,"age");
 		ageClass = XMLTools.getInt(e,"ageclass");
-		male = XMLTools.getBoolean(e,"male");
 		skillsAvailable = XMLTools.getInt(e,"skillsavailable");
 		featsAvailable = XMLTools.getInt(e,"featsavailable");
 		fighterBonusFeats = XMLTools.getInt(e,"fighterbonusfeats");
 		levelsToGain = XMLTools.getInt(e,"levelstogain");
-		hp = XMLTools.getInt(e,"hp");
-		maxHp = XMLTools.getInt(e,"maxhp");
-		xp = XMLTools.getInt(e,"xp");
 		race = (D20Race)library.getSection("races").get(XMLTools.getString(e,"race"));
 		size = D20Size.load(XMLTools.getString(e,"size"));
 		alignment = D20Alignment.load(XMLTools.getString(e,"alignment"));
 		
-		List<?> stats = e.getChildren("statistic");
-		for (int i = 0; i < stats.size(); i++) {
-			Element stat = (Element)stats.get(i);
-			statistics.put(XMLTools.getInt(stat, "score"), (Statistic)XMLTools.dynamicLoad(stat));
-		}
-				
+		
 		List lv = e.getChildren("level");
 		for (int i = 0; i < lv.size(); i++) { 
 			Element lvl = (Element)lv.get(i);
@@ -597,7 +450,7 @@ public class D20Character implements D20, Serializable, XMLSerializable {
 			if (spec != null)
 				special = spec.getText();
 			Specialized<D20Skill> key = new Specialized<D20Skill>(skill, special);
-			skills.put(key, (SkillRank)XMLTools.dynamicLoad(skyll.getChild("statistic")));					
+			skills.put(key, (D20SkillRank)XMLTools.dynamicLoad(skyll.getChild("statistic")));					
 		}
 		
 		List fe = e.getChildren("feat");

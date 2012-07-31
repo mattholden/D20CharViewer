@@ -1,4 +1,5 @@
 package com.darkenedsky.gemini.d20fantasy.classes;
+import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.prereq.TransientPrerequisite;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
@@ -21,14 +22,16 @@ public class Paladin extends D20Class implements D20SpellcasterClass, D20Fantasy
 		// paladins must be LG
 		addPrerequisite(new TransientPrerequisite() { 
 			@Override
-			public boolean satisfies(D20Character character) { 
-				return (character.getAlignment().equals(D20Alignment.LAWFUL_GOOD));
+			public boolean satisfies(GameCharacter c) {
+			D20Character character = (D20Character)c;
+			return (character.getAlignment().equals(D20Alignment.LAWFUL_GOOD));
 			}
 		});
 	}
 	
 	@Override
-	public void onGain(D20Character character) { 		
+	public void onGain(GameCharacter chara) { 
+		D20Character character = (D20Character)chara;
 		super.onGain(character);
 		
 		// it's already been added to the object, so this should never be below 1

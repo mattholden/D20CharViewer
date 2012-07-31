@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import com.darkenedsky.gemini.common.Dice;
+import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.Progression;
 import com.darkenedsky.gemini.common.RuleObject;
 import com.darkenedsky.gemini.common.Specialized;
@@ -198,8 +199,9 @@ public class D20Class extends RuleObject implements D20, D20ClassInterface {
 	 * @see com.darkenedsky.d20charviewer.d20objects.D20ClassInterface#onGain(com.darkenedsky.d20charviewer.d20objects.D20Character)
 	 */
 	@Override
-	public void onGain(D20Character character) { 
-			
+	public void onGain(GameCharacter chara) { 
+		D20Character character = (D20Character)chara;
+		
 		// don't want to add reading and writing as a skill to EVERYTHING not a barbarian
 		if (literacy) { 			
 			if (character.getSkill(D20SRD.Skills.READING_WRITING, null).getBaseValue() == 0) {

@@ -1,7 +1,10 @@
-package com.darkenedsky.gemini.common.prereq;
+package com.darkenedsky.gemini.d20system.prereq;
 
 import org.jdom.Element;
+
+import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.XMLTools;
+import com.darkenedsky.gemini.common.prereq.Prerequisite;
 import com.darkenedsky.gemini.d20system.D20Character;
 
 public class TotalLevelPrerequisite implements Prerequisite {
@@ -13,8 +16,8 @@ public class TotalLevelPrerequisite implements Prerequisite {
 	private int level = 0;
 	
 	@Override
-	public boolean satisfies(D20Character character) { 
-		return character.getCharacterLevel() >= level;
+	public boolean satisfies(GameCharacter character) { 
+		return ((D20Character)character).getCharacterLevel() >= level;
 	}
 	
 	public TotalLevelPrerequisite(Element e) { 

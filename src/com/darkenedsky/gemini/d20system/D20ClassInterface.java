@@ -3,6 +3,7 @@ package com.darkenedsky.gemini.d20system;
 import java.util.ArrayList;
 
 import com.darkenedsky.gemini.common.Dice;
+import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.Progression;
 import com.darkenedsky.gemini.common.Specialized;
 
@@ -40,7 +41,7 @@ public interface D20ClassInterface extends D20 {
 
 	public abstract int getSkillPoints();
 
-	public abstract void onGain(D20Character character);
+	public abstract void onGain(GameCharacter character);
 	
 	public abstract String getName();
 	

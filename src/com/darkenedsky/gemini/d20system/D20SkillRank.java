@@ -5,13 +5,15 @@ import java.util.List;
 
 import com.darkenedsky.gemini.common.Statistic;
 import com.darkenedsky.gemini.common.modifier.Bonus;
+import com.darkenedsky.gemini.d20system.bonus.AbilityModifier;
+import com.darkenedsky.gemini.d20system.bonus.ArmorCheckPenalty;
 
-public class SkillRank extends Statistic { 
+public class D20SkillRank extends Statistic { 
 
 	private D20Skill skill;
 	private D20Character character;
 	
-	public SkillRank(D20Skill sk, D20Character character) { 
+	public D20SkillRank(D20Skill sk, D20Character character) { 
 		this.skill = sk;
 		this.character = character;
 		
