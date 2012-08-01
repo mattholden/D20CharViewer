@@ -38,6 +38,11 @@ public class Barbarian extends D20Class implements D20Fantasy {
 		// barbs can't be lawful
 		TransientPrerequisite notLawful = new TransientPrerequisite() { 
 		
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 4290823687231795395L;
+
 			@Override
 			public boolean satisfies(GameCharacter c) {
 				D20Character character = (D20Character)c;

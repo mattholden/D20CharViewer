@@ -1,10 +1,16 @@
 package com.darkenedsky.gemini.common;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TimeUnit {
+public class TimeUnit implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3275199822329651862L;
+
 	private String unit;
 	private TimeUnit(String time) { 
 		unit = time;

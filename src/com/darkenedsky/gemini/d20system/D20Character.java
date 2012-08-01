@@ -106,6 +106,7 @@ public class D20Character extends GameCharacter implements D20 {
 			super.addBonus(stat, b);
 		}
 	}
+	
 	public int getFeatRanks(D20Feat feat, String spec) { 
 		int ranks = 0;
 		for (Map.Entry<Specialized<D20Feat>, Integer> entry : feats.entrySet()) { 
@@ -178,6 +179,7 @@ public class D20Character extends GameCharacter implements D20 {
 	}
 	
 	public boolean addAbility(D20Feat feat, String spec) { return addAbility(feat,spec,Frequency.AT_WILL); }
+
 	public boolean addAbility(D20Feat feat, String spec, Frequency freq) { 
 		
 		// see if i can even do it
@@ -213,31 +215,6 @@ public class D20Character extends GameCharacter implements D20 {
 		return ((statistics.get(score).getBaseValue())/2) - 5;
 	}
 	
-	public D20Character(String player, Library lib) {
-		this.player = player;
-		library = lib;
-		
-		// CORE STATS
-		statistics.put(STR,new Statistic());
-		statistics.put(DEX,new Statistic());
-		statistics.put(CON,new Statistic());
-		statistics.put(INT,new Statistic());
-		statistics.put(WIS,new Statistic());
-		statistics.put(CHA,new Statistic());
-		statistics.put(FORT,new Statistic());
-		statistics.put(REFLEX,new Statistic());
-		statistics.put(WILL,new Statistic());
-		statistics.put(ATTACK,new Statistic());
-		statistics.put(DODGE,new Statistic());
-		statistics.put(DAMAGE,new Statistic());
-		statistics.put(DAMAGE_REDUCTION,new Statistic());
-		statistics.put(INITIATIVE,new Statistic());
-		statistics.put(BASE_SPEED,new Statistic());
-		statistics.put(ARMOR_CLASS,new Statistic());
-		statistics.put(RANGED_ATTACK, new Statistic());
-		statistics.put(GRAPPLE_ATTACK, new Statistic());
-		
-	}
 	
 	public int getCharacterLevel() { 
 		return levels.size();
@@ -261,6 +238,7 @@ public class D20Character extends GameCharacter implements D20 {
 	public int getLevelOfClass(Class<? extends D20Class> clazz) { 
 		int i = 0;
 		for (D20Class c : levels) { 
+			
 			if (clazz.isInstance(c))
 				i++;			
 		}
@@ -483,4 +461,30 @@ public class D20Character extends GameCharacter implements D20 {
 		
 		
 	}
+	
+	public D20Character(Library lib) {
+		library = lib;
+		
+		// CORE STATS
+		statistics.put(STR,new Statistic());
+		statistics.put(DEX,new Statistic());
+		statistics.put(CON,new Statistic());
+		statistics.put(INT,new Statistic());
+		statistics.put(WIS,new Statistic());
+		statistics.put(CHA,new Statistic());
+		statistics.put(FORT,new Statistic());
+		statistics.put(REFLEX,new Statistic());
+		statistics.put(WILL,new Statistic());
+		statistics.put(ATTACK,new Statistic());
+		statistics.put(DODGE,new Statistic());
+		statistics.put(DAMAGE,new Statistic());
+		statistics.put(DAMAGE_REDUCTION,new Statistic());
+		statistics.put(INITIATIVE,new Statistic());
+		statistics.put(BASE_SPEED,new Statistic());
+		statistics.put(ARMOR_CLASS,new Statistic());
+		statistics.put(RANGED_ATTACK, new Statistic());
+		statistics.put(GRAPPLE_ATTACK, new Statistic());
+		
+	}
+	
 }

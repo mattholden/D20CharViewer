@@ -21,6 +21,11 @@ public class Paladin extends D20Class implements D20SpellcasterClass, D20Fantasy
 	
 		// paladins must be LG
 		addPrerequisite(new TransientPrerequisite() { 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -6899709621486040197L;
+
 			@Override
 			public boolean satisfies(GameCharacter c) {
 			D20Character character = (D20Character)c;

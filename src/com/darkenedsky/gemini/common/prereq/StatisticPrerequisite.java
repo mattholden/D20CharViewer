@@ -7,6 +7,10 @@ import com.darkenedsky.gemini.common.XMLTools;
 
 public class StatisticPrerequisite implements Prerequisite { 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1903081522145546121L;
 	protected int score, value;
 	public StatisticPrerequisite(int score, int value) { 
 		this.score = score;

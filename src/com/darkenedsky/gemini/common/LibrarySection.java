@@ -1,13 +1,18 @@
 package com.darkenedsky.gemini.common;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class LibrarySection {
+public class LibrarySection implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2501811380943848238L;
 	private Map<String, RuleObject> objects = new HashMap<String, RuleObject>();
 	
 	public List<RuleObject> getAll() { 

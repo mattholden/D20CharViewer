@@ -1,5 +1,6 @@
 package com.darkenedsky.gemini.common;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +10,13 @@ import com.darkenedsky.gemini.common.modifier.Bonus;
 import com.darkenedsky.gemini.common.modifier.Modifier;
 
 
-public class Statistic implements XMLSerializable { 
+public class Statistic implements Serializable, XMLSerializable { 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1929381674148057599L;
+
 	public Statistic() { } 
 	
 	public int getValueWithPermanentBonuses(GameCharacter c) { 

@@ -1,9 +1,15 @@
 package com.darkenedsky.gemini.common;
 
+import java.io.Serializable;
+
 import org.jdom.Element;
 
-public class Specialized<T extends RuleObject> { 
+public class Specialized<T extends RuleObject> implements Serializable { 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7196397511460453460L;
 	public T ability;
 	public String specialization;
 	

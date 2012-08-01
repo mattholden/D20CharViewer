@@ -11,6 +11,10 @@ import com.darkenedsky.gemini.d20system.D20Class;
 
 public class ClassLevelPrerequisite implements Prerequisite {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2497462094578135620L;
 	private D20Class clazz;
 	private int level;
 	

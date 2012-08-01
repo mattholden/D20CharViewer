@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package com.darkenedsky.d20charviewer;
+package com.darkenedsky.gemini.android.charviewer;
 
 public final class R {
     public static final class attr {

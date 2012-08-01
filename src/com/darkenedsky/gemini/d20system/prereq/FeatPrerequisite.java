@@ -11,6 +11,10 @@ import com.darkenedsky.gemini.d20system.D20Feat;
 
 public class FeatPrerequisite implements Prerequisite {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4679813522050434883L;
 	private D20Feat feat;
 	private String special;
 	private int timesTaken = 1;

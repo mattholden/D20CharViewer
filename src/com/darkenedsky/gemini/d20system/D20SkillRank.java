@@ -10,6 +10,10 @@ import com.darkenedsky.gemini.d20system.bonus.ArmorCheckPenalty;
 
 public class D20SkillRank extends Statistic { 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2929112341253114312L;
 	private D20Skill skill;
 	private D20Character character;
 	

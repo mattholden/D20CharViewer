@@ -1,4 +1,5 @@
 package com.darkenedsky.gemini.common;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,8 +9,13 @@ import org.jdom.Element;
 
 import com.darkenedsky.gemini.common.modifier.Modifier;
 
-public class Dice implements XMLSerializable {
+public class Dice implements XMLSerializable, Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4352820422630077455L;
+
 	public Dice(Element e) throws Exception { 
 		dice = XMLTools.getInt(e,"dice");
 		sides = XMLTools.getInt(e,"sides");

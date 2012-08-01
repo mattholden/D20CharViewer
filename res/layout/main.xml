@@ -7,22 +7,20 @@
 <TextView  
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content" 
-    android:text="GEMini D20CharView 1.0"
+    android:text="GEMini CharView 1.0"
     />
 <TextView  
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content" 
     android:text="(c)2012 Darkened Sky Studios"
     />
- 
-    
-        
-
-<Button android:text="New Character" 
+     
+<Button android:text="New D20 3.5 Character" 
 	android:id="@+id/newCharacter" 
 	android:layout_width="fill_parent" android:layout_height="wrap_content"
-	android:onClick="doNewCharacter"
+	android:onClick="newD20"
 >
+
 </Button>
         
 </LinearLayout>

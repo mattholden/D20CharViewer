@@ -1,9 +1,15 @@
 package com.darkenedsky.gemini.common;
 
+import java.io.Serializable;
+
 import org.jdom.Element;
 
-public class Frequency implements XMLSerializable {
+public class Frequency implements Serializable, XMLSerializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8881193749718610871L;
 	private TimeUnit unit;
 	private int uses;
 	
@@ -33,6 +39,11 @@ public class Frequency implements XMLSerializable {
 	}
 	
 	public static final Frequency AT_WILL = new Frequency(100, TimeUnit.SECOND) { 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 4079001379853109926L;
+
 		@Override
 		public String toString() { 
 			return "(at will)";
@@ -40,6 +51,11 @@ public class Frequency implements XMLSerializable {
 	};
 	
 	public static final Frequency MODIFIER = new Frequency(0, TimeUnit.SECOND) { 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1008021732211170498L;
+
 		@Override
 		public String toString() { 
 			return "(ability modifier)";

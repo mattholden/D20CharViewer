@@ -35,6 +35,11 @@ public class Bard extends D20Class implements D20SpellcasterClass, D20Fantasy{
 		// bards can't be lawful
 		TransientPrerequisite notLawful = new TransientPrerequisite() { 
 		
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 9197473322762554429L;
+
 			@Override
 			public boolean satisfies(GameCharacter c) {
 				D20Character character = (D20Character)c;

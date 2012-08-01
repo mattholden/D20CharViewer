@@ -1,5 +1,6 @@
 package com.darkenedsky.gemini.common.modifier;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.jdom.Element;
@@ -11,8 +12,12 @@ import com.darkenedsky.gemini.common.XMLTools;
 import com.darkenedsky.gemini.common.prereq.HasPrerequisites;
 import com.darkenedsky.gemini.common.prereq.Prerequisite;
 
-public class Bonus implements HasPrerequisites, XMLSerializable {
+public class Bonus implements HasPrerequisites, Serializable, XMLSerializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6915785852300090440L;
 	private RuleObject source;
 	private Modifier modifier;
 	private String conditional;

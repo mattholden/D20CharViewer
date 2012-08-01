@@ -1,15 +1,16 @@
-package com.darkenedsky.d20charviewer;
+package com.darkenedsky.gemini.android.charviewer;
+import java.io.Serializable;
 
-
-import com.darkenedsky.d20charviewer.R;
+import com.darkenedsky.gemini.android.charviewer.R;
+import com.darkenedsky.gemini.android.charviewer.d20newchar.D20NewCharWizard;
 import com.darkenedsky.gemini.common.Library;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.D20Character;
-
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+
 /*
 import java.util.regex.Pattern;
 import android.accounts.Account;
@@ -17,8 +18,12 @@ import android.accounts.AccountManager;
 import android.util.Patterns;
  */
 
-public class D20CharViewerActivity extends Activity {
+public class CharViewerMainActivity extends Activity implements Serializable {
     
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7792643794772678181L;
 	private Library library;
 	
 	/** Called when the activity is first created. */
@@ -36,15 +41,10 @@ public class D20CharViewerActivity extends Activity {
         
         setContentView(R.layout.main);
     }
-    
-    private D20Character character;
-    
-    public void doNewCharacter(View view) {
-    	System.out.println("Doing new character!");
-    	character = new D20Character("jjj", library);
-    	Intent intent = new Intent(this, AbilityScoreActivity.class);
-    	intent.putExtra("CHARACTER", character);    			
-    	startActivity(intent);	
+
+    public void newD20(View view) {
+    	System.out.println("Doing new D20character!");
+    	new D20NewCharWizard(this, new D20Character(library), library).begin();	
     }
     
     /*

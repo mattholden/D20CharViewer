@@ -1,5 +1,7 @@
 package com.darkenedsky.gemini.d20system;
 
+import java.io.Serializable;
+
 import com.darkenedsky.gemini.common.modifier.Plus;
 
 /**
@@ -7,7 +9,7 @@ import com.darkenedsky.gemini.common.modifier.Plus;
  * @author Matt Holden
  *
  */
-public interface D20 {
+public interface D20 extends Serializable {
 
 	// LIBRARY CONSTANTS
 	public static final String

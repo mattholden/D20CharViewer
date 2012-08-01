@@ -26,6 +26,11 @@ public class Druid extends D20Class implements D20SpellcasterClass, D20Fantasy {
 	// druids must have some kind of neutral
 	private TransientPrerequisite neutral = new TransientPrerequisite() { 
 	
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 4760366553055179719L;
+
 		@Override
 		public boolean satisfies(GameCharacter c) {
 			D20Character character = (D20Character)c;

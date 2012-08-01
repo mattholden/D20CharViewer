@@ -6,6 +6,10 @@ import com.darkenedsky.gemini.d20system.D20Character;
 
 public class AbilityModifier extends Modifier {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5078238555649225999L;
 	private D20Character character;
 	private int scoreToUse;
 	

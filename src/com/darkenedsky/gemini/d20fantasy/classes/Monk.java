@@ -25,6 +25,11 @@ public class Monk extends D20Class implements D20Fantasy {
 	// monks must be lawful
 	private static final TransientPrerequisite lawful = new TransientPrerequisite() { 
 	
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -7069480497496618529L;
+
 		@Override
 		public boolean satisfies(GameCharacter c) {
 			D20Character character = (D20Character)c;

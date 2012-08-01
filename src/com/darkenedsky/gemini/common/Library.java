@@ -1,9 +1,15 @@
 package com.darkenedsky.gemini.common;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Library {
+public class Library implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7355704229580479818L;
 
 	// Constants for stuff we're going to use a lot
 	public static final String

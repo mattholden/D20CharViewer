@@ -9,6 +9,11 @@ import com.darkenedsky.gemini.d20system.D20Character;
 
 public class TotalLevelPrerequisite implements Prerequisite {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5234580821153137981L;
+
 	public TotalLevelPrerequisite(int level) { 
 		this.level = level;
 	}

@@ -1,5 +1,7 @@
 package com.darkenedsky.gemini.common.prereq;
 
+import java.io.Serializable;
+
 import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.XMLSerializable;
 
@@ -8,7 +10,7 @@ import com.darkenedsky.gemini.common.XMLSerializable;
  * @author Matt Holden
  *
  */
-public interface Prerequisite extends XMLSerializable {
+public interface Prerequisite extends Serializable, XMLSerializable {
 
 	public boolean satisfies(GameCharacter character);
 	
