@@ -21,11 +21,11 @@ public class GameCharacter implements XMLSerializable, java.io.Serializable {
 	
 	protected int hp;
 	protected int maxHp;
-	protected String name;
+	protected String name = "New Character";
 	protected String hair;
 	protected String eyes;
 	protected String player;
-	protected boolean male;
+	protected boolean male = true;
 	protected D20Race race;
 	protected int height;
 	protected int weight;
@@ -198,8 +198,10 @@ public class GameCharacter implements XMLSerializable, java.io.Serializable {
 		e.addContent(XMLTools.xml("maxhp", maxHp));
 		e.addContent(XMLTools.xml("xp", xp));
 		
-		for (Statistic stat : statistics.values()) { 
-			e.addContent(stat.toXML("statistic"));
+		for (Map.Entry<Integer, Statistic> stat : statistics.entrySet()) { 
+			Element s = (stat.getValue().toXML("statistic"));
+			s.addContent(XMLTools.xml("score", stat.getKey()));
+			e.addContent(s);
 		}
 		
 		return e;

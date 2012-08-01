@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, D20CharViewerActivity!</string>
-    <string name="app_name">D20CharViewer</string>
+    <string name="app_name">GEMini CharViewer</string>
+    
+    <string-array name="d20_ascore_names">
+        <item>Strength</item>
+        <item>Dexterity</item>
+        <item>Constitution</item>
+        <item>Intelligence</item>
+        <item>Wisdom</item>
+        <item>Charisma</item>
+    </string-array>
+    
 </resources>

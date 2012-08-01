@@ -353,29 +353,19 @@ public class D20Character extends GameCharacter implements D20 {
 	@Override
 	public Element toXML(String root) { 
 		Element e = super.toXML(root);
-		e.addContent(XMLTools.xml("class", getClass().getName()));
-		e.addContent(XMLTools.xml("player", player));
-		e.addContent(XMLTools.xml("name", name));
-		e.addContent(XMLTools.xml("hair", hair));
-		e.addContent(XMLTools.xml("eyes", eyes));
-		e.addContent(XMLTools.xml("height", height));
-		e.addContent(XMLTools.xml("weight",weight));
-		e.addContent(XMLTools.xml("age", age));
-		e.addContent(XMLTools.xml("male", male));
 		e.addContent(XMLTools.xml("skillsavailable", skillsAvailable));
 		e.addContent(XMLTools.xml("featsavailable", featsAvailable));
 		e.addContent(XMLTools.xml("fighterbonusfeats", fighterBonusFeats));
 		e.addContent(XMLTools.xml("levelstogain", levelsToGain));
 		e.addContent(XMLTools.xml("ageclass", ageClass));
 		e.addContent(XMLTools.xml("bonusLanguages", bonusLanguages));
-		
-		e.addContent(XMLTools.xml("hp", hp));
-		e.addContent(XMLTools.xml("maxhp", maxHp));
-		e.addContent(XMLTools.xml("xp", xp));
-		
-		e.addContent(XMLTools.xml("race", race.getUniqueID()));
-		e.addContent(XMLTools.xml("size", size.getUniqueID()));
-		e.addContent(XMLTools.xml("alignment", alignment.getUniqueID()));
+			
+		if (race != null)
+			e.addContent(XMLTools.xml("race", race.getUniqueID()));
+		if (size != null)
+			e.addContent(XMLTools.xml("size", size.getUniqueID()));
+		if (alignment != null)
+			e.addContent(XMLTools.xml("alignment", alignment.getUniqueID()));
 		
 		// todo: deal with cleric, expert problem
 		for (D20Class lvl : levels) 

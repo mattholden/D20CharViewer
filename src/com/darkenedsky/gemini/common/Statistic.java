@@ -19,6 +19,10 @@ public class Statistic implements Serializable, XMLSerializable {
 
 	public Statistic() { } 
 	
+	public String toString() { 
+		return Integer.toString(this.getBaseValue());
+	}
+	
 	public int getValueWithPermanentBonuses(GameCharacter c) { 
 		int total = baseValue;
 		for (Bonus b : getBonuses()) { 
@@ -32,8 +36,8 @@ public class Statistic implements Serializable, XMLSerializable {
 		return baseValue;
 	}
 
-	public void setBaseValue(int baseValue) {
-		this.baseValue = baseValue;
+	public void setBaseValue(int base) {
+		this.baseValue = base;
 	}
 
 	public Dice getDiceCheck() {
@@ -71,7 +75,7 @@ public class Statistic implements Serializable, XMLSerializable {
 	
 	public Statistic (Element e) throws Exception { 
 		baseValue = XMLTools.getInt(e,"basevalue");
-		diceCheck = new Dice(e.getChild("dicecheck"));
+		diceCheck = new Dice(e.getChild("dice"));
 		
 		List<?> modz = e.getChildren("bonus");
 		for (int i = 0; i < modz.size(); i++) { 
@@ -85,8 +89,9 @@ public class Statistic implements Serializable, XMLSerializable {
 	public Element toXML(String root) {
 		Element e = new Element(root);
 		e.addContent(XMLTools.xml("class", getClass().getName()));
-		e.addContent(XMLTools.xml("basevalue", baseValue));
-		e.addContent(diceCheck.toXML("dicecheck"));
+		System.out.println("Writing basevalue " + getBaseValue());
+		e.addContent(XMLTools.xml("basevalue", getBaseValue()));
+		e.addContent(diceCheck.toXML("dice"));
 		
 		for (Bonus b : bonuses) { 
 			e.addContent(b.toXML("bonus"));

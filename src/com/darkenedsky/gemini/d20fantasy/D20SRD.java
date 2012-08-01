@@ -17,6 +17,11 @@ import com.darkenedsky.gemini.d20system.D20SpellcasterClass;
 
 public abstract class D20SRD implements D20Fantasy {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5788567498841621924L;
+
 	public static class Classes { 
 		public static final D20Class
 			BARBARIAN = null,
@@ -96,13 +101,16 @@ public abstract class D20SRD implements D20Fantasy {
 		public static final D20Class[] buildArray() throws IllegalArgumentException, IllegalAccessException {
 			ArrayList<D20Class> feet = new ArrayList<D20Class>();
 			for (Field f : Classes.class.getFields()) {
-				if (f.getType().equals(D20Class.class)) {
+				if (f.getType().isAssignableFrom(D20Class.class)) {
 					D20Class thing = (D20Class)f.get(null);
 					if (thing != null)
 						feet.add(thing);
 				}
 			}
-			return (D20Class[])feet.toArray();
+			D20Class[] arr = new D20Class[feet.size()];
+			for (int i = 0; i < feet.size(); i++) 
+				arr[i] = feet.get(i);
+			return arr;
 		}
 		
 	}
@@ -112,12 +120,12 @@ public abstract class D20SRD implements D20Fantasy {
 	public static class Races { 
 		public static final D20Race 
 			HUMAN = new Human(),
-			HALFELF = null,
-			ELF = null,
-			DWARF = null,
-			GNOME = null,
-			HALFORC = null,
-			HALFLING = null,
+			HALFELF = new HalfElf(),
+			ELF = new Elf(),
+			DWARF = new Dwarf(),
+			GNOME = new Gnome(),
+			HALFORC = new HalfOrc(),
+			HALFLING = new Halfling(),
 			
 			// PSONIC RACES
 			DROMITE = null,
@@ -130,12 +138,15 @@ public abstract class D20SRD implements D20Fantasy {
 		public static final D20Race[] buildArray() throws IllegalArgumentException, IllegalAccessException {
 			ArrayList<D20Race> feet = new ArrayList<D20Race>();
 			for (Field f : Races.class.getFields()) {
-				if (f.getType().equals(D20Race.class)) {
+				if (f.getType().isAssignableFrom(D20Race.class)) {
 					D20Race r = (D20Race)f.get(null);
-					if (r == null) feet.add(r);
+					if (r != null) feet.add(r);
 				}
 			}
-			return (D20Race[])feet.toArray();
+			D20Race[] arr = new D20Race[feet.size()];
+			for (int i = 0; i < feet.size(); i++) 
+				arr[i] = feet.get(i);
+			return arr;
 		}
 	};
 	
@@ -195,13 +206,16 @@ public abstract class D20SRD implements D20Fantasy {
 		public static final D20Skill[] buildArray() throws IllegalArgumentException, IllegalAccessException {
 			ArrayList<D20Skill> feet = new ArrayList<D20Skill>();
 			for (Field f : Skills.class.getFields()) {
-				if (f.getType().equals(D20Skill.class)) {
+				if (f.getType().isAssignableFrom(D20Skill.class)) {
 					D20Skill thing = (D20Skill)f.get(null);
 					if (thing != null)
 						feet.add(thing);
 				}
 			}
-			return (D20Skill[])feet.toArray();
+			D20Skill[] arr = new D20Skill[feet.size()];
+			for (int i = 0; i < feet.size(); i++) 
+				arr[i] = feet.get(i);
+			return arr;
 		}	
 		
 	}
@@ -257,13 +271,16 @@ public abstract class D20SRD implements D20Fantasy {
 		public static final D20Feat[] buildArray() throws IllegalArgumentException, IllegalAccessException {
 			ArrayList<D20Feat> feet = new ArrayList<D20Feat>();
 			for (Field f : Abilities.class.getFields()) {
-				if (f.getType().equals(D20Feat.class)) {
+				if (f.getType().isAssignableFrom(D20Feat.class)) {
 					D20Feat x = (D20Feat)f.get(null);
 					if (x != null)
 						feet.add(x);
 				}
 			}
-			return (D20Feat[])feet.toArray();
+			D20Feat[] arr = new D20Feat[feet.size()];
+			for (int i = 0; i < feet.size(); i++) 
+				arr[i] = feet.get(i);
+			return arr;
 		}
 	}
 	
@@ -282,13 +299,16 @@ public abstract class D20SRD implements D20Fantasy {
 		public static final D20Feat[] buildArray() throws IllegalArgumentException, IllegalAccessException {
 			ArrayList<D20Feat> feet = new ArrayList<D20Feat>();
 			for (Field f : Feats.class.getFields()) {
-				if (f.getType().equals(D20Feat.class)) {
+				if (f.getType().isAssignableFrom(D20Feat.class)) {
 					D20Feat x = (D20Feat)f.get(null);
 					if (x != null)
 						feet.add(x);
 				}
 			}
-			return (D20Feat[])feet.toArray();
+			D20Feat[] arr = new D20Feat[feet.size()];
+			for (int i = 0; i < feet.size(); i++) 
+				arr[i] = feet.get(i);
+			return arr;
 		}
 		
 	}
@@ -304,13 +324,16 @@ public abstract class D20SRD implements D20Fantasy {
 		public static final D20Spell[] buildArray() throws IllegalArgumentException, IllegalAccessException {
 			ArrayList<D20Spell> feet = new ArrayList<D20Spell>();
 			for (Field f : Spells.class.getFields()) {
-				if (f.getType().equals(D20Spell.class)) {
+				if (f.getType().isAssignableFrom(D20Spell.class)) {
 					D20Spell x = (D20Spell)f.get(null);
 					if (x != null)
 						feet.add(x);
 				}
 			}
-			return (D20Spell[])feet.toArray();
+			D20Spell[] arr = new D20Spell[feet.size()];
+			for (int i = 0; i < feet.size(); i++) 
+				arr[i] = feet.get(i);
+			return arr;
 		}
 	}
 	
@@ -334,9 +357,9 @@ public abstract class D20SRD implements D20Fantasy {
 	public static final Library getLibrary() throws IllegalArgumentException, IllegalAccessException { 
 		
 		Library l = new Library();
-		l.getSection(Library.RACES).add(Races.buildArray());
-		l.getSection(Library.SPELLS).add(Spells.buildArray());
 		l.getSection(Library.ABILITIES).add(Abilities.buildArray());
+		l.getSection(Library.SPELLS).add(Spells.buildArray());
+		l.getSection(Library.RACES).add(Races.buildArray());
 		
 		LibrarySection align = l.addSection(ALIGNMENT);
 		align.add(new D20Alignment[] {D20Alignment.CHAOTIC_EVIL, D20Alignment.CHAOTIC_GOOD, D20Alignment.CHAOTIC_NEUTRAL, 

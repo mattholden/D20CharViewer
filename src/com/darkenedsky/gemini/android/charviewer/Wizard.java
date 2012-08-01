@@ -50,25 +50,34 @@ public abstract class Wizard<T extends GameCharacter> implements Serializable {
 		return pages.get(pageIndex);
 	}
 	
-	public boolean finish() { 
 	
+	public boolean writeFile() { 
 		try {
+			
 			String file = character.getName() + ".xml";
-			String extStorage = Environment.getExternalStorageDirectory().toString() + "/gemini/";
+			String extStorage = Environment.getExternalStorageDirectory().toString()+ "/gemini";
 			File dir = new File(extStorage);
 			if (!dir.exists())
-				dir.mkdir();
-			File theFile = new File(extStorage + file);
-			BufferedWriter write = new BufferedWriter(new FileWriter(theFile));
+				dir.mkdirs();
+			File theFile = new File(extStorage + "/" + file);
+			BufferedWriter write = new BufferedWriter(new FileWriter(theFile), 8096);
 			write.write(XMLTools.xmlToString(character.toXML("character")));
 			write.flush();
 			write.close();
+			return true;
 		} catch (IOException e) {		
 			e.printStackTrace();
-			Toast.makeText(context, "Error saving file. Please try again.", Toast.LENGTH_LONG);
+			Toast.makeText(context, "Error saving character file to SD card. Please try again.", Toast.LENGTH_LONG).show();
 			return false;
+			
 		}
-		
+	}
+	
+	public T getCharacter() { 
+		return character;
+	}
+	
+	public boolean finish() { 
 		Intent intent = new Intent(context, CharViewerMainActivity.class);	  	    	
     	context.startActivity(intent);
     	return true;

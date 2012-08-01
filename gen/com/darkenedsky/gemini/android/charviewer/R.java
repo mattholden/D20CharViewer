@@ -8,40 +8,46 @@
 package com.darkenedsky.gemini.android.charviewer;
 
 public final class R {
+    public static final class array {
+        public static final int d20_ascore_names=0x7f050000;
+    }
     public static final class attr {
     }
     public static final class drawable {
         public static final int icon=0x7f020000;
     }
     public static final class id {
-        public static final int charisma=0x7f050013;
-        public static final int constitution=0x7f05000a;
-        public static final int dexterity=0x7f050007;
-        public static final int intelligence=0x7f05000d;
-        public static final int newCharacter=0x7f050014;
-        public static final int strength=0x7f050004;
-        public static final int tableLayout1=0x7f050000;
-        public static final int tableRow1=0x7f050002;
-        public static final int tableRow2=0x7f050005;
-        public static final int tableRow3=0x7f050008;
-        public static final int tableRow4=0x7f05000b;
-        public static final int tableRow5=0x7f05000e;
-        public static final int tableRow6=0x7f050011;
-        public static final int tablerow0=0x7f050001;
-        public static final int textView1=0x7f050003;
-        public static final int textView2=0x7f050006;
-        public static final int textView3=0x7f050009;
-        public static final int textView4=0x7f05000c;
-        public static final int textView5=0x7f05000f;
-        public static final int textView6=0x7f050012;
-        public static final int wisdom=0x7f050010;
+        public static final int ascore1=0x7f060003;
+        public static final int ascore2=0x7f060006;
+        public static final int ascore3=0x7f060009;
+        public static final int ascore4=0x7f06000c;
+        public static final int ascore5=0x7f06000f;
+        public static final int ascore6=0x7f060012;
+        public static final int ascoreCancel=0x7f060015;
+        public static final int ascoreNext=0x7f060017;
+        public static final int ascoreReroll=0x7f060016;
+        public static final int assign1=0x7f060004;
+        public static final int assign2=0x7f060007;
+        public static final int assign3=0x7f06000a;
+        public static final int assign4=0x7f06000d;
+        public static final int assign5=0x7f060010;
+        public static final int assign6=0x7f060013;
+        public static final int newCharacter=0x7f060018;
+        public static final int tableLayout1=0x7f060000;
+        public static final int tableRow1=0x7f060002;
+        public static final int tableRow2=0x7f060005;
+        public static final int tableRow3=0x7f060008;
+        public static final int tableRow4=0x7f06000b;
+        public static final int tableRow5=0x7f06000e;
+        public static final int tableRow6=0x7f060011;
+        public static final int tableRow7=0x7f060014;
+        public static final int tablerow0=0x7f060001;
     }
     public static final class layout {
         public static final int abilityscore=0x7f030000;
         public static final int main=0x7f030001;
     }
     public static final class string {
-        public static final int app_name=0x7f040001;
-        public static final int hello=0x7f040000;
+        public static final int app_name=0x7f040000;
     }
 }
