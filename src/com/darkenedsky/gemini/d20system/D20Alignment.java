@@ -41,11 +41,19 @@ public class D20Alignment extends RuleObject implements D20 {
 		CHAOTIC_NEUTRAL = new D20Alignment(CHAOTIC,NEUTRAL,"http://www.d20srd.org/srd/description.htm#theNineAlignments"),
 		CHAOTIC_EVIL = new D20Alignment(CHAOTIC,EVIL,"http://www.d20srd.org/srd/description.htm#theNineAlignments");
 		
+	public static final D20Alignment[] buildArray() { 
+		return new D20Alignment[] {
+				LAWFUL_GOOD, LAWFUL_NEUTRAL, LAWFUL_EVIL,
+				NEUTRAL_GOOD, TRUE_NEUTRAL, NEUTRAL_EVIL,
+				CHAOTIC_GOOD, CHAOTIC_NEUTRAL, CHAOTIC_EVIL
+		};
+	}
+	
 	public static final D20Alignment load(String text) {
 		
 		if (text.equals("Lawful Good")) return LAWFUL_GOOD;
 		if (text.equals("Lawful Neutral")) return LAWFUL_NEUTRAL;
-		if (text.equals("Lawful Evil")) return LAWFUL_EVIL;
+		if (text.equals("Lawful Evil")) return LAWFUL_EVIL; 
 		if (text.equals("Neutral Good")) return NEUTRAL_GOOD;
 		if (text.equals("True Neutral")) return TRUE_NEUTRAL;
 		if (text.equals("Neutral Evil")) return NEUTRAL_EVIL;

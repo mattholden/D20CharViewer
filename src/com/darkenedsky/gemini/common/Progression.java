@@ -1,7 +1,11 @@
 package com.darkenedsky.gemini.common;
 
-public class Progression {
+public class Progression implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer[] progression = new Integer[31];
 	
 	public Progression(Integer... progress) {

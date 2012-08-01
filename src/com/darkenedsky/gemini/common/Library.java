@@ -25,6 +25,7 @@ public class Library implements Serializable {
 		addSection(RACES);
 		addSection(CLASSES);
 		addSection(SPELLS);
+		addSection(SKILLS);
 		addSection(ABILITIES);
 		addSection(SPELL_CATEGORIES);
 	}

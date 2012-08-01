@@ -359,12 +359,11 @@ public abstract class D20SRD implements D20Fantasy {
 		Library l = new Library();
 		l.getSection(Library.ABILITIES).add(Abilities.buildArray());
 		l.getSection(Library.SPELLS).add(Spells.buildArray());
-		l.getSection(Library.RACES).add(Races.buildArray());
-		
-		LibrarySection align = l.addSection(ALIGNMENT);
-		align.add(new D20Alignment[] {D20Alignment.CHAOTIC_EVIL, D20Alignment.CHAOTIC_GOOD, D20Alignment.CHAOTIC_NEUTRAL, 
-			D20Alignment.NEUTRAL_EVIL, D20Alignment.NEUTRAL_GOOD, D20Alignment.TRUE_NEUTRAL, 
-			D20Alignment.LAWFUL_EVIL, D20Alignment.LAWFUL_GOOD, D20Alignment.LAWFUL_NEUTRAL });
+		l.getSection(Library.RACES).add(Races.buildArray());		
+		l.addSection(Library.SKILLS, Skills.buildArray());
+		l.addSection(ALIGNMENT).add(D20Alignment.buildArray());
+		l.addSection(SIZE, Size.buildArray());		
+		l.addSection(FEATS, Feats.buildArray());
 		
 		D20Class[] classes = Classes.buildArray();
 		l.getSection(Library.CLASSES).add(classes);
@@ -374,11 +373,7 @@ public abstract class D20SRD implements D20Fantasy {
 				castertype.add(c);
 			}
 		}
-		
-		l.addSection(SIZE, Size.buildArray());		
-		l.addSection(FEATS, Feats.buildArray());
-		
-		
+				
 		return l;
 	}
 	
