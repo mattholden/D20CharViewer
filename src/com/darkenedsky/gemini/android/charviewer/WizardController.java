@@ -10,46 +10,27 @@ import android.content.Context;
 import android.os.Environment;
 import android.widget.Toast;
 import com.darkenedsky.gemini.common.GameCharacter;
-import com.darkenedsky.gemini.common.Library;
 import com.darkenedsky.gemini.common.XMLTools;
 
-public abstract class Wizard<T extends GameCharacter> implements Serializable {
+public abstract class WizardController<T extends GameCharacter> implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -7337447940795947866L;
 
-	private ArrayList<Class<? extends WizardPageActivity<T>>> pages = new ArrayList<Class<? extends WizardPageActivity<T>>>(10);
+	protected ArrayList<Class<? extends WizardPageActivity<T>>> pages = new ArrayList<Class<? extends WizardPageActivity<T>>>(10);	
+	protected int pageIndex = 0;
+	protected T character;
+	protected Context context;
 	
-	int pageIndex = 0;
-
-	private T character;
-	private Library library;
-	private Context context;
-	
-	public Wizard(Context cont, T chr, Library lib) { 
-		character = chr;
-		library = lib;
+	public WizardController(Context cont) { 
 		context = cont;
 	}
 	
 	public void addPage(Class<? extends WizardPageActivity<T>> clz) { 
 		pages.add(clz);
 	}
-	
-	public Class<? extends WizardPageActivity<T>> getPrev() { 
-		if (pageIndex == 0) return null;
-		pageIndex--;
-		return pages.get(pageIndex);
-	}
-	
-	public Class<? extends WizardPageActivity<T>> getNext() { 
-		if (pageIndex == (pages.size()-1)) return null;
-		pageIndex++;
-		return pages.get(pageIndex);
-	}
-	
 	
 	public boolean writeFile() { 
 		try {
@@ -78,23 +59,37 @@ public abstract class Wizard<T extends GameCharacter> implements Serializable {
 	}
 	
 	public boolean finish() { 
+		/*
 		Intent intent = new Intent(context, CharViewerMainActivity.class);	  	    	
     	context.startActivity(intent);
+    	*/
     	return true;
 	}
 	
 	public void begin() { 
+		System.out.println("there are " + pages.size());
 	  	Intent intent = new Intent(context, pages.get(0));
-	  	intent.putExtra("CHARACTER", character);
-	  	intent.putExtra("LIBRARY", library);
 	  	intent.putExtra("WIZARD", this);
+	  	intent.putExtra("CHARACTER", this);
     	context.startActivity(intent);	  	
+	}
+	
+
+	public Class<? extends WizardPageActivity<T>> prev() { 
+		if (pageIndex == 0) return null;
+		pageIndex--;
+		return pages.get(pageIndex);
+	}
+	
+	public Class<? extends WizardPageActivity<T>> next() { 
+		if (pageIndex == (pages.size()-1)) return null;
+		pageIndex++;
+		return pages.get(pageIndex);
 	}
 	
 	public void cancel() {
 	  	Intent intent = new Intent(context, CharViewerMainActivity.class);	  	    	
     	context.startActivity(intent);	
-  
 	}
 	
 }

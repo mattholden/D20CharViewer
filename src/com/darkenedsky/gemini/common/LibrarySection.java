@@ -36,7 +36,8 @@ public class LibrarySection implements Serializable {
 	
 	public LibrarySection(RuleObject[] stuff) { 
 		for (RuleObject thing : stuff) { 
-			objects.put(thing.getName(), thing);
+			if (thing != null)
+				objects.put(thing.getName(), thing);
 		}
 	}
 	

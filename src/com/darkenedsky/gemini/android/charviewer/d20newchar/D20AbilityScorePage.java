@@ -1,18 +1,15 @@
 package com.darkenedsky.gemini.android.charviewer.d20newchar;
 
 import java.util.ArrayList;
-
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.darkenedsky.gemini.android.charviewer.R;
 import com.darkenedsky.gemini.android.charviewer.WizardPageActivity;
 import com.darkenedsky.gemini.common.Dice;
 import com.darkenedsky.gemini.common.GameCharacter;
-import com.darkenedsky.gemini.d20system.D20;
 import com.darkenedsky.gemini.d20system.D20Character;
 
 
@@ -158,8 +155,6 @@ public class D20AbilityScorePage extends WizardPageActivity<D20Character> {
 		TextView tv5 = (TextView)findViewById(R.id.ascore5);
 		TextView tv6 = (TextView)findViewById(R.id.ascore6);
 		
-		// for some reason these ints kept going out of scope, as if getting passed by reference,
-		// and not saving in the setBaseValue functions below. So, be extra-anal about it.
 		Integer i1 = new Integer(Integer.parseInt((String)tv1.getText()));
 		Integer i2 = new Integer(Integer.parseInt((String)tv2.getText()));
 		Integer i3 = new Integer(Integer.parseInt((String)tv3.getText()));
@@ -174,15 +169,7 @@ public class D20AbilityScorePage extends WizardPageActivity<D20Character> {
 		character.getStat(spinner4.getSelectedItemPosition()).setBaseValue(i4);
 		character.getStat(spinner5.getSelectedItemPosition()).setBaseValue(i5);
 		character.getStat(spinner6.getSelectedItemPosition()).setBaseValue(i6);
-		
-		System.out.println("STR: " + character.getStat(D20.STR));
-		System.out.println("Dex: " + character.getStat(D20.DEX));
-		System.out.println("Con: " + character.getStat(D20.CON));
-		System.out.println("int: " + character.getStat(D20.INT));
-		System.out.println("Wis: " + character.getStat(D20.WIS));
-		System.out.println("Cha: " + character.getStat(D20.CHA));
-		
-		
+			
 	}
 	 
 	 	

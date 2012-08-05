@@ -1,60 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+
+<TableLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="vertical"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
-    <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/tableLayout1">
-    	<TableRow android:id="@+id/tablerow0" android:layout_width="fill_parent" android:layout_height="wrap_content">
-    		<TextView android:text="Enter your ability scores." android:layout_width="fill_parent" android:layout_height="wrap_content" />
-    	</TableRow>
-        <TableRow android:id="@+id/tableRow1" android:layout_width="wrap_content" android:layout_height="wrap_content">
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:padding="5dip">
+
+<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content">
+        
+  	  	
+    <TableLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:padding="5dip">
+    	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content">
+    	<TextView android:text="Enter your ability scores." android:layout_width="fill_parent" android:layout_height="wrap_content" />
+  		</TableRow>
+        <TableRow android:id="@+id/tableRow1" android:layout_width="fill_parent" android:layout_height="wrap_content">
             <TextView android:text="" android:id="@+id/ascore1" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"></TextView>
-            <Spinner android:layout_height="wrap_content" android:id="@+id/assign1" android:layout_width="0dp" android:layout_weight="2"></Spinner>
+            <Spinner android:layout_height="wrap_content" android:id="@+id/assign1" android:layout_weight="2"></Spinner>
         </TableRow>
-
-        <TableRow android:id="@+id/tableRow2" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <TableRow android:id="@+id/tableRow2" android:layout_width="fill_parent" android:layout_height="wrap_content">
             <TextView android:text="" android:id="@+id/ascore2" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"></TextView>
-            <Spinner android:layout_height="wrap_content" android:id="@+id/assign2" android:layout_width="0dp" android:layout_weight="2"></Spinner>
+            <Spinner android:layout_height="wrap_content" android:id="@+id/assign2" android:layout_weight="2"></Spinner>
         </TableRow>
-        <TableRow android:id="@+id/tableRow3" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <TableRow android:id="@+id/tableRow3" android:layout_width="fill_parent" android:layout_height="wrap_content">
             <TextView android:text="" android:id="@+id/ascore3" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"></TextView>
-            <Spinner android:layout_height="wrap_content" android:id="@+id/assign3" android:layout_width="0dp" android:layout_weight="2"></Spinner>
+            <Spinner android:layout_height="wrap_content" android:id="@+id/assign3"  android:layout_weight="2"></Spinner>
+            </TableRow>
+        <TableRow android:id="@+id/tableRow4" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <TextView android:text="" android:id="@+id/ascore4" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"></TextView>
+            <Spinner android:layout_height="wrap_content" android:id="@+id/assign4"  android:layout_weight="2"></Spinner>
         </TableRow>
-        <TableRow android:id="@+id/tableRow4" android:layout_width="wrap_content" android:layout_height="wrap_content">
-            <TextView android:text="" android:id="@+id/ascore4" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"></TextView>
-            <Spinner android:layout_height="wrap_content" android:id="@+id/assign4" android:layout_width="0dp" android:layout_weight="2"></Spinner>
-        </TableRow>
-        <TableRow android:id="@+id/tableRow5" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <TableRow android:id="@+id/tableRow5" android:layout_width="fill_parent" android:layout_height="wrap_content">
             <TextView android:text="" android:id="@+id/ascore5" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"></TextView>
-            <Spinner android:layout_height="wrap_content" android:id="@+id/assign5" android:layout_width="0dp" android:layout_weight="2"></Spinner>
+            <Spinner android:layout_height="wrap_content" android:id="@+id/assign5"  android:layout_weight="2"></Spinner>
+		</TableRow>
+        <TableRow android:id="@+id/tableRow6" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                    <TextView android:text="" android:id="@+id/ascore6" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"></TextView>
+            <Spinner android:layout_height="wrap_content" android:id="@+id/assign6"  android:layout_weight="2"></Spinner>
         </TableRow>
-        <TableRow android:id="@+id/tableRow6" android:layout_width="wrap_content" android:layout_height="wrap_content">
-            <TextView android:text="" android:id="@+id/ascore6" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"></TextView>
-            <Spinner android:layout_height="wrap_content" android:id="@+id/assign6" android:layout_width="0dp" android:layout_weight="2"></Spinner>
-        </TableRow>
-        <TableRow android:id="@+id/tableRow7" android:layout_width="wrap_content" android:layout_height="wrap_content">
-        	<Button android:text="Cancel" 
-				android:id="@+id/ascoreCancel" 
-				android:layout_width="fill_parent" android:layout_height="wrap_content"
-				android:onClick="back"
-			/>
-			<Button android:text="Reroll" 
-				android:id="@+id/ascoreReroll" 
-				android:layout_width="fill_parent" android:layout_height="wrap_content"
-				android:onClick="reroll"
-			/>
-			<Button android:text="Next" 
-				android:id="@+id/ascoreNext" 
-				android:layout_width="fill_parent" android:layout_height="wrap_content"
-				android:onClick="next"
-			/>
-			
-			
-        </TableRow>
-
-
-    </TableLayout>
+     </TableLayout>
+     </TableRow>
+     <TableRow android:layout_width="wrap_content" android:layout_height="wrap_content">
+     
+	    <TableLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+	        <TableRow android:id="@+id/tableRow7" android:layout_width="fill_parent" android:layout_height="wrap_content">
+	        	<ImageButton android:src="@drawable/back"
+					android:id="@+id/ascoreCancel" 
+					android:layout_weight="1" android:layout_height="wrap_content"
+					android:onClick="back"
+				/>
+				<ImageButton android:src="@drawable/dice" 
+					android:id="@+id/ascoreReroll" 
+					android:layout_weight="1" android:layout_height="wrap_content"
+					android:onClick="reroll"
+				/>
+				<ImageButton android:src="@drawable/next" 
+					android:id="@+id/ascoreNext" 
+					android:layout_weight="1" android:layout_height="wrap_content"
+					android:onClick="next"
+				/>
+				
+				
+	        </TableRow>
+	
+	
+	    </TableLayout>
+	    
+	 </TableRow>
+	 
+ </TableLayout>
     
-
-</LinearLayout>

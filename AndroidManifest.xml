@@ -6,7 +6,7 @@
       android:installLocation="preferExternal">
     <uses-sdk android:minSdkVersion="8" />
 
-    <application android:icon="@drawable/icon" android:label="@string/app_name">
+    <application android:icon="@drawable/calculate" android:label="@string/app_name">
         <activity android:name="CharViewerMainActivity"
                   android:label="@string/app_name">
             <intent-filter>
@@ -23,6 +23,21 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".d20newchar.NameAndGenderPage"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".d20newchar.D20RacePage"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
     </application>
     

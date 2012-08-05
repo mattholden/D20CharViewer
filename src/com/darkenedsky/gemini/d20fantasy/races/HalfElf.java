@@ -16,7 +16,7 @@ public class HalfElf extends D20Race implements D20Fantasy {
 	private static final long serialVersionUID = 4119146793467917364L;
 
 	public HalfElf() {
-		super("HalfElf", "http://www.d20srd.org/srd/races.htm#halfElves");
+		super("Half-Elf", "http://www.d20srd.org/srd/races.htm#halfElves");
 		bonusLanguages.add("*");
 		
 		ageRanges= new int[] {10,20,62,93,125};

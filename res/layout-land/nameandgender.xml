@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:padding="5dip">
+
+   	<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content">
+		<TableLayout
+		  xmlns:android="http://schemas.android.com/apk/res/android"
+		  android:orientation="vertical"
+		  android:layout_width="fill_parent"
+		  android:padding="5dip"
+		  android:layout_height="match_parent">
+		
+    	<TableRow android:id="@+id/nAndg_tablerow0" android:layout_width="fill_parent" android:layout_height="wrap_content">
+    		<TextView android:text="Welcome! Let's get started building your character." android:layout_width="fill_parent" android:layout_height="wrap_content" />
+    	</TableRow>
+        <TableRow android:id="@+id/nAndg_tableRow1" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <TextView android:text="Character Name:"  android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"></TextView>
+            <EditText android:layout_height="wrap_content" android:id="@+id/nAndG_charName" android:layout_width="0dp" android:layout_weight="2"></EditText>
+        </TableRow>
+
+        <TableRow android:id="@+id/nAndg_tableRow2" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <TextView android:text="Player's Name:"  android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"></TextView>
+            <EditText android:layout_height="wrap_content" android:id="@+id/nAndG_playerName" android:layout_width="0dp" android:layout_weight="2"></EditText>
+        </TableRow>
+        
+        <TableRow android:id="@+id/nAndg_tableRow3" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <TextView android:text="Gender:" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"></TextView>
+            <RadioGroup android:layout_weight="2" android:layout_height="wrap_content" android:orientation="horizontal">
+            <RadioButton android:text="Male" android:layout_height="wrap_content" android:id="@+id/nAndG_male" android:layout_width="0dp" android:layout_weight="1"></RadioButton>
+            <RadioButton android:text="Female" android:layout_height="wrap_content" android:id="@+id/nAndG_female" android:layout_width="0dp" android:layout_weight="1"></RadioButton>
+            </RadioGroup>
+        </TableRow>
+        
+        <TableRow android:id="@+id/nAndg_tableRow4" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        </TableRow>
+        <TableRow android:id="@+id/nAndg_tableRow5" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        </TableRow>
+        
+        <TableRow android:id="@+id/nAndg_tableRow6" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        </TableRow>
+        </TableLayout>
+    </TableRow>
+    <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content">
+    
+    <TableLayout
+    	  android:padding="5dip"
+		  xmlns:android="http://schemas.android.com/apk/res/android"
+		  android:orientation="vertical"
+		  android:layout_width="match_parent"
+		  android:layout_height="match_parent">
+		    
+        <TableRow android:id="@+id/nAndg_tableRow7" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        	
+        	<ImageButton android:src="@drawable/back"
+				android:id="@+id/ascoreCancel" 
+				android:layout_weight="1" android:layout_height="wrap_content"
+				android:onClick="back"
+			/>
+			<TextView android:layout_weight="1" />
+			
+			<ImageButton android:src="@drawable/next" 
+				android:id="@+id/ascoreNext" 
+				android:layout_weight="1" android:layout_height="wrap_content"
+				android:onClick="next"
+			/>
+			
+			
+			
+        </TableRow>
+	</TableLayout>
+	</TableRow>
+	
+</TableLayout>

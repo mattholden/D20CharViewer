@@ -361,7 +361,7 @@ public abstract class D20SRD implements D20Fantasy {
 		l.getSection(Library.SPELLS).add(Spells.buildArray());
 		l.getSection(Library.RACES).add(Races.buildArray());		
 		l.addSection(Library.SKILLS, Skills.buildArray());
-		l.addSection(ALIGNMENT).add(D20Alignment.buildArray());
+		l.addSection(ALIGNMENT, D20Alignment.buildArray());
 		l.addSection(SIZE, Size.buildArray());		
 		l.addSection(FEATS, Feats.buildArray());
 		
@@ -369,7 +369,7 @@ public abstract class D20SRD implements D20Fantasy {
 		l.getSection(Library.CLASSES).add(classes);
 		LibrarySection castertype = l.addSection(SPELLCASTER_TYPES);
 		for (D20Class c: classes) { 
-			if (c instanceof D20SpellcasterClass) { 
+			if (c != null && c instanceof D20SpellcasterClass) { 
 				castertype.add(c);
 			}
 		}

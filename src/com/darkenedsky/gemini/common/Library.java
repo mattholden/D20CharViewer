@@ -61,11 +61,13 @@ public class Library implements Serializable {
 		return sections.get(name);
 	}
 
-	public LibrarySection addSection(String name) { 
-		return sections.put(name, new LibrarySection());
+	public LibrarySection addSection(String name) {
+		LibrarySection ls = new LibrarySection();
+		sections.put(name, ls);
+		return ls;
 	}
 	
-	public LibrarySection addSection(String name, RuleObject[] stuff) {
+	public LibrarySection addSection(String name, RuleObject[] stuff) {		
 		return sections.put(name, new LibrarySection(stuff));
 	}
 	

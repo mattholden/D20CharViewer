@@ -14,7 +14,7 @@ public class HalfOrc extends D20Race implements D20Fantasy {
 	private static final long serialVersionUID = -8477449609986282790L;
 
 	public HalfOrc() {
-		super("HalfOrc", "http://www.d20srd.org/srd/races.htm#halfOrcs");
+		super("Half-Orc", "http://www.d20srd.org/srd/races.htm#halfOrcs");
 		favoredClass = D20SRD.Classes.BARBARIAN;
 		mods[STR] = 2;
 		mods[INT] = -2;
