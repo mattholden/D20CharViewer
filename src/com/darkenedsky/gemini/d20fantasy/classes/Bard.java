@@ -20,7 +20,7 @@ public class Bard extends D20Class implements D20SpellcasterClass, D20Fantasy{
 	private static final long serialVersionUID = 7483831801072618500L;
 
 	public Bard() {
-		super("Bard", "");
+		super("Bard", "http://www.d20srd.org/srd/classes/bard.htm");
 		ageClass = (D20Race.AGE_MOD_ADULT);
 		hitDice = new Dice(1,6);
 		skillPoints = 6;

@@ -50,6 +50,8 @@ public class D20Class extends RuleObject implements D20, D20ClassInterface {
 		// these things will happen in.
 		this.addPrerequisite(new AlignmentRestriction(this));
 		
+		// EVERYBODY's literate except for a barbarian
+		this.addForbiddenSkill(D20SRD.Skills.READING_WRITING);
 	}
 
 	public boolean isClassSkill(D20Skill skill, String spec) { 
@@ -282,7 +284,7 @@ public class D20Class extends RuleObject implements D20, D20ClassInterface {
 	protected ArrayList<D20Alignment> deniedAlignments = new ArrayList<D20Alignment>();
 	
 	@Override
-	public ArrayList<D20Alignment> getDeniedAlignments() {
+	public ArrayList<D20Alignment> getForbiddenAlignments() {
 		return deniedAlignments;
 	}
 	

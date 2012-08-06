@@ -42,6 +42,17 @@ public class Cleric extends D20Class implements D20SpellcasterClass, D20Fantasy 
 		startingGold = new Dice(5,4);
 		startingGold.addModifier(new Times(10));
 		
+		addClassSkill(D20SRD.Skills.CONCENTRATION);
+		addClassSkill(D20SRD.Skills.CRAFT);
+		addClassSkill(D20SRD.Skills.DIPLOMACY);
+		addClassSkill(D20SRD.Skills.HEAL);
+		addClassSkill(D20SRD.Skills.KNOWLEDGE,"arcana");
+		addClassSkill(D20SRD.Skills.KNOWLEDGE,"history");
+		addClassSkill(D20SRD.Skills.KNOWLEDGE,"religion");
+		addClassSkill(D20SRD.Skills.KNOWLEDGE,"the planes");		
+		addClassSkill(D20SRD.Skills.PROFESSION);
+		addClassSkill(D20SRD.Skills.SPELLCRAFT);
+		
 		spellsPerDay[0] = new Progression(3,4,4,5,5,5,6);
 		spellsPerDay[1] = new Progression(1,2,2,3,3,3,4,4,4,4,5);
 		spellsPerDay[2] = new Progression(0,0,1,2,2,3,3,3,4,4,4,4,5);

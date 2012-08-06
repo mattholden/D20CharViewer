@@ -1,14 +1,21 @@
 package com.darkenedsky.gemini.d20fantasy.classes;
+import com.darkenedsky.gemini.common.Dice;
 import com.darkenedsky.gemini.common.GameCharacter;
+import com.darkenedsky.gemini.common.modifier.Plus;
+import com.darkenedsky.gemini.common.modifier.Times;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.D20Alignment;
 import com.darkenedsky.gemini.d20system.D20Character;
 import com.darkenedsky.gemini.d20system.D20Class;
+import com.darkenedsky.gemini.d20system.D20Race;
 import com.darkenedsky.gemini.d20system.D20SpellcasterClass;
 
 public class Druid extends D20Class implements D20SpellcasterClass, D20Fantasy {
 
+	// TODO: check starting gold, spell progression, abilities 
+	
+	
 	/**
 	 * 
 	 */
@@ -16,7 +23,32 @@ public class Druid extends D20Class implements D20SpellcasterClass, D20Fantasy {
 
 	public Druid() {
 		super("Druid","");
-		//old
+		
+		ageClass = (D20Race.AGE_MOD_OLD);
+		hitDice = new Dice(1,8);
+		skillPoints = 4;
+		babProgression = BAB_AVERAGE;
+		fortSaveProgression = SAVE_BONUS_HIGH;
+		reflexSaveProgression = SAVE_BONUS_LOW;
+		willSaveProgression = SAVE_BONUS_HIGH;
+		
+		startingGold = new Dice(4,4);
+		startingGold.addModifier(new Times(10));
+		
+		addClassSkill(D20SRD.Skills.CONCENTRATION);
+		addClassSkill(D20SRD.Skills.CRAFT);
+		addClassSkill(D20SRD.Skills.DIPLOMACY);
+		addClassSkill(D20SRD.Skills.HANDLE_ANIMAL);
+		addClassSkill(D20SRD.Skills.HEAL);
+		addClassSkill(D20SRD.Skills.KNOWLEDGE,"nature");
+		addClassSkill(D20SRD.Skills.LISTEN);
+		addClassSkill(D20SRD.Skills.PROFESSION);
+		addClassSkill(D20SRD.Skills.RIDE);
+		addClassSkill(D20SRD.Skills.SPELLCRAFT);
+		addClassSkill(D20SRD.Skills.SPOT);
+		addClassSkill(D20SRD.Skills.SURVIVAL);
+		addClassSkill(D20SRD.Skills.SWIM);
+		
 		
 		// druids must have some kind of neutral
 		deniedAlignments.add(D20Alignment.LAWFUL_EVIL);
@@ -37,11 +69,21 @@ public class Druid extends D20Class implements D20SpellcasterClass, D20Fantasy {
 		Integer classLevel = character.getLevelOfClass(this);		
 		switch (classLevel) { 
 		case 1: { 
-				character.addFeat(D20SRD.Feats.SIMPLE_WEAPON_PROFICIENCY, "*", true);
-				character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "*", true);
-				character.addFeat(D20SRD.Feats.LIGHT_ARMOR_PROFICIENCY, "*", true);
-				character.addFeat(D20SRD.Feats.MEDIUM_ARMOR_PROFICIENCY, "*", true);
+				character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "club", true);
+				character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "dagger", true);
+				character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "dart", true);
+				character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "quarterstaff", true);
+				character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "scimitar", true);
+				character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "sickle", true);
+				character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "shortspear", true);
+				character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "sling", true);
+				character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "spear", true);				
+				character.addFeat(D20SRD.Feats.LIGHT_ARMOR_PROFICIENCY, null, true);
+				character.addFeat(D20SRD.Feats.MEDIUM_ARMOR_PROFICIENCY, null, true);
 				character.addFeat(D20SRD.Feats.SHIELD_PROFICIENCY, null, true);
+				character.addSkillRank(D20SRD.Skills.SPEAK_LANGUAGE, "Druidic", false, true);
+				character.getSkill(D20SRD.Skills.KNOWLEDGE,"nature").addBonus(this, new Plus(2),null);
+				character.getSkill(D20SRD.Skills.SURVIVAL).addBonus(this, new Plus(2),null);
 				break;
 			}
 		case 2:
@@ -49,6 +91,7 @@ public class Druid extends D20Class implements D20SpellcasterClass, D20Fantasy {
 		case 3:
 			break;
 		case 4:
+			character.addAbility(D20SRD.Abilities.UNCANNY_DODGE,null);
 			break;
 		case 5:	
 			break;
@@ -57,6 +100,7 @@ public class Druid extends D20Class implements D20SpellcasterClass, D20Fantasy {
 		case 7:
 			break;
 		case 8:
+			character.addAbility(D20SRD.Abilities.IMPROVED_UNCANNY_DODGE,null);
 			break;
 		case 9:
 			break;
@@ -83,7 +127,6 @@ public class Druid extends D20Class implements D20SpellcasterClass, D20Fantasy {
 		case 20:
 			break;
 		
-		// TODO: Epic levels
 		case 21: break;
 		case 22: break;
 		case 23: break;

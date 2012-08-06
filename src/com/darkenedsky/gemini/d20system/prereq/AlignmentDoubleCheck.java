@@ -38,11 +38,11 @@ public class AlignmentDoubleCheck implements Prerequisite {
 	public boolean satisfies(GameCharacter character) {
 		D20Character c = (D20Character)character;
 		
-		if (!c.getRace().getDeniedAlignments().contains(align))
+		if (!c.getRace().getForbiddenAlignments().contains(align))
 			return false;
 		
 		for (D20ClassLevel level : c.getLevelList()) { 
-			if (level.getDeniedAlignments().contains(align)) 
+			if (level.getForbiddenAlignments().contains(align)) 
 				return false;
 		}
 		return true;

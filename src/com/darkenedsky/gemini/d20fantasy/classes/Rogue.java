@@ -1,12 +1,17 @@
 package com.darkenedsky.gemini.d20fantasy.classes;
 
+import com.darkenedsky.gemini.common.Dice;
 import com.darkenedsky.gemini.common.GameCharacter;
+import com.darkenedsky.gemini.common.modifier.Times;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.D20Character;
 import com.darkenedsky.gemini.d20system.D20Class;
+import com.darkenedsky.gemini.d20system.D20Race;
 
 public class Rogue extends D20Class implements D20Fantasy {
+	
+	// TODO: check starting gold, check age, abilities
 	
 	/**
 	 * 
@@ -14,8 +19,48 @@ public class Rogue extends D20Class implements D20Fantasy {
 	private static final long serialVersionUID = -2060955820553860621L;
 
 	public Rogue() { 
-		super("Rogue","");
-		// young
+		super("Rogue","http://www.d20srd.org/srd/classes/rogue.htm");
+		ageClass = (D20Race.AGE_MOD_YOUNG);
+		hitDice = new Dice(1,6);
+		skillPoints = 8;
+		babProgression = BAB_AVERAGE;
+		fortSaveProgression = SAVE_BONUS_LOW;
+		reflexSaveProgression = SAVE_BONUS_HIGH;
+		willSaveProgression = SAVE_BONUS_LOW;
+		
+		startingGold = new Dice(4,4);
+		startingGold.addModifier(new Times(10));
+		
+		addClassSkill(D20SRD.Skills.APPRAISE);
+		addClassSkill(D20SRD.Skills.BALANCE);
+		addClassSkill(D20SRD.Skills.BLUFF);
+		addClassSkill(D20SRD.Skills.CLIMB);
+		addClassSkill(D20SRD.Skills.CRAFT);
+		addClassSkill(D20SRD.Skills.DECIPHER_SCRIPT);
+		addClassSkill(D20SRD.Skills.DIPLOMACY);
+		addClassSkill(D20SRD.Skills.DISABLE_DEVICE);
+		addClassSkill(D20SRD.Skills.DISGUISE);
+		addClassSkill(D20SRD.Skills.ESCAPE_ARTIST);
+		addClassSkill(D20SRD.Skills.FORGERY);
+		addClassSkill(D20SRD.Skills.GATHER_INFORMATION);
+		addClassSkill(D20SRD.Skills.HIDE);
+		addClassSkill(D20SRD.Skills.INTIMIDATE);
+		addClassSkill(D20SRD.Skills.JUMP);
+		addClassSkill(D20SRD.Skills.KNOWLEDGE,"local");
+		addClassSkill(D20SRD.Skills.LISTEN);
+		addClassSkill(D20SRD.Skills.MOVE_SILENTLY);
+		addClassSkill(D20SRD.Skills.OPEN_LOCK);
+		addClassSkill(D20SRD.Skills.PERFORM);
+		addClassSkill(D20SRD.Skills.PROFESSION);
+		addClassSkill(D20SRD.Skills.SEARCH);
+		addClassSkill(D20SRD.Skills.SENSE_MOTIVE);
+		addClassSkill(D20SRD.Skills.SLEIGHT_OF_HAND);
+		addClassSkill(D20SRD.Skills.SPOT);
+		addClassSkill(D20SRD.Skills.SWIM);
+		addClassSkill(D20SRD.Skills.TUMBLE);
+		addClassSkill(D20SRD.Skills.USE_MAGIC_DEVICE);
+		addClassSkill(D20SRD.Skills.USE_ROPE);
+		
 	}
 
 
@@ -28,11 +73,13 @@ public class Rogue extends D20Class implements D20Fantasy {
 		Integer classLevel = character.getLevelOfClass(this);		
 		switch (classLevel) { 
 		case 1: { 
-				character.addFeat(D20SRD.Feats.SIMPLE_WEAPON_PROFICIENCY, "*", true);
-				character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "*", true);
-				character.addFeat(D20SRD.Feats.LIGHT_ARMOR_PROFICIENCY, "*", true);
-				character.addFeat(D20SRD.Feats.MEDIUM_ARMOR_PROFICIENCY, "*", true);
-				character.addFeat(D20SRD.Feats.SHIELD_PROFICIENCY, null, true);
+				character.addFeat(D20SRD.Feats.SIMPLE_WEAPON_PROFICIENCY, null, true);
+				character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "hand crossbow", true);
+				character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "sap", true);
+				character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "rapier", true);
+				character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "shortbow", true);
+				character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "short sword", true);
+				character.addFeat(D20SRD.Feats.LIGHT_ARMOR_PROFICIENCY, null, true);
 				break;
 			}
 		case 2:
@@ -74,7 +121,6 @@ public class Rogue extends D20Class implements D20Fantasy {
 		case 20:
 			break;
 		
-		// TODO: Epic levels
 		case 21: break;
 		case 22: break;
 		case 23: break;

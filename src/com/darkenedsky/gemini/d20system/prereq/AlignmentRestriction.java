@@ -38,7 +38,7 @@ public class AlignmentRestriction implements Prerequisite {
 		D20Character c = (D20Character)character;
 		
 		if (c.getAlignment() == null) return true;
-		return !(restrictor.getDeniedAlignments().contains(c.getAlignment()));
+		return !(restrictor.getForbiddenAlignments().contains(c.getAlignment()));
 	} 
 	
 	

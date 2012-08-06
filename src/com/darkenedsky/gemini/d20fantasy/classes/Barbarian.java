@@ -31,6 +31,16 @@ public class Barbarian extends D20Class implements D20Fantasy {
 		startingGold = new Dice(4,4);
 		startingGold.addModifier(new Times(10));
 		
+		addClassSkill(D20SRD.Skills.CLIMB);
+		addClassSkill(D20SRD.Skills.CRAFT);
+		addClassSkill(D20SRD.Skills.HANDLE_ANIMAL);
+		addClassSkill(D20SRD.Skills.INTIMIDATE);
+		addClassSkill(D20SRD.Skills.JUMP);
+		addClassSkill(D20SRD.Skills.LISTEN);
+		addClassSkill(D20SRD.Skills.RIDE);
+		addClassSkill(D20SRD.Skills.SURVIVAL);
+		addClassSkill(D20SRD.Skills.SWIM);
+		
 		// gotta be weird, don't ya, barbarians?
 		setIlliterate();
 		

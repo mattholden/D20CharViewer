@@ -43,8 +43,13 @@ public class D20ClassLevel implements D20, XMLSerializable, Serializable, Restri
 		return classLeveled.getClassSkills();
 	}
 	
-	public ArrayList<D20Alignment> getDeniedAlignments() { 
-		return classLeveled.getDeniedAlignments();
+	public ArrayList<Specialized<D20Skill>> getForbiddenSkills() { 
+		return classLeveled.getForbiddenSkills();		
+	}
+	
+	@Override
+	public ArrayList<D20Alignment> getForbiddenAlignments() { 
+		return classLeveled.getForbiddenAlignments();
 	}
 
 	@Override

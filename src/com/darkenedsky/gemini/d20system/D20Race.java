@@ -173,7 +173,7 @@ public class D20Race extends RuleObject implements D20, RestrictsAlignment {
 	protected ArrayList<D20Alignment> deniedAlignments = new ArrayList<D20Alignment>();
 	
 	@Override
-	public ArrayList<D20Alignment> getDeniedAlignments() {
+	public ArrayList<D20Alignment> getForbiddenAlignments() {
 		return deniedAlignments;
 	}
 }
