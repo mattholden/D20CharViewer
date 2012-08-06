@@ -19,7 +19,7 @@ public class D20Character extends GameCharacter implements D20 {
 	
 	private D20Size size;
 	private D20Alignment alignment;
-	private ArrayList<D20Class> levels = new ArrayList<D20Class>();
+	private ArrayList<D20ClassLevel> levels = new ArrayList<D20ClassLevel>();
 	private Map<Specialized<D20Feat>, Integer> feats = new HashMap<Specialized<D20Feat>, Integer>();
 	private Map<Specialized<D20Feat>, Frequency> abilities = new HashMap<Specialized<D20Feat>, Frequency>();
 	private Map<Specialized<D20Skill>, D20SkillRank> skills = new HashMap<Specialized<D20Skill>, D20SkillRank>(20);
@@ -222,17 +222,22 @@ public class D20Character extends GameCharacter implements D20 {
 	}
 	
 	
+	public ArrayList<D20ClassLevel> getLevelList() { 
+		ArrayList<D20ClassLevel> copy = new ArrayList<D20ClassLevel>(levels.size());
+		copy.addAll(levels);
+		return copy;
+	}
+	
 	public int getCharacterLevel() { 
 		return levels.size();
 	}
 	
-	public boolean addLevel(Class<D20Class> clazz) { 
+	public boolean addLevel(D20ClassLevel level) { 
 		try {
-			D20Class level = clazz.newInstance();
 			
-			if (!level.hasPrerequisites(this)) return false;
+			if (!level.getClassLeveled().hasPrerequisites(this)) return false;
 			levels.add(level);
-			level.onGain(this);
+			level.getClassLeveled().onGain(this);
 			return true;
 		}
 		catch (Exception x) { 
@@ -241,11 +246,11 @@ public class D20Character extends GameCharacter implements D20 {
 		}
 	}
 	
-	public int getLevelOfClass(Class<? extends D20Class> clazz) { 
+	public int getLevelOfClass(D20Class claz) { 
 		int i = 0;
-		for (D20Class c : levels) { 
+		for (D20ClassLevel c : levels) { 
 			
-			if (clazz.isInstance(c))
+			if (claz.equals(c.getClassLeveled()))
 				i++;			
 		}
 		return i;
@@ -253,12 +258,13 @@ public class D20Character extends GameCharacter implements D20 {
 	
 	public Map<D20Class, Integer> getLevelMap() { 		
 		Map<D20Class,Integer> lvl = new HashMap<D20Class, Integer>();
-		for (D20Class c : levels) { 
-			Integer i = lvl.get(c);
+		
+		for (D20ClassLevel c : levels) { 
+			Integer i = lvl.get(c.getClassLeveled());
 			if (i == null)
 				i = 0;
 			i++;
-			lvl.put(c,i);
+			lvl.put(c.getClassLeveled(),i);
 		}
 		return lvl;
 	}
@@ -266,7 +272,7 @@ public class D20Character extends GameCharacter implements D20 {
 	public D20Class getClassForLevel(int lvl) { 
 		int level = lvl - 1;
 		if (level < 0 || level >= levels.size()) return null;		
-		return levels.get(level);
+		return levels.get(level).getClassLeveled();
 	}
 	
 	public D20Race getRace() {
@@ -372,10 +378,12 @@ public class D20Character extends GameCharacter implements D20 {
 			e.addContent(XMLTools.xml("size", size.getUniqueID()));
 		if (alignment != null)
 			e.addContent(XMLTools.xml("alignment", alignment.getUniqueID()));
-		
-		// todo: deal with cleric, expert problem
-		for (D20Class lvl : levels) 
-			e.addContent(XMLTools.xml("classlevel", lvl.getUniqueID()));
+				
+		for (int ilevel = 0; ilevel < levels.size(); ilevel++) { 
+			Element elevel = levels.get(ilevel).toXML("classlevel");
+			elevel.addContent(XMLTools.xml("levelorder", ilevel));			
+			e.addContent(elevel);
+		}
 		
 		for (Map.Entry<Specialized<D20Skill>, D20SkillRank> skill : skills.entrySet()) { 
 			Element s = new Element("skillrank");
@@ -409,9 +417,7 @@ public class D20Character extends GameCharacter implements D20 {
 		for (int i = 0; i < lv.size(); i++) { 
 			Element lvl = (Element)lv.get(i);
 			
-			// TODO: replace this with loading the actual class from the XML file because of things like
-			// Expert where the class object itself is mutable
-			levels.add((D20Class)library.getByID(XMLTools.getString(lvl, "classlevel")));
+			levels.add((D20ClassLevel)XMLTools.dynamicLoad(lvl));
 		}
 		
 		List sk = e.getChildren("skill");

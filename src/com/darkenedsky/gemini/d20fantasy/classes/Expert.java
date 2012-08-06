@@ -1,6 +1,4 @@
 package com.darkenedsky.gemini.d20fantasy.classes;
-import java.util.Map;
-
 import com.darkenedsky.gemini.common.Dice;
 import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.Library;
@@ -10,7 +8,6 @@ import com.darkenedsky.gemini.common.event.CharacterListener;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.D20Character;
-import com.darkenedsky.gemini.d20system.D20Class;
 import com.darkenedsky.gemini.d20system.D20NPCClass;
 import com.darkenedsky.gemini.d20system.D20Skill;
 import com.darkenedsky.gemini.d20system.D20UIEvents;
@@ -40,7 +37,7 @@ public class Expert extends D20NPCClass implements CharacterListener<D20Skill>, 
 		super.onGain(character);
 		
 		// it's already been added to the object, so this should never be below 1
-		Integer classLevel = character.getLevelOfClass(getClass());
+		Integer classLevel = character.getLevelOfClass(this);
 				
 		// if we need to pick class skills
 		if (classLevel == 1) {
@@ -53,17 +50,7 @@ public class Expert extends D20NPCClass implements CharacterListener<D20Skill>, 
 					e.addInObject((D20Skill)s,null);
 				}
 			}
-		}
-		// if we already have a level of Expert, keep the same class skills
-		else { 
-			for (Map.Entry<D20Class, Integer> e : character.getLevelMap().entrySet()) { 
-				if (e.getKey().equals(this)) { ;
-					addClassSkills(e.getKey());
-					return;
-				}
-			}
-		}
-		
+		}		
 	}
 	
 	/** Ask for more class skills until we have 10. 	 

@@ -6,8 +6,10 @@ import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.RuleObject;
 import com.darkenedsky.gemini.common.modifier.Bonus;
 import com.darkenedsky.gemini.common.modifier.Plus;
+import com.darkenedsky.gemini.d20system.prereq.AlignmentRestriction;
+import com.darkenedsky.gemini.d20system.prereq.RestrictsAlignment;
 
-public class D20Race extends RuleObject implements D20 {
+public class D20Race extends RuleObject implements D20, RestrictsAlignment {
 
 	/**
 	 * 
@@ -16,6 +18,12 @@ public class D20Race extends RuleObject implements D20 {
 
 	public D20Race(String name, String sRDURL) {
 		super(name, sRDURL);
+		
+		// Add a prerequisite to check the alignment requirements.
+		// We also have to check this for the alignment, but we aren't sure about the order 
+		// these things will happen in.
+		this.addPrerequisite(new AlignmentRestriction(this));
+
 	}
 	
 	protected ArrayList<String> bonusLanguages = new ArrayList<String>();
@@ -161,5 +169,11 @@ public class D20Race extends RuleObject implements D20 {
 		
 		
 	}
-		
+	
+	protected ArrayList<D20Alignment> deniedAlignments = new ArrayList<D20Alignment>();
+	
+	@Override
+	public ArrayList<D20Alignment> getDeniedAlignments() {
+		return deniedAlignments;
+	}
 }

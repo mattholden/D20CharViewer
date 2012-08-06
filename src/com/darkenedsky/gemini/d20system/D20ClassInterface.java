@@ -6,9 +6,12 @@ import com.darkenedsky.gemini.common.Dice;
 import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.Progression;
 import com.darkenedsky.gemini.common.Specialized;
+import com.darkenedsky.gemini.d20system.prereq.RestrictsAlignment;
 
-public interface D20ClassInterface extends D20 {
+public interface D20ClassInterface extends D20, RestrictsAlignment {
 
+	public abstract D20ClassLevel getNewLevel();
+	
 	public abstract ArrayList<Specialized<D20Skill>> getClassSkills();
 
 	public abstract ArrayList<Specialized<D20Skill>> getForbiddenSkills();

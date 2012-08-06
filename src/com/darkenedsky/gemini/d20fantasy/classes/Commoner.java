@@ -44,7 +44,7 @@ public class Commoner extends D20NPCClass implements CharacterListener<D20Feat>,
 		D20Character character = (D20Character)chara;
 		super.onGain(character);
 		
-		int classLevel = character.getLevelOfClass(getClass());
+		int classLevel = character.getLevelOfClass(this);
 		if (classLevel == 1) { 
 			character.fireUIEvent(new CharacterEvent<D20Feat>(character, D20UIEvents.CHOOSE_SIMPLE_WEAPON, this));
 		}

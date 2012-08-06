@@ -55,13 +55,12 @@ public class D20ClassPage extends WizardPageActivity<D20Character> {
 		RuleObject race = (RuleObject)spinner1.getSelectedItem();
 		return race.hasPrerequisites(wizard.getCharacter());
 	}
-
-	@SuppressWarnings("unchecked")
+	
 	@Override
 	public void saveToCharacter() {
 		Spinner spinner1 = (Spinner) findViewById(R.id.choose1_spinner);
 		D20Class clasz = (D20Class)spinner1.getSelectedItem();
-		((D20Character)wizard.getCharacter()).addLevel((Class<D20Class>)clasz.getClass());
+		((D20Character)wizard.getCharacter()).addLevel(clasz.getNewLevel());
 	}
 	 
 }

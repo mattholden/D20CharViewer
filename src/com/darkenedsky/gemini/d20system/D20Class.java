@@ -9,6 +9,7 @@ import com.darkenedsky.gemini.common.Progression;
 import com.darkenedsky.gemini.common.RuleObject;
 import com.darkenedsky.gemini.common.Specialized;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
+import com.darkenedsky.gemini.d20system.prereq.AlignmentRestriction;
 
 public class D20Class extends RuleObject implements D20, D20ClassInterface {
 
@@ -43,6 +44,12 @@ public class D20Class extends RuleObject implements D20, D20ClassInterface {
 			spellsPerDay[i] = Progression.ZERO;
 			spellsKnown[i] = Progression.ZERO;
 		}
+		
+		// Add a prerequisite to check the alignment requirements.
+		// We also have to check this for the alignment, but we aren't sure about the order 
+		// these things will happen in.
+		this.addPrerequisite(new AlignmentRestriction(this));
+		
 	}
 
 	public boolean isClassSkill(D20Skill skill, String spec) { 
@@ -270,6 +277,17 @@ public class D20Class extends RuleObject implements D20, D20ClassInterface {
 		
 		// Spell progressions?
 		
+	}
+	
+	protected ArrayList<D20Alignment> deniedAlignments = new ArrayList<D20Alignment>();
+	
+	@Override
+	public ArrayList<D20Alignment> getDeniedAlignments() {
+		return deniedAlignments;
+	}
+	
+	public D20ClassLevel getNewLevel() { 
+		return new D20ClassLevel(this);
 	}
 	
 }

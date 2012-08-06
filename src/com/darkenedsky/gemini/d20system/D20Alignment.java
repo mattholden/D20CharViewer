@@ -1,6 +1,9 @@
 package com.darkenedsky.gemini.d20system;
 
+import java.util.ArrayList;
+
 import com.darkenedsky.gemini.common.RuleObject;
+import com.darkenedsky.gemini.d20system.prereq.AlignmentDoubleCheck;
 
 
 public class D20Alignment extends RuleObject implements D20 {
@@ -63,4 +66,19 @@ public class D20Alignment extends RuleObject implements D20 {
 		return null;
 	}
 	
+	public static final ArrayList<D20Alignment> getPermittedAlignments(D20Character chr) { 
+		
+		ArrayList<D20Alignment> ok = new ArrayList<D20Alignment>();
+		
+		if (new AlignmentDoubleCheck(LAWFUL_GOOD).satisfies(chr)) ok.add(LAWFUL_GOOD);
+		if (new AlignmentDoubleCheck(LAWFUL_NEUTRAL).satisfies(chr)) ok.add(LAWFUL_NEUTRAL);
+		if (new AlignmentDoubleCheck(LAWFUL_EVIL).satisfies(chr)) ok.add(LAWFUL_EVIL);
+		if (new AlignmentDoubleCheck(NEUTRAL_GOOD).satisfies(chr)) ok.add(NEUTRAL_GOOD);
+		if (new AlignmentDoubleCheck(TRUE_NEUTRAL).satisfies(chr)) ok.add(TRUE_NEUTRAL);
+		if (new AlignmentDoubleCheck(NEUTRAL_EVIL).satisfies(chr)) ok.add(NEUTRAL_EVIL);
+		if (new AlignmentDoubleCheck(CHAOTIC_GOOD).satisfies(chr)) ok.add(CHAOTIC_GOOD);
+		if (new AlignmentDoubleCheck(CHAOTIC_NEUTRAL).satisfies(chr)) ok.add(CHAOTIC_NEUTRAL);
+		if (new AlignmentDoubleCheck(CHAOTIC_EVIL).satisfies(chr)) ok.add(CHAOTIC_EVIL);
+		return ok;
+	}
 }

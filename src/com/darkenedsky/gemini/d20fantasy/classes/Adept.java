@@ -48,7 +48,7 @@ public class Adept extends D20NPCClass implements D20SpellcasterClass, D20Fantas
 	public void onGain(GameCharacter chara) { 
 		D20Character character = (D20Character)chara;
 	
-		int classLevel = character.getLevelOfClass(getClass());
+		int classLevel = character.getLevelOfClass(this);
 		if (classLevel == 1) {
 			character.addFeat(D20SRD.Feats.SIMPLE_WEAPON_PROFICIENCY, "*", true);			
 		}

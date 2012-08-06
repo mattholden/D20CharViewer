@@ -31,9 +31,10 @@ public abstract class RuleObject implements java.io.Serializable, HasPrerequisit
 	
 	public boolean equals(Object other) { 
 		if (other instanceof RuleObject)
-			return ((RuleObject)other).sRDURL.equalsIgnoreCase(sRDURL) && getClass().equals(other.getClass());
+			return (((RuleObject) other).getUniqueID().equals(getUniqueID()));
 		else return false;
 	}
+	
 	public RuleObject(String name, String sRDURL) {
 		super();
 		this.name = name;

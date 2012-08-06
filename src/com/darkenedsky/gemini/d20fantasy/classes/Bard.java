@@ -100,7 +100,7 @@ public class Bard extends D20Class implements D20SpellcasterClass, D20Fantasy{
 		super.onGain(character);
 		
 		// it's already been added to the object, so this should never be below 1
-		Integer classLevel = character.getLevelOfClass(getClass());
+		Integer classLevel = character.getLevelOfClass(this);
 		
 		switch (classLevel) { 
 		case 1: { 

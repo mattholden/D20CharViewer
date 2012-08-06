@@ -37,7 +37,7 @@ public class Warrior extends D20NPCClass implements D20Fantasy {
 		super.onGain(character);
 		
 		// it's already been added to the object, so this should never be below 1
-		Integer classLevel = character.getLevelOfClass(getClass());
+		Integer classLevel = character.getLevelOfClass(this);
 		
 		if (classLevel == 1) { 
 			
