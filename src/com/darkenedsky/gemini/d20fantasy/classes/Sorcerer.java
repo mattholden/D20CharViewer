@@ -15,7 +15,7 @@ public class Sorcerer extends D20Class implements D20Fantasy {
 
 	public Sorcerer() { 
 		super("Sorcerer","");
-		// yung
+		// young
 	}
 	
 

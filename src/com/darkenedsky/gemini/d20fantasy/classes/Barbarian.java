@@ -5,7 +5,6 @@ import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.TimeUnit;
 import com.darkenedsky.gemini.common.modifier.Plus;
 import com.darkenedsky.gemini.common.modifier.Times;
-import com.darkenedsky.gemini.common.prereq.TransientPrerequisite;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.D20Alignment;
@@ -35,22 +34,10 @@ public class Barbarian extends D20Class implements D20Fantasy {
 		// gotta be weird, don't ya, barbarians?
 		setIlliterate();
 		
-		// barbs can't be lawful
-		TransientPrerequisite notLawful = new TransientPrerequisite() { 
+		this.deniedAlignments.add(D20Alignment.LAWFUL_EVIL);
+		this.deniedAlignments.add(D20Alignment.LAWFUL_GOOD);
+		this.deniedAlignments.add(D20Alignment.LAWFUL_NEUTRAL);
 		
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 4290823687231795395L;
-
-			@Override
-			public boolean satisfies(GameCharacter c) {
-				D20Character character = (D20Character)c;
-				D20Alignment a = character.getAlignment();
-				return !(a.getLawAxis().equals(D20Alignment.LAWFUL));
-			}
-		};
-		addPrerequisite(notLawful);
 	}
 		
 	@Override

@@ -4,7 +4,6 @@ import com.darkenedsky.gemini.common.Dice;
 import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.Progression;
 import com.darkenedsky.gemini.common.modifier.Times;
-import com.darkenedsky.gemini.common.prereq.TransientPrerequisite;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.D20Alignment;
@@ -33,22 +32,9 @@ public class Bard extends D20Class implements D20SpellcasterClass, D20Fantasy{
 		startingGold.addModifier(new Times(10));
 		
 		// bards can't be lawful
-		TransientPrerequisite notLawful = new TransientPrerequisite() { 
-		
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 9197473322762554429L;
-
-			@Override
-			public boolean satisfies(GameCharacter c) {
-				D20Character character = (D20Character)c;
-				D20Alignment a = character.getAlignment();
-				return !(a.getLawAxis().equals(D20Alignment.LAWFUL));
-			}
-			
-		};
-		addPrerequisite(notLawful);
+		deniedAlignments.add(D20Alignment.LAWFUL_EVIL);
+		deniedAlignments.add(D20Alignment.LAWFUL_NEUTRAL);
+		deniedAlignments.add(D20Alignment.LAWFUL_GOOD);
 		
 		addClassSkill(D20SRD.Skills.APPRAISE);
 		addClassSkill(D20SRD.Skills.BALANCE);

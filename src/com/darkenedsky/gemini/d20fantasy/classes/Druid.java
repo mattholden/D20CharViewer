@@ -1,6 +1,5 @@
 package com.darkenedsky.gemini.d20fantasy.classes;
 import com.darkenedsky.gemini.common.GameCharacter;
-import com.darkenedsky.gemini.common.prereq.TransientPrerequisite;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.D20Alignment;
@@ -19,26 +18,15 @@ public class Druid extends D20Class implements D20SpellcasterClass, D20Fantasy {
 		super("Druid","");
 		//old
 		
-		addPrerequisite(neutral);
+		// druids must have some kind of neutral
+		deniedAlignments.add(D20Alignment.LAWFUL_EVIL);
+		deniedAlignments.add(D20Alignment.LAWFUL_GOOD);
+		deniedAlignments.add(D20Alignment.CHAOTIC_GOOD);
+		deniedAlignments.add(D20Alignment.CHAOTIC_EVIL);
 	}
 
 
-	// druids must have some kind of neutral
-	private TransientPrerequisite neutral = new TransientPrerequisite() { 
 	
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 4760366553055179719L;
-
-		@Override
-		public boolean satisfies(GameCharacter c) {
-			D20Character character = (D20Character)c;
-			D20Alignment a = character.getAlignment();
-			return (a.getLawAxis().equals(D20Alignment.NEUTRAL) || 
-					a.getMoralityAxis().equals(D20Alignment.NEUTRAL));
-		}
-	};
 	
 	@Override
 	public void onGain(GameCharacter chara) { 

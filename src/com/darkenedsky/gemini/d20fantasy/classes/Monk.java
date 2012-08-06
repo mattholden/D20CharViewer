@@ -1,6 +1,5 @@
 package com.darkenedsky.gemini.d20fantasy.classes;
 import com.darkenedsky.gemini.common.GameCharacter;
-import com.darkenedsky.gemini.common.prereq.TransientPrerequisite;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.D20Alignment;
@@ -18,26 +17,17 @@ public class Monk extends D20Class implements D20Fantasy {
 		super("Monk","");
 		// old
 		
-		addPrerequisite(lawful);
+		// monks must be lawful
+		deniedAlignments.add(D20Alignment.CHAOTIC_EVIL);
+		deniedAlignments.add(D20Alignment.CHAOTIC_GOOD);
+		deniedAlignments.add(D20Alignment.CHAOTIC_NEUTRAL);
+		deniedAlignments.add(D20Alignment.NEUTRAL_EVIL);
+		deniedAlignments.add(D20Alignment.NEUTRAL_GOOD);
+		deniedAlignments.add(D20Alignment.TRUE_NEUTRAL);
 	}
 	
 
-	// monks must be lawful
-	private static final TransientPrerequisite lawful = new TransientPrerequisite() { 
-	
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -7069480497496618529L;
-
-		@Override
-		public boolean satisfies(GameCharacter c) {
-			D20Character character = (D20Character)c;
-			D20Alignment a = character.getAlignment();
-			return (a.getLawAxis().equals(D20Alignment.LAWFUL));
-		}
-	};
-	
+		
 	@Override
 	public void onGain(GameCharacter chara) { 
 		D20Character character = (D20Character)chara;

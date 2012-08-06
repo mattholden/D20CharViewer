@@ -1,6 +1,5 @@
 package com.darkenedsky.gemini.d20fantasy.classes;
 import com.darkenedsky.gemini.common.GameCharacter;
-import com.darkenedsky.gemini.common.prereq.TransientPrerequisite;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.D20Alignment;
@@ -20,18 +19,14 @@ public class Paladin extends D20Class implements D20SpellcasterClass, D20Fantasy
 		// middle
 	
 		// paladins must be LG
-		addPrerequisite(new TransientPrerequisite() { 
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = -6899709621486040197L;
-
-			@Override
-			public boolean satisfies(GameCharacter c) {
-			D20Character character = (D20Character)c;
-			return (character.getAlignment().equals(D20Alignment.LAWFUL_GOOD));
-			}
-		});
+		deniedAlignments.add(D20Alignment.CHAOTIC_EVIL);
+		deniedAlignments.add(D20Alignment.CHAOTIC_GOOD);
+		deniedAlignments.add(D20Alignment.CHAOTIC_NEUTRAL);
+		deniedAlignments.add(D20Alignment.NEUTRAL_EVIL);
+		deniedAlignments.add(D20Alignment.NEUTRAL_GOOD);
+		deniedAlignments.add(D20Alignment.TRUE_NEUTRAL);
+		deniedAlignments.add(D20Alignment.LAWFUL_EVIL);
+		deniedAlignments.add(D20Alignment.LAWFUL_NEUTRAL);
 	}
 	
 	@Override
