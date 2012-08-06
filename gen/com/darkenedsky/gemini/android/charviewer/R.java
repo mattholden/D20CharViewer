@@ -62,23 +62,24 @@ public final class R {
         public static final int assign4=0x7f06000b;
         public static final int assign5=0x7f06000e;
         public static final int assign6=0x7f060011;
-        public static final int d20race_back=0x7f060019;
-        public static final int d20race_next=0x7f06001a;
-        public static final int d20race_race=0x7f060017;
-        public static final int d20race_racesrd=0x7f060018;
-        public static final int nAndG_charName=0x7f06001d;
-        public static final int nAndG_female=0x7f060022;
-        public static final int nAndG_male=0x7f060021;
-        public static final int nAndG_playerName=0x7f06001f;
-        public static final int nAndg_tableRow1=0x7f06001c;
-        public static final int nAndg_tableRow2=0x7f06001e;
-        public static final int nAndg_tableRow3=0x7f060020;
-        public static final int nAndg_tableRow4=0x7f060025;
-        public static final int nAndg_tableRow5=0x7f060026;
-        public static final int nAndg_tableRow6=0x7f060027;
-        public static final int nAndg_tableRow7=0x7f060023;
-        public static final int nAndg_tablerow0=0x7f060024;
-        public static final int newCharacter=0x7f06001b;
+        public static final int choose1_back=0x7f06001a;
+        public static final int choose1_instructions=0x7f060017;
+        public static final int choose1_next=0x7f06001b;
+        public static final int choose1_spinner=0x7f060018;
+        public static final int choose1_srdButton=0x7f060019;
+        public static final int nAndG_charName=0x7f06001e;
+        public static final int nAndG_female=0x7f060023;
+        public static final int nAndG_male=0x7f060022;
+        public static final int nAndG_playerName=0x7f060020;
+        public static final int nAndg_tableRow1=0x7f06001d;
+        public static final int nAndg_tableRow2=0x7f06001f;
+        public static final int nAndg_tableRow3=0x7f060021;
+        public static final int nAndg_tableRow4=0x7f060026;
+        public static final int nAndg_tableRow5=0x7f060027;
+        public static final int nAndg_tableRow6=0x7f060028;
+        public static final int nAndg_tableRow7=0x7f060024;
+        public static final int nAndg_tablerow0=0x7f060025;
+        public static final int newCharacter=0x7f06001c;
         public static final int tableRow0=0x7f060016;
         public static final int tableRow1=0x7f060000;
         public static final int tableRow2=0x7f060003;
@@ -90,7 +91,7 @@ public final class R {
     }
     public static final class layout {
         public static final int abilityscore=0x7f030000;
-        public static final int d20race=0x7f030001;
+        public static final int choose_one_object=0x7f030001;
         public static final int main=0x7f030002;
         public static final int nameandgender=0x7f030003;
     }

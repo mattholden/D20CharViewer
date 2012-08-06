@@ -4,16 +4,15 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import com.darkenedsky.gemini.android.charviewer.R;
 import com.darkenedsky.gemini.android.charviewer.WizardPageActivity;
 import com.darkenedsky.gemini.common.Library;
 import com.darkenedsky.gemini.common.RuleObject;
 import com.darkenedsky.gemini.d20system.D20Character;
-import com.darkenedsky.gemini.d20system.D20Race;
+import com.darkenedsky.gemini.d20system.D20Class;
 
 
-public class D20RacePage extends WizardPageActivity<D20Character> {
+public class D20ClassPage extends WizardPageActivity<D20Character> {
 	 	
 	/**
 	 * 
@@ -26,13 +25,13 @@ public class D20RacePage extends WizardPageActivity<D20Character> {
 		setContentView(R.layout.choose_one_object);
 			
 		Spinner spinner = (Spinner) findViewById(R.id.choose1_spinner);
-		List<RuleObject> stuff = wizard.getCharacter().getLibrary().getSection(Library.RACES).getAll(); 
-		ArrayAdapter<RuleObject> racez = new ArrayAdapter<RuleObject>(this, android.R.layout.simple_spinner_item, stuff);
-		spinner.setAdapter(racez);
+		List<RuleObject> stuff = wizard.getCharacter().getLibrary().getSection(Library.CLASSES).getAll(); 
+		ArrayAdapter<RuleObject> choices = new ArrayAdapter<RuleObject>(this, android.R.layout.simple_spinner_item, stuff);
+		spinner.setAdapter(choices);
 		spinner.setSelection(-1);		
 		
 		TextView inst = (TextView)findViewById(R.id.choose1_instructions);
-		inst.setText("Great! Now, let's pick your character's race.");
+		inst.setText("Your character will now gain a level. Please choose a class.");
 	  }
 
 	@Override
@@ -44,8 +43,8 @@ public class D20RacePage extends WizardPageActivity<D20Character> {
 	public void choose1_srdLookup(View v) { 
 		Spinner spinner1 = (Spinner) findViewById(R.id.choose1_spinner);
 		if (spinner1.getSelectedItemPosition() == -1) return;		
-		D20Race race = (D20Race)spinner1.getSelectedItem();
-		launchBrowser(race.getSRD_URL());
+		RuleObject thing = (RuleObject)spinner1.getSelectedItem();
+		launchBrowser(thing.getSRD_URL());
 	}	
 	
 	@Override
@@ -53,14 +52,16 @@ public class D20RacePage extends WizardPageActivity<D20Character> {
 		
 		Spinner spinner1 = (Spinner) findViewById(R.id.choose1_spinner);
 		if (spinner1.getSelectedItemPosition() == -1) return false;		
-		D20Race race = (D20Race)spinner1.getSelectedItem();
+		RuleObject race = (RuleObject)spinner1.getSelectedItem();
 		return race.hasPrerequisites(wizard.getCharacter());
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void saveToCharacter() {
 		Spinner spinner1 = (Spinner) findViewById(R.id.choose1_spinner);
-		((D20Character)wizard.getCharacter()).setRace((D20Race)spinner1.getSelectedItem());
+		D20Class clasz = (D20Class)spinner1.getSelectedItem();
+		((D20Character)wizard.getCharacter()).addLevel((Class<D20Class>)clasz.getClass());
 	}
 	 
 }

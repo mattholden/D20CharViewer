@@ -16,16 +16,17 @@
 	  	  <TextView  
 		    android:layout_width="fill_parent" 
 		    android:layout_height="wrap_content" 
-		    android:text="Great! Now, let's pick your character's race."
+		    android:id="@+id/choose1_instructions"
+		    android:text=""
 		    />
 		</TableRow> 
 	   <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content">
-	    <Spinner android:layout_height="wrap_content" android:id="@+id/d20race_race" android:layout_weight="5"></Spinner>
+	    <Spinner android:layout_height="wrap_content" android:id="@+id/choose1_spinner" android:layout_weight="5"></Spinner>
 	    
 		<ImageButton android:src="@drawable/help"
-			android:id="@+id/d20race_racesrd" 
+			android:id="@+id/choose1_srdButton" 
 			android:layout_weight="1" android:layout_height="wrap_content"
-			android:onClick="d20race_srd"
+			android:onClick="choose1_srdLookup"
 		> 
 		</ImageButton>
 		</TableRow>   
@@ -37,13 +38,13 @@
 	        
 	        <TableRow android:layout_width="fill_parent" android:layout_height="wrap_content">
 	        	<ImageButton android:src="@drawable/back"
-					android:id="@+id/d20race_back" 
+					android:id="@+id/choose1_back" 
 					android:layout_weight="1" android:layout_height="wrap_content"
 					android:onClick="back"
 				/>
 				<TextView />
 				<ImageButton android:src="@drawable/next" 
-					android:id="@+id/d20race_next" 
+					android:id="@+id/choose1_next" 
 					android:layout_weight="1" android:layout_height="wrap_content"
 					android:onClick="next"
 				/>

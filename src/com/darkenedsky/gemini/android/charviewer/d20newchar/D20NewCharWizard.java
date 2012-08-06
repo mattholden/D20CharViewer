@@ -20,7 +20,11 @@ public class D20NewCharWizard extends WizardController<D20Character> {
 		try {
 			// build the library 
 			Library lib = D20SRD.getLibrary();
+			
+			// set up the character
 			character = new D20Character(lib);
+			
+			// set listeners so the character can call the steps involved in leveling up		
 		}
 		catch (Exception x) { 
 			x.printStackTrace();
@@ -31,6 +35,7 @@ public class D20NewCharWizard extends WizardController<D20Character> {
 		addPage(NameAndGenderPage.class);
 		addPage(D20AbilityScorePage.class);
 		addPage(D20RacePage.class);
+		addPage(D20ClassPage.class);
 		
 	} 
 

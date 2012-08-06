@@ -1,19 +1,13 @@
 package com.darkenedsky.gemini.d20fantasy;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-
 import com.darkenedsky.gemini.common.Library;
 import com.darkenedsky.gemini.common.LibrarySection;
 import com.darkenedsky.gemini.d20fantasy.classes.*;
 import com.darkenedsky.gemini.d20fantasy.races.*;
-import com.darkenedsky.gemini.d20system.D20Alignment;
-import com.darkenedsky.gemini.d20system.D20Class;
-import com.darkenedsky.gemini.d20system.D20Feat;
-import com.darkenedsky.gemini.d20system.D20Race;
-import com.darkenedsky.gemini.d20system.D20Size;
-import com.darkenedsky.gemini.d20system.D20Skill;
-import com.darkenedsky.gemini.d20system.D20Spell;
-import com.darkenedsky.gemini.d20system.D20SpellcasterClass;
+import com.darkenedsky.gemini.d20fantasy.skills.*;
+import com.darkenedsky.gemini.d20system.*;
+
 
 public abstract class D20SRD implements D20Fantasy {
 	
@@ -98,7 +92,7 @@ public abstract class D20SRD implements D20Fantasy {
 			THRALLHERD = null,
 			WAR_MIND = null;
 			
-		public static final D20Class[] buildArray() throws IllegalArgumentException, IllegalAccessException {
+		static final D20Class[] buildArray() throws IllegalArgumentException, IllegalAccessException {
 			ArrayList<D20Class> feet = new ArrayList<D20Class>();
 			for (Field f : Classes.class.getFields()) {
 				if (f.getType().isAssignableFrom(D20Class.class)) {
@@ -135,7 +129,7 @@ public abstract class D20SRD implements D20Fantasy {
 			MAENAD = null,
 			XEPH = null;
 		
-		public static final D20Race[] buildArray() throws IllegalArgumentException, IllegalAccessException {
+		 static final D20Race[] buildArray() throws IllegalArgumentException, IllegalAccessException {
 			ArrayList<D20Race> feet = new ArrayList<D20Race>();
 			for (Field f : Races.class.getFields()) {
 				if (f.getType().isAssignableFrom(D20Race.class)) {
@@ -152,58 +146,52 @@ public abstract class D20SRD implements D20Fantasy {
 	
 	public static class Skills { 
 		public static final D20Skill
-			ALCHEMY = null,
-			ANIMAL_EMPATHY = null,
-			APPRAISE = null,
-			BALANCE = null,
-			BLUFF = null,
-			CLIMB = null,
-			CONCENTRATION = null,
-			CRAFT = null,
-			DECIPHER_SCRIPT = null,
-			DIPLOMACY = null,
-			DISABLE_DEVICE = null,
-			DISGUISE = null,
-			ESCAPE_ARTIST = null,
-			FORGERY = null,
-			GATHER_INFORMATION = null,
-			HANDLE_ANIMAL = null,
-			HEAL = null,
-			HIDE = null,
-			INNUENDO = null,
-			INTIMIDATE = null,
-			INTUIT_DIRECTION = null,
-			JUMP = null,
-			KNOWLEDGE = null,
-			LISTEN = null,
-			MOVE_SILENTLY = null,
-			OPEN_LOCK = null,
-			PERFORM = null,
-			PICK_POCKET = null,
-			PROFESSION = null,
-			READ_LIPS = null,
-			RIDE = null,
-			SCRY = null,
-			READING_WRITING = null,
-			SEARCH = null,
-			SENSE_MOTIVE = null,
-			SLEIGHT_OF_HAND = null,
-			SPEAK_LANGUAGE = null,
-			SPELLCRAFT = null,
-			SPOT = null,
-			SURVIVAL = null,
-			SWIM = null,
-			TUMBLE = null,
-			USE_MAGIC_DEVICE = null,
-			USE_ROPE = null,
-			WILDERNESS_LORE = null,
+		
+			// D20Skill: Name, SRD, Specialized, UseUntrained, Key, ArmorCheck
+			APPRAISE = 				new Appraise(),
+			BALANCE = 				new Balance(),
+			BLUFF = 				new Bluff(),
+			CLIMB = 				new Climb(),
+			CONCENTRATION = 		new Concentration(),
+			CRAFT = 				new Craft(),
+			DECIPHER_SCRIPT = 		new DecipherScript(),
+			DIPLOMACY = 			new Diplomacy(),
+			DISABLE_DEVICE = 		new DisableDevice(),
+			DISGUISE = 				new Disguise(),
+			ESCAPE_ARTIST = 		new EscapeArtist(),
+			FORGERY = 				new Forgery(),
+			GATHER_INFORMATION = 	new GatherInformation(),
+			HANDLE_ANIMAL =			new HandleAnimal(),
+			HEAL = 					new Heal(),
+			HIDE = 					new Hide(),
+			INTIMIDATE = 			new Intimidate(),
+			JUMP = 					new Jump(),
+			KNOWLEDGE = 			new Knowledge(),
+			LISTEN = 				new Listen(),
+			MOVE_SILENTLY = 		new MoveSilently(),
+			OPEN_LOCK = 			new OpenLock(),
+			PERFORM = 				new Perform(),
+			PROFESSION = 			new Profession(),
+			RIDE = 					new Ride(),
+			READING_WRITING = 		new ReadingAndWriting(),
+			SEARCH = 				new Search(),
+			SENSE_MOTIVE = 			new SenseMotive(),
+			SLEIGHT_OF_HAND = 		new SleightOfHand(),
+			SPEAK_LANGUAGE = 		new SpeakLanguage(),
+			SPELLCRAFT = 			new Spellcraft(),
+			SPOT = 					new Spot(),
+			SURVIVAL = 				new Survival(),
+			SWIM = 					new Swim(),
+			TUMBLE = 				new Tumble(),
+			USE_MAGIC_DEVICE = 		new UseMagicDevice(),
+			USE_ROPE = 				new UseRope(),
 			
 			// psionics
-			AUTOHYPNOSIS = null,
-			PSICRAFT = null,
-			USE_PSIONIC_DEVICE = null;
+			AUTOHYPNOSIS = 			null,
+			PSICRAFT = 				null,
+			USE_PSIONIC_DEVICE = 	null;
 			
-		public static final D20Skill[] buildArray() throws IllegalArgumentException, IllegalAccessException {
+		static final D20Skill[] buildArray() throws IllegalArgumentException, IllegalAccessException {
 			ArrayList<D20Skill> feet = new ArrayList<D20Skill>();
 			for (Field f : Skills.class.getFields()) {
 				if (f.getType().isAssignableFrom(D20Skill.class)) {
@@ -212,9 +200,16 @@ public abstract class D20SRD implements D20Fantasy {
 						feet.add(thing);
 				}
 			}
+					
 			D20Skill[] arr = new D20Skill[feet.size()];
-			for (int i = 0; i < feet.size(); i++) 
+			for (int i = 0; i < feet.size(); i++) {
 				arr[i] = feet.get(i);
+				
+				// add synergy as a second op because the referenced skills might not exist
+				// when you call the constructor, if skill A gives a synergy bonus to skill B
+				// but the static instance of B is not yet created
+				arr[i].buildSynergy(); 
+			}
 			return arr;
 		}	
 		
@@ -268,7 +263,7 @@ public abstract class D20SRD implements D20Fantasy {
 			
 		
 			
-		public static final D20Feat[] buildArray() throws IllegalArgumentException, IllegalAccessException {
+		 static final D20Feat[] buildArray() throws IllegalArgumentException, IllegalAccessException {
 			ArrayList<D20Feat> feet = new ArrayList<D20Feat>();
 			for (Field f : Abilities.class.getFields()) {
 				if (f.getType().isAssignableFrom(D20Feat.class)) {
@@ -296,7 +291,7 @@ public abstract class D20SRD implements D20Fantasy {
 			SHIELD_PROFICIENCY = null,
 			TOWER_SHIELD_PROFICIENCY = null;
 		
-		public static final D20Feat[] buildArray() throws IllegalArgumentException, IllegalAccessException {
+		 static final D20Feat[] buildArray() throws IllegalArgumentException, IllegalAccessException {
 			ArrayList<D20Feat> feet = new ArrayList<D20Feat>();
 			for (Field f : Feats.class.getFields()) {
 				if (f.getType().isAssignableFrom(D20Feat.class)) {
@@ -321,7 +316,7 @@ public abstract class D20SRD implements D20Fantasy {
 			PRESTIDIGITATION = null,
 			GHOST_SOUND = null;
 		
-		public static final D20Spell[] buildArray() throws IllegalArgumentException, IllegalAccessException {
+		 static final D20Spell[] buildArray() throws IllegalArgumentException, IllegalAccessException {
 			ArrayList<D20Spell> feet = new ArrayList<D20Spell>();
 			for (Field f : Spells.class.getFields()) {
 				if (f.getType().isAssignableFrom(D20Spell.class)) {
@@ -349,7 +344,7 @@ public abstract class D20SRD implements D20Fantasy {
 			GARGANTUAN = D20Size.GARGANTUAN,
 			COLOSSAL = D20Size.COLOSSAL;
 		
-		public static final D20Size[] buildArray() { 
+		 static final D20Size[] buildArray() { 
 			return new D20Size[] { FINE, TINY, DIMINUTIVE, SMALL, MEDIUM, LARGE, HUGE, GARGANTUAN, COLOSSAL };
 		}
 	}
@@ -359,8 +354,8 @@ public abstract class D20SRD implements D20Fantasy {
 		Library l = new Library();
 		l.getSection(Library.ABILITIES).add(Abilities.buildArray());
 		l.getSection(Library.SPELLS).add(Spells.buildArray());
-		l.getSection(Library.RACES).add(Races.buildArray());		
-		l.addSection(Library.SKILLS, Skills.buildArray());
+		l.getSection(Library.RACES).add(Races.buildArray());					
+		l.addSection(Library.SKILLS, Skills.buildArray());		
 		l.addSection(ALIGNMENT, D20Alignment.buildArray());
 		l.addSection(SIZE, Size.buildArray());		
 		l.addSection(FEATS, Feats.buildArray());

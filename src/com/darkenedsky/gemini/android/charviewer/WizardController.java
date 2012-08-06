@@ -24,6 +24,10 @@ public abstract class WizardController<T extends GameCharacter> implements Seria
 	protected T character;
 	protected Context context;
 	
+	public Context getContext() { 
+		return context;
+	}
+	
 	public WizardController(Context cont) { 
 		context = cont;
 	}

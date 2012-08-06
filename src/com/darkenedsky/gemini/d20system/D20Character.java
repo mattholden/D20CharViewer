@@ -76,6 +76,12 @@ public class D20Character extends GameCharacter implements D20 {
 			existing.setBaseValue(existing.getBaseValue()+1);
 		
 		skill.onGain(this);
+
+		// gain synergy bonuses
+		if (existing.getBaseValue() == 5) { 
+			skill.applySynergy(spec, this);
+		}
+
 		return true;
 	}
 	

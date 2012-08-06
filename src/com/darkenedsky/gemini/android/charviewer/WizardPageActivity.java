@@ -47,7 +47,7 @@ public abstract class WizardPageActivity<T extends GameCharacter> extends Activi
 			wizard.finish();
 		}
 		else { 
-		  	Intent intent = new Intent(wizard.context, next);
+		  	Intent intent = new Intent(this, next);
 	    	intent.putExtra("WIZARD", wizard);
 	    	intent.putExtra("CHARACTER", wizard.getCharacter());
 	    	startActivity(intent);
