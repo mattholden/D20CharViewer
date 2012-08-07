@@ -25,10 +25,9 @@ public class D20Character extends GameCharacter implements D20 {
 	private Map<Specialized<D20Skill>, D20SkillRank> skills = new HashMap<Specialized<D20Skill>, D20SkillRank>(20);
 	
 	// temp variables used during chargen/levelup
-	private int skillsAvailable, featsAvailable, fighterBonusFeats;
+	private int skillsAvailable, featsAvailable;
 	private int ageClass;
 	private int levelsToGain = 1;
-	private int bonusLanguages = 0;
 	
 	public D20SkillRank getSkill(D20Skill skill) { return getSkill(skill,null);}
 	
@@ -281,22 +280,6 @@ public class D20Character extends GameCharacter implements D20 {
 	}
 
 
-	public void setFighterBonusFeats(int fighterBonusFeats) {
-		this.fighterBonusFeats = fighterBonusFeats;
-	}
-
-	public int getFighterBonusFeats() {
-		return fighterBonusFeats;
-	}
-
-	public void setBonusLanguages(int bonusLanguages) {
-		this.bonusLanguages = bonusLanguages;
-	}
-
-	public int getBonusLanguages() {
-		return bonusLanguages;
-	}
-
 	public D20Alignment getAlignment() {
 		return alignment;
 	}
@@ -361,10 +344,8 @@ public class D20Character extends GameCharacter implements D20 {
 		
 		e.addContent(XMLTools.xml("skillsavailable", skillsAvailable));
 		e.addContent(XMLTools.xml("featsavailable", featsAvailable));
-		e.addContent(XMLTools.xml("fighterbonusfeats", fighterBonusFeats));
 		e.addContent(XMLTools.xml("levelstogain", levelsToGain));
 		e.addContent(XMLTools.xml("ageclass", ageClass));
-		e.addContent(XMLTools.xml("bonusLanguages", bonusLanguages));
 			
 		if (race != null)
 			e.addContent(XMLTools.xml("race", race.getUniqueID()));
@@ -406,7 +387,6 @@ public class D20Character extends GameCharacter implements D20 {
 		ageClass = XMLTools.getInt(e,"ageclass");
 		skillsAvailable = XMLTools.getInt(e,"skillsavailable");
 		featsAvailable = XMLTools.getInt(e,"featsavailable");
-		fighterBonusFeats = XMLTools.getInt(e,"fighterbonusfeats");
 		levelsToGain = XMLTools.getInt(e,"levelstogain");
 		race = (D20Race)library.getSection("races").get(XMLTools.getString(e,"race"));
 		size = D20Size.load(XMLTools.getString(e,"size"));
