@@ -3,7 +3,6 @@ package com.darkenedsky.gemini.d20fantasy.classes;
 import com.darkenedsky.gemini.common.Dice;
 import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.Progression;
-import com.darkenedsky.gemini.common.modifier.Times;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.D20Alignment;
@@ -15,7 +14,7 @@ import com.darkenedsky.gemini.d20system.D20SpellcasterClass;
 public class Bard extends D20Class implements D20SpellcasterClass, D20Fantasy{
 
 	/**
-	 * 
+	 * DONE
 	 */
 	private static final long serialVersionUID = 7483831801072618500L;
 
@@ -28,8 +27,6 @@ public class Bard extends D20Class implements D20SpellcasterClass, D20Fantasy{
 		fortSaveProgression = SAVE_BONUS_LOW;
 		reflexSaveProgression = SAVE_BONUS_HIGH;
 		willSaveProgression = SAVE_BONUS_HIGH;
-		startingGold = new Dice(4,4);
-		startingGold.addModifier(new Times(10));
 		
 		// bards can't be lawful
 		deniedAlignments.add(D20Alignment.LAWFUL_EVIL);
@@ -90,14 +87,14 @@ public class Bard extends D20Class implements D20SpellcasterClass, D20Fantasy{
 		
 		switch (classLevel) { 
 		case 1: { 
-				character.addFeat(D20SRD.Feats.SIMPLE_WEAPON_PROFICIENCY, "*", true);
+				character.addFeat(D20SRD.Feats.SIMPLE_WEAPON_PROFICIENCY, null, true);
 				character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "longsword", true);
 				character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "rapier", true);
 				character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "sap", true);
 				character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "short sword", true);
 				character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "shortbow", true);
 				character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "whip", true);
-				character.addFeat(D20SRD.Feats.LIGHT_ARMOR_PROFICIENCY, "*", true);
+				character.addFeat(D20SRD.Feats.LIGHT_ARMOR_PROFICIENCY, null, true);
 				character.addFeat(D20SRD.Feats.SHIELD_PROFICIENCY, null, true);
 					
 				character.addAbility(D20SRD.Abilities.BARDIC_KNOWLEDGE, null);

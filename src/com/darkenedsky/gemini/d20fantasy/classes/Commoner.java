@@ -1,24 +1,23 @@
 package com.darkenedsky.gemini.d20fantasy.classes;
 import com.darkenedsky.gemini.common.Dice;
 import com.darkenedsky.gemini.common.GameCharacter;
-import com.darkenedsky.gemini.common.event.CharacterEvent;
-import com.darkenedsky.gemini.common.event.CharacterListener;
+import com.darkenedsky.gemini.common.event.ChooseStringEvent;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.D20Character;
-import com.darkenedsky.gemini.d20system.D20Feat;
+
 import com.darkenedsky.gemini.d20system.D20NPCClass;
 import com.darkenedsky.gemini.d20system.D20UIEvents;
 
-public class Commoner extends D20NPCClass implements CharacterListener<D20Feat>, D20Fantasy {
+public class Commoner extends D20NPCClass implements D20Fantasy {
 
 	/**
-	 * 
+	 * TODO: Weapon list
 	 */
 	private static final long serialVersionUID = -7233516754646135330L;
 
 	public Commoner() {
-		super("Commoner", "http://www.d20srd.org/srd/classes/commoner.htm");
+		super("Commoner", "http://www.d20srd.org/srd/npcClasses/commoner.htm");
 		hitDice = new Dice(1,4);
 		skillPoints = 2;
 		babProgression = BAB_LOW;
@@ -46,12 +45,15 @@ public class Commoner extends D20NPCClass implements CharacterListener<D20Feat>,
 		
 		int classLevel = character.getLevelOfClass(this);
 		if (classLevel == 1) { 
-			character.fireUIEvent(new CharacterEvent<D20Feat>(character, D20UIEvents.CHOOSE_SIMPLE_WEAPON, this));
+			ChooseStringEvent weapon = new ChooseStringEvent(D20UIEvents.CHOOSE_SIMPLE_WEAPON, "Select a weapon to become proficient with.");
+			weapon.setAllowOther(false);
+			
+			// TODO: add list of simple weapons
+			
+			character.fireCharGenEvent(weapon);
 		}
 	}
 
-	public void actionPerformed(CharacterEvent<D20Feat> evt) { 
-		
-	}
+	
 	
 }

@@ -4,7 +4,6 @@ import com.darkenedsky.gemini.common.Frequency;
 import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.TimeUnit;
 import com.darkenedsky.gemini.common.modifier.Plus;
-import com.darkenedsky.gemini.common.modifier.Times;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.D20Alignment;
@@ -15,7 +14,7 @@ import com.darkenedsky.gemini.d20system.D20Race;
 public class Barbarian extends D20Class implements D20Fantasy {
 
 	/**
-	 * 
+	 * DONE
 	 */
 	private static final long serialVersionUID = -3826764620082335808L;
 
@@ -28,8 +27,6 @@ public class Barbarian extends D20Class implements D20Fantasy {
 		fortSaveProgression = SAVE_BONUS_HIGH;
 		reflexSaveProgression = SAVE_BONUS_LOW;
 		willSaveProgression = SAVE_BONUS_LOW;
-		startingGold = new Dice(4,4);
-		startingGold.addModifier(new Times(10));
 		
 		addClassSkill(D20SRD.Skills.CLIMB);
 		addClassSkill(D20SRD.Skills.CRAFT);
@@ -61,10 +58,10 @@ public class Barbarian extends D20Class implements D20Fantasy {
 		
 		switch (classLevel) { 
 		case 1: { 
-				character.addFeat(D20SRD.Feats.SIMPLE_WEAPON_PROFICIENCY, "*", true);
-				character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "*", true);
-				character.addFeat(D20SRD.Feats.LIGHT_ARMOR_PROFICIENCY, "*", true);
-				character.addFeat(D20SRD.Feats.MEDIUM_ARMOR_PROFICIENCY, "*", true);
+				character.addFeat(D20SRD.Feats.SIMPLE_WEAPON_PROFICIENCY, null, true);
+				character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, null, true);
+				character.addFeat(D20SRD.Feats.LIGHT_ARMOR_PROFICIENCY, null, true);
+				character.addFeat(D20SRD.Feats.MEDIUM_ARMOR_PROFICIENCY, null, true);
 				character.addFeat(D20SRD.Feats.SHIELD_PROFICIENCY, null, true);
 					
 				character.addAbility(D20SRD.Abilities.FAST_MOVEMENT, null, Frequency.MODIFIER);

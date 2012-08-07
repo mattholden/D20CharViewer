@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import org.jdom.Element;
 
-public class Specialized<T extends RuleObject> implements Serializable { 
+public class Specialized<T extends RuleObject> implements Serializable, XMLSerializable { 
 	
 	/**
 	 * 
@@ -18,7 +18,13 @@ public class Specialized<T extends RuleObject> implements Serializable {
 		specialization = spec;
 	}
 	
-
+	@SuppressWarnings("unchecked")
+	public Specialized(Element e) { 
+		ability = (T)Library.instance.getByID(XMLTools.getString(e,"ability"));
+		specialization = XMLTools.getString(e, "specialization");
+	}
+	
+	
 	public boolean equals(Object another) { 
 		if ((another instanceof Specialized<?>) == false)
 			return false;
@@ -33,7 +39,8 @@ public class Specialized<T extends RuleObject> implements Serializable {
 		return (ability.equals(other.ability) && specCheck); 
 	}
 	
-	public Element toXML(String root, Frequency freq) { 
+	@Override
+	public Element toXML(String root) { 
 		Element e = new Element(root);
 		e.addContent(XMLTools.xml("ability", ability.getUniqueID()));
 		
@@ -43,35 +50,7 @@ public class Specialized<T extends RuleObject> implements Serializable {
 			e.addContent(sp);
 		}
 		
-		e.addContent(freq.toXML("frequency"));
 		return e;
 	}
-	
-	public Element toXML(String root, Integer ranks) { 
-		Element e = new Element(root);
-		e.addContent(XMLTools.xml("ability", ability.getUniqueID()));
 		
-		if (specialization != null) { 
-			Element sp = new Element("specialization");
-			sp.setText(specialization);
-			e.addContent(sp);
-		}
-		
-		e.addContent(XMLTools.xml("ranks", ranks));
-		return e;
-	}
-	public Element toXML(String root, Float ranks) { 
-		Element e = new Element(root);
-		e.addContent(XMLTools.xml("ability", ability.getUniqueID()));
-		
-		if (specialization != null) { 
-			Element sp = new Element("specialization");
-			sp.setText(specialization);
-			e.addContent(sp);
-		}
-		
-		e.addContent(XMLTools.xml("ranks", NumberTools.trimFloat(ranks, 1,1,true)));
-		return e;
-	}
-	
 }

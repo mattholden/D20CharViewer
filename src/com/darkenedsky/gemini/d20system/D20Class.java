@@ -24,11 +24,11 @@ public class D20Class extends RuleObject implements D20, D20ClassInterface {
 	 * 
 	 */
 	private static final long serialVersionUID = -8981668795309213519L;
-	
+	protected ArrayList<String> bonusLanguages = new ArrayList<String>();
 	protected Progression fortSaveProgression, reflexSaveProgression, willSaveProgression, babProgression;
 	protected Progression spellsPerDay[] = new Progression[10];
 	protected Progression spellsKnown[] = new Progression[10];
-		
+	protected boolean allowSplitMulticlass = true;
 	private ArrayList<Specialized<D20Skill>> classSkills = new ArrayList<Specialized<D20Skill>>();
 	private ArrayList<Specialized<D20Skill>> forbiddenSkills = new ArrayList<Specialized<D20Skill>>();
 	private boolean literacy = true;
@@ -36,7 +36,6 @@ public class D20Class extends RuleObject implements D20, D20ClassInterface {
 	protected int ageClass;	
 	protected int skillPoints;
 	protected Integer skillPointsAfter1 = null;
-	protected Dice startingGold = new Dice(0,1);
 		
 	public D20Class(String name, String sRDURL) {
 		super(name, sRDURL);
@@ -204,6 +203,10 @@ public class D20Class extends RuleObject implements D20, D20ClassInterface {
 		}
 	}
 	
+	public boolean allowsSplitMulticlass() { 
+		return allowSplitMulticlass;
+	}
+	
 	/* (non-Javadoc)
 	 * @see com.darkenedsky.d20charviewer.d20objects.D20ClassInterface#onGain(com.darkenedsky.d20charviewer.d20objects.D20Character)
 	 */
@@ -292,4 +295,7 @@ public class D20Class extends RuleObject implements D20, D20ClassInterface {
 		return new D20ClassLevel(this);
 	}
 	
+	public ArrayList<String> getBonusLanguages() { 
+		return bonusLanguages;
+	}
 }

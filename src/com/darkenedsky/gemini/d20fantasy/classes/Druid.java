@@ -2,7 +2,6 @@ package com.darkenedsky.gemini.d20fantasy.classes;
 import com.darkenedsky.gemini.common.Dice;
 import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.modifier.Plus;
-import com.darkenedsky.gemini.common.modifier.Times;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.D20Alignment;
@@ -13,7 +12,7 @@ import com.darkenedsky.gemini.d20system.D20SpellcasterClass;
 
 public class Druid extends D20Class implements D20SpellcasterClass, D20Fantasy {
 
-	// TODO: check starting gold, spell progression, abilities 
+	// TODO: spell progression, abilities 
 	
 	
 	/**
@@ -22,7 +21,7 @@ public class Druid extends D20Class implements D20SpellcasterClass, D20Fantasy {
 	private static final long serialVersionUID = 3770457620699209564L;
 
 	public Druid() {
-		super("Druid","");
+		super("Druid","http://www.d20srd.org/srd/classes/druid.htm");
 		
 		ageClass = (D20Race.AGE_MOD_OLD);
 		hitDice = new Dice(1,8);
@@ -31,9 +30,6 @@ public class Druid extends D20Class implements D20SpellcasterClass, D20Fantasy {
 		fortSaveProgression = SAVE_BONUS_HIGH;
 		reflexSaveProgression = SAVE_BONUS_LOW;
 		willSaveProgression = SAVE_BONUS_HIGH;
-		
-		startingGold = new Dice(4,4);
-		startingGold.addModifier(new Times(10));
 		
 		addClassSkill(D20SRD.Skills.CONCENTRATION);
 		addClassSkill(D20SRD.Skills.CRAFT);
@@ -91,7 +87,6 @@ public class Druid extends D20Class implements D20SpellcasterClass, D20Fantasy {
 		case 3:
 			break;
 		case 4:
-			character.addAbility(D20SRD.Abilities.UNCANNY_DODGE,null);
 			break;
 		case 5:	
 			break;
@@ -100,7 +95,6 @@ public class Druid extends D20Class implements D20SpellcasterClass, D20Fantasy {
 		case 7:
 			break;
 		case 8:
-			character.addAbility(D20SRD.Abilities.IMPROVED_UNCANNY_DODGE,null);
 			break;
 		case 9:
 			break;

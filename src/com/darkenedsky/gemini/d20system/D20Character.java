@@ -125,6 +125,7 @@ public class D20Character extends GameCharacter implements D20 {
 		return ranks;
 	}
 	
+	
 	public boolean addFeat(D20Feat feat, String spec, boolean free) { 
 		boolean added = false;
 		
@@ -137,15 +138,7 @@ public class D20Character extends GameCharacter implements D20 {
 		
 		// need points?
 		if (!free) {
-			boolean legitFighter = (fighterBonusFeats > 0 && feat.isFighterBonusFeat());
-			if (featsAvailable <= 0 && !legitFighter)
-				return false;
-			
-			// use a fighter bonus feat if we can.
-			if (legitFighter)
-				fighterBonusFeats--;
-			else
-				featsAvailable--;
+			featsAvailable--;
 		}
 		for (Map.Entry<Specialized<D20Feat>, Integer> entry : feats.entrySet()) { 
 			if (entry.getKey().ability.equals(feat)) { 
@@ -365,6 +358,7 @@ public class D20Character extends GameCharacter implements D20 {
 	@Override
 	public Element toXML(String root) { 
 		Element e = super.toXML(root);
+		
 		e.addContent(XMLTools.xml("skillsavailable", skillsAvailable));
 		e.addContent(XMLTools.xml("featsavailable", featsAvailable));
 		e.addContent(XMLTools.xml("fighterbonusfeats", fighterBonusFeats));
@@ -391,10 +385,16 @@ public class D20Character extends GameCharacter implements D20 {
 			s.addContent(XMLTools.xml("specialization", skill.getKey().specialization));
 			s.addContent(skill.getValue().toXML("statistic"));
 		}
-		for (Map.Entry<Specialized<D20Feat>, Integer> entry : feats.entrySet()) 
-			e.addContent(entry.getKey().toXML("feat", entry.getValue()));
-		for (Map.Entry<Specialized<D20Feat>, Frequency> entry : abilities.entrySet())  
-			e.addContent(entry.getKey().toXML("ability", entry.getValue()));
+		for (Map.Entry<Specialized<D20Feat>, Integer> entry : feats.entrySet()) { 
+			Element f = (entry.getKey().toXML("feat"));
+			f.addContent(XMLTools.xml("ranks", entry.getValue()));
+			e.addContent(f);
+		}
+		for (Map.Entry<Specialized<D20Feat>, Frequency> entry : abilities.entrySet())  {
+			Element a = (entry.getKey().toXML("ability"));
+			a.addContent(entry.getValue().toXML("frequency"));
+			e.addContent(a);
+		}
 			
 		return e;
 	}

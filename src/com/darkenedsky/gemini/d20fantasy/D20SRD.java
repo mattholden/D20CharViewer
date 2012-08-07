@@ -18,27 +18,17 @@ public abstract class D20SRD implements D20Fantasy {
 
 	public static class Classes { 
 		public static final D20Class
-			BARBARIAN = null,
-			BARD = null,
-			CLERIC = null,
-			DRUID = null,
-			FIGHTER = null,
-			MONK = null,
-			PALADIN = null,
+			BARBARIAN = new Barbarian(),
+			BARD = new Bard(),
+			CLERIC = new Cleric(),
+			DRUID = new Druid(),
+			FIGHTER = new Fighter(),
+			MONK = new Monk(),
+			PALADIN = new Paladin(),
 			RANGER = new Ranger(),
-			ROGUE = null,
-			SORCERER = null,
-			WIZARD = null,
-			
-			// SPECIALTY WIZARDS
-			ILLUSIONIST = null,
-			ABJURER = null,
-			CONJURER = null,
-			DIVINER = null,
-			ENCHANTER = null,
-			EVOKER = null,
-			NECROMANCER = null,
-			TRANSMUTER = null,
+			ROGUE = new Rogue(),
+			SORCERER = new Sorcerer(),
+			WIZARD = new Wizard(),
 			
 			// PRESTIGE CLASSES
 			ARCANE_ARCHER = null,
@@ -58,11 +48,11 @@ public abstract class D20SRD implements D20Fantasy {
 			THAUMATURGIST  = null,
 			
 			// NPC CLASSES
-			ADEPT = null,
-			ARISTOCRAT = null,
-			COMMONER = null,
-			EXPERT = null,
-			WARRIOR = null,
+			ADEPT = new Adept(),
+			ARISTOCRAT = new Aristocrat(),
+			COMMONER = new Commoner(),
+			EXPERT = new Expert(),
+			WARRIOR = new Warrior(),
 		
 			// EPIC PRESTIGE
 			AGENT_RETRIEVER = null,
@@ -289,7 +279,13 @@ public abstract class D20SRD implements D20Fantasy {
 			MEDIUM_ARMOR_PROFICIENCY = null,
 			HEAVY_ARMOR_PROFICIENCY = null,
 			SHIELD_PROFICIENCY = null,
-			TOWER_SHIELD_PROFICIENCY = null;
+			TOWER_SHIELD_PROFICIENCY = null,
+			SCRIBE_SCROLL = null,
+			SPELL_MASTERY = null,
+			TRACK = null,
+			ENDURANCE = null,
+			TWO_WEAPON_FIGHTING = null,
+			RAPID_SHOT = null;
 		
 		 static final D20Feat[] buildArray() throws IllegalArgumentException, IllegalAccessException {
 			ArrayList<D20Feat> feet = new ArrayList<D20Feat>();

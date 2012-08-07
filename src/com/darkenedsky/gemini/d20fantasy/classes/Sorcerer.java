@@ -1,21 +1,39 @@
 package com.darkenedsky.gemini.d20fantasy.classes;
 
+import com.darkenedsky.gemini.common.Dice;
 import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.D20Character;
 import com.darkenedsky.gemini.d20system.D20Class;
+import com.darkenedsky.gemini.d20system.D20Race;
 
 public class Sorcerer extends D20Class implements D20Fantasy { 
 
 	/**
-	 * 
+	 * todo: spells, spells known
 	 */
 	private static final long serialVersionUID = 5869571921144862136L;
 
 	public Sorcerer() { 
-		super("Sorcerer","");
-		// young
+		
+		super("Sorcerer","http://www.d20srd.org/srd/classes/sorcererWizard.htm");
+
+		ageClass = (D20Race.AGE_MOD_YOUNG);
+		hitDice = new Dice(1,4);
+		skillPoints = 2;
+		babProgression = BAB_LOW;
+		fortSaveProgression = SAVE_BONUS_LOW;
+		reflexSaveProgression = SAVE_BONUS_LOW;
+		willSaveProgression = SAVE_BONUS_HIGH;
+		
+		addClassSkill(D20SRD.Skills.BLUFF);
+		addClassSkill(D20SRD.Skills.CONCENTRATION);
+		addClassSkill(D20SRD.Skills.CRAFT);
+		addClassSkill(D20SRD.Skills.KNOWLEDGE, "arcana");
+		addClassSkill(D20SRD.Skills.PROFESSION);
+		addClassSkill(D20SRD.Skills.SPELLCRAFT);
+		
 	}
 	
 
@@ -28,11 +46,7 @@ public class Sorcerer extends D20Class implements D20Fantasy {
 		Integer classLevel = character.getLevelOfClass(this);		
 		switch (classLevel) { 
 		case 1: { 
-				character.addFeat(D20SRD.Feats.SIMPLE_WEAPON_PROFICIENCY, "*", true);
-				character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "*", true);
-				character.addFeat(D20SRD.Feats.LIGHT_ARMOR_PROFICIENCY, "*", true);
-				character.addFeat(D20SRD.Feats.MEDIUM_ARMOR_PROFICIENCY, "*", true);
-				character.addFeat(D20SRD.Feats.SHIELD_PROFICIENCY, null, true);
+				character.addFeat(D20SRD.Feats.SIMPLE_WEAPON_PROFICIENCY, null, true);
 				break;
 			}
 		case 2:

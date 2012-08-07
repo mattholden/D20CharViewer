@@ -6,8 +6,8 @@ import java.util.Map;
 
 import org.jdom.Element;
 
-import com.darkenedsky.gemini.common.event.CharacterEvent;
-import com.darkenedsky.gemini.common.event.CharacterListener;
+import com.darkenedsky.gemini.common.event.CharacterGeneratorEvent;
+import com.darkenedsky.gemini.common.event.CharacterGeneratorListener;
 import com.darkenedsky.gemini.common.modifier.Bonus;
 import com.darkenedsky.gemini.common.modifier.Modifier;
 import com.darkenedsky.gemini.d20system.D20Race;
@@ -32,16 +32,22 @@ public class GameCharacter implements XMLSerializable, java.io.Serializable {
 	protected int age;
 	protected int xp = 0;
 	protected Library library;
-	private ArrayList<CharacterListener<?>> uiListeners = new ArrayList<CharacterListener<?>>();
+	private ArrayList<CharacterGeneratorListener> charGenListeners = new ArrayList<CharacterGeneratorListener>();
 	protected Map<Integer, Statistic> statistics = new HashMap<Integer, Statistic>(20);
 
 	public GameCharacter() {
 		super();
 	}
 
-	public void fireUIEvent(CharacterEvent uiEvent) { 
-		for (CharacterListener<?> ui : uiListeners) {
-			ui.actionPerformed(uiEvent);
+	public void addCharGenListener(CharacterGeneratorListener l) { 
+		charGenListeners.add(l);
+	}
+	
+	public void fireCharGenEvent(CharacterGeneratorEvent uiEvent) { 
+		for (CharacterGeneratorListener ui : charGenListeners) {
+			if (uiEvent.getEventCode().equals(ui.getEventCode())) {
+				ui.receiveEvent(uiEvent);
+			}
 		}
 	}
 

@@ -12,7 +12,7 @@ import com.darkenedsky.gemini.d20system.D20SpellcasterClass;
 public class Adept extends D20NPCClass implements D20SpellcasterClass, D20Fantasy {
 
 	/**
-	 * 
+	 * DONE
 	 */
 	private static final long serialVersionUID = -1041503408684533949L;
 
@@ -50,7 +50,7 @@ public class Adept extends D20NPCClass implements D20SpellcasterClass, D20Fantas
 	
 		int classLevel = character.getLevelOfClass(this);
 		if (classLevel == 1) {
-			character.addFeat(D20SRD.Feats.SIMPLE_WEAPON_PROFICIENCY, "*", true);			
+			character.addFeat(D20SRD.Feats.SIMPLE_WEAPON_PROFICIENCY, null, true);			
 		}
 		else if (classLevel == 2) { 
 			character.addAbility(D20SRD.Abilities.SUMMON_FAMILIAR, null);

@@ -3,13 +3,11 @@ package com.darkenedsky.gemini.d20fantasy.classes;
 import com.darkenedsky.gemini.common.Dice;
 import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.Progression;
-import com.darkenedsky.gemini.common.modifier.Times;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.D20Character;
 import com.darkenedsky.gemini.d20system.D20Class;
 import com.darkenedsky.gemini.d20system.D20Race;
-import com.darkenedsky.gemini.d20system.D20SpellCategory;
 import com.darkenedsky.gemini.d20system.D20SpellcasterClass;
 
 public class Cleric extends D20Class implements D20SpellcasterClass, D20Fantasy {
@@ -19,14 +17,16 @@ public class Cleric extends D20Class implements D20SpellcasterClass, D20Fantasy 
 	 * Clerics must be within 1 alignment step from their diety.
 	 * Guess we need to do something about deities, huh? 
 	 * Blegggh.
+	 * 
+	 * Domains
+	 * 
+	 * 
 	 */
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7483831801072618500L;
-
-	protected D20SpellCategory domain = null;
 	
 	public Cleric() {
 		super("Cleric", "http://www.d20srd.org/srd/classes/cleric.htm");
@@ -39,9 +39,6 @@ public class Cleric extends D20Class implements D20SpellcasterClass, D20Fantasy 
 		reflexSaveProgression = SAVE_BONUS_LOW;
 		willSaveProgression = SAVE_BONUS_HIGH;
 	
-		startingGold = new Dice(5,4);
-		startingGold.addModifier(new Times(10));
-		
 		addClassSkill(D20SRD.Skills.CONCENTRATION);
 		addClassSkill(D20SRD.Skills.CRAFT);
 		addClassSkill(D20SRD.Skills.DIPLOMACY);
@@ -75,10 +72,10 @@ public class Cleric extends D20Class implements D20SpellcasterClass, D20Fantasy 
 		Integer classLevel = character.getLevelOfClass(this);		
 		switch (classLevel) { 
 		case 1: { 
-				character.addFeat(D20SRD.Feats.SIMPLE_WEAPON_PROFICIENCY, "*", true);
-				character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "*", true);
-				character.addFeat(D20SRD.Feats.LIGHT_ARMOR_PROFICIENCY, "*", true);
-				character.addFeat(D20SRD.Feats.MEDIUM_ARMOR_PROFICIENCY, "*", true);
+				character.addFeat(D20SRD.Feats.SIMPLE_WEAPON_PROFICIENCY, null, true);
+				character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, null, true);
+				character.addFeat(D20SRD.Feats.LIGHT_ARMOR_PROFICIENCY, null, true);
+				character.addFeat(D20SRD.Feats.MEDIUM_ARMOR_PROFICIENCY, null, true);
 				character.addFeat(D20SRD.Feats.SHIELD_PROFICIENCY, null, true);
 				break;
 			}

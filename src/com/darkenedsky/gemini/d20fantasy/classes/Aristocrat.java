@@ -10,12 +10,12 @@ import com.darkenedsky.gemini.d20system.D20NPCClass;
 public class Aristocrat extends D20NPCClass implements D20Fantasy{
 
 	/**
-	 * 
+	 * DONE
 	 */
 	private static final long serialVersionUID = -7233516754646135330L;
 
 	public Aristocrat() {
-		super("Aristocrat", "http://www.d20srd.org/srd/classes/aristocrat.htm");
+		super("Aristocrat", "http://www.d20srd.org/srd/npcClasses/aristocrat.htm");
 		hitDice = new Dice(1,8);
 		skillPoints = 4;
 		babProgression = BAB_AVERAGE;
@@ -36,7 +36,7 @@ public class Aristocrat extends D20NPCClass implements D20Fantasy{
 		addClassSkill(D20SRD.Skills.PERFORM,"*");
 		addClassSkill(D20SRD.Skills.RIDE);
 		addClassSkill(D20SRD.Skills.SENSE_MOTIVE);
-		addClassSkill(D20SRD.Skills.SPEAK_LANGUAGE,"*");
+		addClassSkill(D20SRD.Skills.SPEAK_LANGUAGE,null);
 		addClassSkill(D20SRD.Skills.SPOT);
 		addClassSkill(D20SRD.Skills.SURVIVAL);
 	}
@@ -52,11 +52,11 @@ public class Aristocrat extends D20NPCClass implements D20Fantasy{
 				
 		if (classLevel == 1) { 
 			
-			character.addFeat(D20SRD.Feats.SIMPLE_WEAPON_PROFICIENCY, "*", true);
-			character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "*", true);
-			character.addFeat(D20SRD.Feats.LIGHT_ARMOR_PROFICIENCY, "*", true);
-			character.addFeat(D20SRD.Feats.MEDIUM_ARMOR_PROFICIENCY, "*", true);
-			character.addFeat(D20SRD.Feats.HEAVY_ARMOR_PROFICIENCY, "*", true);
+			character.addFeat(D20SRD.Feats.SIMPLE_WEAPON_PROFICIENCY, null, true);
+			character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, null, true);
+			character.addFeat(D20SRD.Feats.LIGHT_ARMOR_PROFICIENCY, null, true);
+			character.addFeat(D20SRD.Feats.MEDIUM_ARMOR_PROFICIENCY, null, true);
+			character.addFeat(D20SRD.Feats.HEAVY_ARMOR_PROFICIENCY, null, true);
 			character.addFeat(D20SRD.Feats.SHIELD_PROFICIENCY, null, true);
 			character.addFeat(D20SRD.Feats.TOWER_SHIELD_PROFICIENCY, null, true);
 			

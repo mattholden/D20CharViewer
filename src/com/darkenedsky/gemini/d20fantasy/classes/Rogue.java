@@ -2,7 +2,6 @@ package com.darkenedsky.gemini.d20fantasy.classes;
 
 import com.darkenedsky.gemini.common.Dice;
 import com.darkenedsky.gemini.common.GameCharacter;
-import com.darkenedsky.gemini.common.modifier.Times;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.D20Character;
@@ -11,7 +10,7 @@ import com.darkenedsky.gemini.d20system.D20Race;
 
 public class Rogue extends D20Class implements D20Fantasy {
 	
-	// TODO: check starting gold, check age, abilities
+	// TODO: abilities
 	
 	/**
 	 * 
@@ -28,8 +27,6 @@ public class Rogue extends D20Class implements D20Fantasy {
 		reflexSaveProgression = SAVE_BONUS_HIGH;
 		willSaveProgression = SAVE_BONUS_LOW;
 		
-		startingGold = new Dice(4,4);
-		startingGold.addModifier(new Times(10));
 		
 		addClassSkill(D20SRD.Skills.APPRAISE);
 		addClassSkill(D20SRD.Skills.BALANCE);
