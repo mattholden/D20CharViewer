@@ -24,10 +24,14 @@ public class D20Character extends GameCharacter implements D20 {
 	private Map<Specialized<D20Feat>, Frequency> abilities = new HashMap<Specialized<D20Feat>, Frequency>();
 	private Map<Specialized<D20Skill>, D20SkillRank> skills = new HashMap<Specialized<D20Skill>, D20SkillRank>(20);
 	
+	private D20CreatureType creatureType;
+	private D20CreatureSubTypeInterface creatureSubType;
+	
 	// temp variables used during chargen/levelup
 	private int skillsAvailable, featsAvailable;
 	private int ageClass;
 	private int levelsToGain = 1;
+	
 	
 	public D20SkillRank getSkill(D20Skill skill) { return getSkill(skill,null);}
 	
@@ -44,6 +48,9 @@ public class D20Character extends GameCharacter implements D20 {
 		}
 		return rank;
 	}
+	
+	public D20CreatureType getCreatureType() { return creatureType; }
+	public D20CreatureSubTypeInterface getCreatureSubType() { return creatureSubType; }
 	
 	public boolean addSkillRank(D20Skill skill, String spec, boolean crossClass, boolean free) { 
 				
@@ -273,9 +280,14 @@ public class D20Character extends GameCharacter implements D20 {
 
 	public boolean setRace(D20Race race) {
 		if (!race.hasPrerequisites(this)) return false;
+				
+		creatureType = race.getCreatureType();
+		creatureType.onGain(this);
 		
-		this.race = race;
-		race.onGain(this);
+		creatureSubType = race;
+		creatureSubType.onGain(this);
+
+		this.race = race;		
 		return true;
 	}
 
@@ -346,14 +358,18 @@ public class D20Character extends GameCharacter implements D20 {
 		e.addContent(XMLTools.xml("featsavailable", featsAvailable));
 		e.addContent(XMLTools.xml("levelstogain", levelsToGain));
 		e.addContent(XMLTools.xml("ageclass", ageClass));
-			
 		if (race != null)
 			e.addContent(XMLTools.xml("race", race.getUniqueID()));
 		if (size != null)
 			e.addContent(XMLTools.xml("size", size.getUniqueID()));
 		if (alignment != null)
 			e.addContent(XMLTools.xml("alignment", alignment.getUniqueID()));
-				
+		if (creatureType != null)
+			e.addContent(XMLTools.xml("creatureType", creatureType.getUniqueID()));
+		if (creatureSubType != null)
+			e.addContent(XMLTools.xml("creatureSubType", creatureSubType.getUniqueID()));
+		
+		
 		for (int ilevel = 0; ilevel < levels.size(); ilevel++) { 
 			Element elevel = levels.get(ilevel).toXML("classlevel");
 			elevel.addContent(XMLTools.xml("levelorder", ilevel));			
@@ -388,9 +404,11 @@ public class D20Character extends GameCharacter implements D20 {
 		skillsAvailable = XMLTools.getInt(e,"skillsavailable");
 		featsAvailable = XMLTools.getInt(e,"featsavailable");
 		levelsToGain = XMLTools.getInt(e,"levelstogain");
-		race = (D20Race)library.getSection("races").get(XMLTools.getString(e,"race"));
+		race = (D20Race)library.getByID(XMLTools.getString(e,"race"));
 		size = D20Size.load(XMLTools.getString(e,"size"));
 		alignment = D20Alignment.load(XMLTools.getString(e,"alignment"));
+		creatureType = (D20CreatureType)library.getByID(XMLTools.getString(e,"creatureType"));
+		creatureSubType = (D20CreatureSubTypeInterface)library.getByID(XMLTools.getString(e,"creatureSubType"));
 		
 		
 		List lv = e.getChildren("level");

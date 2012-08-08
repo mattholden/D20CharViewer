@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import com.darkenedsky.gemini.common.Library;
 import com.darkenedsky.gemini.common.LibrarySection;
 import com.darkenedsky.gemini.d20fantasy.classes.*;
+import com.darkenedsky.gemini.d20fantasy.creaturetypes.*;
 import com.darkenedsky.gemini.d20fantasy.races.*;
 import com.darkenedsky.gemini.d20fantasy.skills.*;
 import com.darkenedsky.gemini.d20system.*;
@@ -205,6 +206,41 @@ public abstract class D20SRD implements D20Fantasy {
 		
 	}
 	
+	public static final class CreatureTypes { 
+		
+		public static final D20CreatureType
+			ABERRATION = null,
+			ANIMAL = null,			
+			CONSTRUCT = null,
+			DRAGON = null,
+			ELEMENTAL = null,
+			FEY = null,
+			GIANT = null,
+			HUMANOID = new Humanoid(),
+			MAGICAL_BEAST = null,
+			MONSTROUS_HUMANOID = null,
+			OOZE = null,
+			OUTSIDER = null,
+			PLANT = null,
+			UNDEAD = null,
+			VERMIN = null;
+		
+		 static final D20CreatureType[] buildArray() throws IllegalArgumentException, IllegalAccessException {
+				ArrayList<D20CreatureType> feet = new ArrayList<D20CreatureType>();
+				for (Field f : CreatureTypes.class.getFields()) {
+					if (f.getType().isAssignableFrom(D20CreatureType.class)) {
+						D20CreatureType x = (D20CreatureType)f.get(null);
+						if (x != null)
+							feet.add(x);
+					}
+				}
+				D20CreatureType[] arr = new D20CreatureType[feet.size()];
+				for (int i = 0; i < feet.size(); i++) 
+					arr[i] = feet.get(i);
+				return arr;
+			}
+	}
+	
 	public static final class Abilities { 
 		
 		public static final D20Feat 
@@ -350,6 +386,7 @@ public abstract class D20SRD implements D20Fantasy {
 		Library l = new Library();
 		l.getSection(Library.ABILITIES).add(Abilities.buildArray());
 		l.getSection(Library.SPELLS).add(Spells.buildArray());
+		l.addSection(CREATURE_TYPES, CreatureTypes.buildArray());
 		l.getSection(Library.RACES).add(Races.buildArray());					
 		l.addSection(Library.SKILLS, Skills.buildArray());		
 		l.addSection(ALIGNMENT, D20Alignment.buildArray());

@@ -16,7 +16,8 @@ public interface D20 extends Serializable {
 		FEATS = "feats",
 		SIZE = "size",
 		ALIGNMENT = "alignment",
-		SPELLCASTER_TYPES = "spellcaster_types";
+		SPELLCASTER_TYPES = "spellcaster_types",
+		CREATURE_TYPES = "creature_types";
 	
 	// for bonuses
 	public static final int ALL_SAVES = -1;

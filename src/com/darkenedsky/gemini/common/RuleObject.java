@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import com.darkenedsky.gemini.common.prereq.HasPrerequisites;
 import com.darkenedsky.gemini.common.prereq.Prerequisite;
 
-public abstract class RuleObject implements java.io.Serializable, HasPrerequisites, Comparable<RuleObject> {
+public abstract class RuleObject implements java.io.Serializable, HasPrerequisites, HasUID, Comparable<RuleObject> {
 
 	/**
 	 * 
@@ -62,6 +62,7 @@ public abstract class RuleObject implements java.io.Serializable, HasPrerequisit
 		return true;
 	}
 	
+	@Override
 	public String getUniqueID() { 
 		return getClass().getName() + "&" + getName();
 	}
