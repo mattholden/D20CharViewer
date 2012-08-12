@@ -45,7 +45,7 @@ public class Monk extends D20Class implements D20Fantasy {
 		addClassSkill(D20SRD.Skills.TUMBLE);
 		
 		allowSplitMulticlass = false;
-		
+			
 		// monks must be lawful
 		deniedAlignments.add(D20Alignment.CHAOTIC_EVIL);
 		deniedAlignments.add(D20Alignment.CHAOTIC_GOOD);

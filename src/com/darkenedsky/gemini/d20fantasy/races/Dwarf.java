@@ -45,13 +45,11 @@ public class Dwarf extends D20Race implements D20Fantasy {
 	public void onGain(GameCharacter chara) { 
 		D20Character character = (D20Character)chara;
 		super.onGain(character);
-		// Dwarves can treat dwarven waraxes and dwarven urgroshes as martial weapons rather than exotic
-		// this will be a special case in the onGain for martial weapon proficiency feat
 		
 		character.addSkillRank(D20SRD.Skills.SPEAK_LANGUAGE, "Dwarven", false, true);
 		character.addSkillRank(D20SRD.Skills.SPEAK_LANGUAGE, "Common", false, true);
 		character.addAbility(D20SRD.Abilities.DWARF_BLOOD, null);
-		character.addAbility(D20SRD.Abilities.DARKVISION60, null);
+		character.addAbility(D20SRD.Abilities.DARKVISION, null);
 		character.addAbility(D20SRD.Abilities.INTUIT_DEPTH, null);
 		character.addAbility(D20SRD.Abilities.FULL_MOVE_SPEED_MEDIUM_LOAD, null);
 		character.addAbility(D20SRD.Abilities.FULL_MOVE_SPEED_HEAVY_LOAD, null);
@@ -73,6 +71,8 @@ public class Dwarf extends D20Race implements D20Fantasy {
 		character.addBonus(DODGE, this, new Plus(4), "giants");
 		character.addBonus(DODGE, this, new Plus(4), "ogres");
 		character.addBonus(DODGE, this, new Plus(4), "trolls");
+		character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "dwarven waraxe", true);
+		character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "dwarven urgrosh", true);
 		
 	}
 

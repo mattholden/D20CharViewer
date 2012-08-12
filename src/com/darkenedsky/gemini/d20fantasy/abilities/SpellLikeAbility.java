@@ -17,9 +17,7 @@ public class SpellLikeAbility extends D20Feat implements D20Fantasy {
 	private int casterLevel;
 	
 	public SpellLikeAbility(D20Spell spell, String name, int castLvl) {
-		super(name, spell.getSRD_URL());
-		type = ABILITY_SPELL_LIKE;
-		stacks = false;
+		super(name, spell.getSRD_URL(), ABILITY_SPELL_LIKE, true);		
 		casterLevel = castLvl;
 	} 
 	

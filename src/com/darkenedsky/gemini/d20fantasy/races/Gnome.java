@@ -58,7 +58,7 @@ public class Gnome extends D20Race implements D20Fantasy {
 		character.addAbility(D20SRD.Abilities.LOWLIGHTVISION, null);
 		character.addBonus(ALL_SAVES, this, new Plus(2), "illusions");
 		character.getSkill(D20SRD.Skills.LISTEN).addBonus(this, new Plus(2), null);
-		character.getSkill(D20SRD.Skills.CRAFT,null).addBonus(this, new Plus(2), "alchemy");
+		character.getSkill(D20SRD.Skills.CRAFT,"alchemy").addBonus(this, new Plus(2), null);
 		character.addBonus(ATTACK, this, new Plus(1), "kobolds");
 		character.addBonus(ATTACK, this, new Plus(1), "goblins");
 		character.addBonus(ATTACK, this, new Plus(1), "bugbears");
@@ -66,11 +66,10 @@ public class Gnome extends D20Race implements D20Fantasy {
 		character.addBonus(DODGE, this, new Plus(4), "giants");
 		character.addBonus(DODGE, this, new Plus(4), "ogres");
 		character.addBonus(DODGE, this, new Plus(4), "trolls");
+		character.addFeat(D20SRD.Feats.MARTIAL_WEAPON_PROFICIENCY, "gnome hooked hammer", true);
+
 		
-		// gnomes can treat gnome hooked hammers as martial weapons rather than exotic
-		// this will be a special case in the onGain for martial weapon proficiency feat
-		
-		// +1 to illusion spell efficacy - not sure how to do this.
+		// TODO +1 to illusion spell efficacy - not sure how to do this.
 		
 		
 		// spell like abilities

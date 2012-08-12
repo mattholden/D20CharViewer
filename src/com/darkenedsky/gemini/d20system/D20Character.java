@@ -139,7 +139,7 @@ public class D20Character extends GameCharacter implements D20 {
 		if (!free && !feat.hasPrerequisites(this))
 			return false;
 		// can't take more than once.
-		if (!feat.isStacks() && getFeatRanks(feat,spec) > 0)
+		if (feat.isSpecialized() && getFeatRanks(feat,spec) > 0)
 			return false;
 		
 		// need points?
@@ -193,7 +193,7 @@ public class D20Character extends GameCharacter implements D20 {
 		
 		// can't take more than once.
 		Frequency freqNow = getAbilityFrequency(feat, spec);
-		if (!feat.isStacks() && freqNow != null)
+		if (feat.isSpecialized() && freqNow != null)
 			return false;
 		
 		if (freqNow != null) { 

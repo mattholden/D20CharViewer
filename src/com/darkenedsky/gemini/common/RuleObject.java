@@ -1,7 +1,5 @@
 package com.darkenedsky.gemini.common;
-import java.util.ArrayList;
 import com.darkenedsky.gemini.common.prereq.HasPrerequisites;
-import com.darkenedsky.gemini.common.prereq.Prerequisite;
 
 public abstract class RuleObject implements java.io.Serializable, HasPrerequisites, HasUID, Comparable<RuleObject> {
 
@@ -44,21 +42,9 @@ public abstract class RuleObject implements java.io.Serializable, HasPrerequisit
 	public void onGain(GameCharacter character) {		
 	}
 	
-	private ArrayList<Prerequisite> prerequisites;
 	
 	@Override
-	public final void addPrerequisite(Prerequisite pre) { 
-		if (prerequisites == null)
-			prerequisites = new ArrayList<Prerequisite>();
-		prerequisites.add(pre);
-	}
-	
-	@Override
-	public final boolean hasPrerequisites(GameCharacter character) {
-		if (prerequisites == null) return true;
-		for (Prerequisite req : prerequisites) { 
-			if (!req.satisfies(character)) return false;
-		}
+	public boolean hasPrerequisites(GameCharacter character) {
 		return true;
 	}
 	

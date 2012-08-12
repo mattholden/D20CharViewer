@@ -1,16 +1,12 @@
 package com.darkenedsky.gemini.common.modifier;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-
 import org.jdom.Element;
-
 import com.darkenedsky.gemini.common.GameCharacter;
+import com.darkenedsky.gemini.common.Library;
 import com.darkenedsky.gemini.common.RuleObject;
 import com.darkenedsky.gemini.common.XMLSerializable;
 import com.darkenedsky.gemini.common.XMLTools;
 import com.darkenedsky.gemini.common.prereq.HasPrerequisites;
-import com.darkenedsky.gemini.common.prereq.Prerequisite;
 
 public class Bonus implements HasPrerequisites, Serializable, XMLSerializable {
 
@@ -22,22 +18,9 @@ public class Bonus implements HasPrerequisites, Serializable, XMLSerializable {
 	private Modifier modifier;
 	private String conditional;
 	
-	private ArrayList<Prerequisite> prerequisites;
-	
-	@Override
-	public void addPrerequisite(Prerequisite pre) { 
-		if (prerequisites == null) { 
-			prerequisites = new ArrayList<Prerequisite>();
-		}
-		prerequisites.add(pre);
-	}
 	
 	@Override
 	public boolean hasPrerequisites(GameCharacter d20) { 
-		if (prerequisites == null) return true;
-		for (Prerequisite p : prerequisites) { 
-			if (!p.satisfies(d20)) return false;
-		}
 		return true;
 	}
 	
@@ -74,14 +57,14 @@ public class Bonus implements HasPrerequisites, Serializable, XMLSerializable {
 		e.addContent(XMLTools.xml("conditional", conditional));
 		e.addContent(XMLTools.xml("source", source.getUniqueID()));
 		e.addContent(modifier.toXML("modifier"));
-		for (Prerequisite p : prerequisites) { 
-			e.addContent(p.toXML("prerequisite"));
-		}
+		
 		return e;
 	}
 	
-	public Bonus(Element e) {
-		conditional = e.getChildText("conditional");
+	public Bonus(Element e) throws Exception {
+		conditional = e.getChildText("conditional");		
+		source = Library.instance.getByID(XMLTools.getString(e,"source"));
+		modifier = (Modifier)XMLTools.dynamicLoad(e.getChild("modifier"));
 		
 	}
 }

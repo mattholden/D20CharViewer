@@ -39,6 +39,7 @@ public class Frequency implements Serializable, XMLSerializable {
 	}
 	
 	public static final Frequency AT_WILL = new Frequency(100, TimeUnit.SECOND) { 
+	
 		/**
 		 * 
 		 */

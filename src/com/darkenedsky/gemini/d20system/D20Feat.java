@@ -11,24 +11,29 @@ public class D20Feat extends RuleObject implements D20 {
 	 */
 	private static final long serialVersionUID = 6048690368418290937L;
 	
-	protected boolean fighterBonusFeat = false;	
-	protected boolean stacks = false;	
+	protected boolean specialized = false;	
 	protected int type = FEAT_GENERAL;
 	
-	public D20Feat(String name, String sRDURL) {
+	public D20Feat(String name, String srdURL) { 
+		this(name, srdURL, FEAT_GENERAL, false);
+	}
+	
+	public D20Feat(String name, String srdURL, int typ) { 
+		this(name, srdURL, typ, false);
+	}
+	
+	public D20Feat(String name, String sRDURL, int typ, boolean spec) {
 		super(name, sRDURL);
+		type = typ;
+		specialized = spec;
 	}
 
 	public int getType() {
 		return type;
 	}
 
-	public boolean isStacks() {
-		return stacks;
-	}
-	
-	public boolean isFighterBonusFeat() { 
-		return fighterBonusFeat;
+	public boolean isSpecialized() {
+		return specialized;
 	}
 	
 }

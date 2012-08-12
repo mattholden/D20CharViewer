@@ -44,11 +44,6 @@ public class D20Class extends RuleObject implements D20, D20ClassInterface {
 			spellsKnown[i] = Progression.ZERO;
 		}
 		
-		// Add a prerequisite to check the alignment requirements.
-		// We also have to check this for the alignment, but we aren't sure about the order 
-		// these things will happen in.
-		this.addPrerequisite(new AlignmentRestriction(this));
-		
 		// EVERYBODY's literate except for a barbarian
 		this.addForbiddenSkill(D20SRD.Skills.READING_WRITING);
 	}
@@ -62,6 +57,17 @@ public class D20Class extends RuleObject implements D20, D20ClassInterface {
 			}
 		}
 		return false;
+	}
+	
+	@Override
+	public boolean hasPrerequisites(GameCharacter ch) {
+		if (!super.hasPrerequisites(ch)) 
+			return false;
+		
+		// Add a prerequisite to check the alignment requirements.
+		// We also have to check this for the alignment, but we aren't sure about the order 
+		// these things will happen in.
+		return new AlignmentRestriction(this).satisfies(ch);
 	}
 	
 	/* (non-Javadoc)

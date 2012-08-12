@@ -2,6 +2,7 @@ package com.darkenedsky.gemini.d20fantasy.classes;
 
 import com.darkenedsky.gemini.common.Dice;
 import com.darkenedsky.gemini.common.GameCharacter;
+import com.darkenedsky.gemini.common.Progression;
 import com.darkenedsky.gemini.common.event.ChooseObjectEvent;
 import com.darkenedsky.gemini.common.event.ChooseStringEvent;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
@@ -15,7 +16,7 @@ import com.darkenedsky.gemini.d20system.D20UIEvents;
 public class Ranger extends D20Class implements D20SpellcasterClass, D20Fantasy  {
 
 	/**
-	 * TODO abilities, spell progression
+	 * TODO abilities, 
 	 */
 	private static final long serialVersionUID = -7233516754646135330L;
 
@@ -38,6 +39,11 @@ public class Ranger extends D20Class implements D20SpellcasterClass, D20Fantasy 
 		addClassSkill(D20SRD.Skills.RIDE);
 		addClassSkill(D20SRD.Skills.SURVIVAL);
 		addClassSkill(D20SRD.Skills.SWIM);
+		
+		this.spellsPerDay[1] = new Progression(null,null,null,0,0,1,1,1,1,1,1,1,1,2,2,2,2,3,3,3);
+		this.spellsPerDay[2] = new Progression(null,null,null,null,null,null,null, 0,0,1,1,1,1,1,1,2,2,2,3,3);
+		this.spellsPerDay[2] = new Progression(null,null,null,null,null,null,null, null,null,null,0,1,1,1,1,1,2,2,3,3);
+		this.spellsPerDay[3] = new Progression(null,null,null,null,null,null,null, null,null,null,null,null,null,0,1,1,1,1,2,3);
 		
 	}
 	

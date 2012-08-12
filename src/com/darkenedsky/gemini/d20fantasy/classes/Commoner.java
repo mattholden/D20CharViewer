@@ -26,11 +26,11 @@ public class Commoner extends D20NPCClass implements D20Fantasy {
 		this.willSaveProgression = SAVE_BONUS_LOW;		
 		
 		addClassSkill(D20SRD.Skills.CLIMB);
-		addClassSkill(D20SRD.Skills.CRAFT,"*");
+		addClassSkill(D20SRD.Skills.CRAFT);
 		addClassSkill(D20SRD.Skills.HANDLE_ANIMAL);
 		addClassSkill(D20SRD.Skills.INTIMIDATE);
 		addClassSkill(D20SRD.Skills.JUMP);
-		addClassSkill(D20SRD.Skills.PROFESSION,"*");
+		addClassSkill(D20SRD.Skills.PROFESSION);
 		addClassSkill(D20SRD.Skills.RIDE);
 		addClassSkill(D20SRD.Skills.LISTEN);
 		addClassSkill(D20SRD.Skills.USE_ROPE);

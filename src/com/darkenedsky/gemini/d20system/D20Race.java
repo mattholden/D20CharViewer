@@ -20,11 +20,18 @@ public class D20Race extends RuleObject implements D20CreatureSubTypeInterface, 
 	public D20Race(String name, String sRDURL) {
 		super(name, sRDURL);
 		
+		
+	}
+	
+	@Override
+	public boolean hasPrerequisites(GameCharacter ch) {
+		if (!super.hasPrerequisites(ch)) 
+			return false;
+		
 		// Add a prerequisite to check the alignment requirements.
 		// We also have to check this for the alignment, but we aren't sure about the order 
 		// these things will happen in.
-		this.addPrerequisite(new AlignmentRestriction(this));
-
+		return new AlignmentRestriction(this).satisfies(ch);
 	}
 	
 	protected ArrayList<String> bonusLanguages = new ArrayList<String>();

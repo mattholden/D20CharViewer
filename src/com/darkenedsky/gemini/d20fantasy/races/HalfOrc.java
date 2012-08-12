@@ -47,7 +47,7 @@ public class HalfOrc extends D20Race implements D20Fantasy {
 		character.addSkillRank(D20SRD.Skills.SPEAK_LANGUAGE, "Orc", false, true);
 		character.addSkillRank(D20SRD.Skills.SPEAK_LANGUAGE, "Common", false, true);
 		character.addAbility(D20SRD.Abilities.ORC_BLOOD, null);
-		character.addAbility(D20SRD.Abilities.DARKVISION60, null);
+		character.addAbility(D20SRD.Abilities.DARKVISION, null);
 		
 		// halforc can't be dumber than 3 int
 		if (character.getStat(INT).getBaseValue() < 3)
