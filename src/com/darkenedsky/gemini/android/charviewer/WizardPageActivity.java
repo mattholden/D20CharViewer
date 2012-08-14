@@ -16,7 +16,7 @@ public abstract class WizardPageActivity<T extends GameCharacter> extends Activi
 	 * 
 	 */
 	private static final long serialVersionUID = 1042089086684522382L;
-	protected WizardController<? extends GameCharacter> wizard;	 
+	protected WizardController<T> wizard;	 
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -42,7 +42,7 @@ public abstract class WizardPageActivity<T extends GameCharacter> extends Activi
 		saveToCharacter();
 		wizard.writeFile();
 		
-		Class<? extends WizardPageActivity<? extends GameCharacter>> next  = wizard.next();
+		Class<? extends WizardPageActivity<T>> next  = wizard.next();
 		if (next == null) {
 			wizard.finish();
 		}
@@ -56,7 +56,7 @@ public abstract class WizardPageActivity<T extends GameCharacter> extends Activi
 	 
 	 public void back(View view) {
 		
-		Class<? extends WizardPageActivity<? extends GameCharacter>> prev  = wizard.prev();
+		Class<? extends WizardPageActivity<T>> prev  = wizard.prev();
 			 
 		if (prev == null) { 
 			wizard.cancel();

@@ -1,10 +1,9 @@
 package com.darkenedsky.gemini.d20system;
 
-import com.darkenedsky.gemini.common.RuleObject;
 
 
 
-public class D20Feat extends RuleObject implements D20 {
+public class D20Feat extends D20Object {
 
 	/**
 	 * 

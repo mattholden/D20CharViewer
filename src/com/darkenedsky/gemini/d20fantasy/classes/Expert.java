@@ -1,6 +1,6 @@
 package com.darkenedsky.gemini.d20fantasy.classes;
 import com.darkenedsky.gemini.common.Dice;
-import com.darkenedsky.gemini.common.GameCharacter;
+
 import com.darkenedsky.gemini.common.Library;
 import com.darkenedsky.gemini.common.RuleObject;
 import com.darkenedsky.gemini.common.event.ChooseObjectEvent;
@@ -31,7 +31,7 @@ public class Expert extends D20NPCClass implements D20Fantasy {
 
 	/** Ask for the first class skill */
 	@Override
-	public void onGain(GameCharacter chara) { 
+	public void onGain(D20Character chara) { 
 		D20Character character = (D20Character)chara;
 		super.onGain(character);
 		

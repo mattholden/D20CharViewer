@@ -1,6 +1,6 @@
 package com.darkenedsky.gemini.d20fantasy.feats;
 
-import com.darkenedsky.gemini.common.GameCharacter;
+
 import com.darkenedsky.gemini.common.modifier.Plus;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.D20Character;
@@ -18,7 +18,7 @@ public class Diligent extends D20Feat {
 	}
 
 	@Override
-	public void onGain(GameCharacter character) {
+	public void onGain(D20Character character) {
 		super.onGain(character);
 		
 		D20Character c = (D20Character)character;

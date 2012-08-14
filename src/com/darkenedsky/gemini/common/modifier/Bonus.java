@@ -8,7 +8,7 @@ import com.darkenedsky.gemini.common.XMLSerializable;
 import com.darkenedsky.gemini.common.XMLTools;
 import com.darkenedsky.gemini.common.prereq.HasPrerequisites;
 
-public class Bonus implements HasPrerequisites, Serializable, XMLSerializable {
+public class Bonus implements HasPrerequisites<GameCharacter>, Serializable, XMLSerializable {
 
 	/**
 	 * 

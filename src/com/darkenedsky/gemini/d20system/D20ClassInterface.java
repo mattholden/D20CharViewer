@@ -1,9 +1,6 @@
 package com.darkenedsky.gemini.d20system;
-
 import java.util.ArrayList;
-
 import com.darkenedsky.gemini.common.Dice;
-import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.Progression;
 import com.darkenedsky.gemini.common.Specialized;
 import com.darkenedsky.gemini.d20system.prereq.RestrictsAlignment;
@@ -44,10 +41,10 @@ public interface D20ClassInterface extends D20, RestrictsAlignment {
 
 	public abstract int getSkillPoints();
 
-	public abstract void onGain(GameCharacter character);
+	public abstract void onGain(D20Character character);
 	
 	public abstract String getName();
 	
-	public abstract String getSRD_URL();
+	public abstract String getURL();
 
 }

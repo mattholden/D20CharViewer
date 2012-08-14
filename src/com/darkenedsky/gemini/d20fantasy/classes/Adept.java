@@ -1,7 +1,5 @@
 package com.darkenedsky.gemini.d20fantasy.classes;
-
 import com.darkenedsky.gemini.common.Dice;
-import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.Progression;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
@@ -45,8 +43,7 @@ public class Adept extends D20NPCClass implements D20SpellcasterClass, D20Fantas
 	}
 	
 	@Override
-	public void onGain(GameCharacter chara) { 
-		D20Character character = (D20Character)chara;
+	public void onGain(D20Character character) { 
 	
 		int classLevel = character.getLevelOfClass(this);
 		if (classLevel == 1) {

@@ -45,7 +45,7 @@ public class D20RacePage extends WizardPageActivity<D20Character> {
 		Spinner spinner1 = (Spinner) findViewById(R.id.choose1_spinner);
 		if (spinner1.getSelectedItemPosition() == -1) return;		
 		D20Race race = (D20Race)spinner1.getSelectedItem();
-		launchBrowser(race.getSRD_URL());
+		launchBrowser(race.getURL());
 	}	
 	
 	@Override

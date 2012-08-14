@@ -1,8 +1,7 @@
 package com.darkenedsky.gemini.d20system;
 
-import com.darkenedsky.gemini.common.RuleObject;
 
-public class D20SpellCategory extends RuleObject implements D20 {
+public class D20SpellCategory extends D20Object {
 
 	/**
 	 * 

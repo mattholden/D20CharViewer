@@ -1,6 +1,6 @@
 package com.darkenedsky.gemini.d20fantasy.classes;
 import com.darkenedsky.gemini.common.Dice;
-import com.darkenedsky.gemini.common.GameCharacter;
+
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.D20Alignment;
@@ -58,7 +58,7 @@ public class Monk extends D20Class implements D20Fantasy {
 
 		
 	@Override
-	public void onGain(GameCharacter chara) { 
+	public void onGain(D20Character chara) { 
 		D20Character character = (D20Character)chara;
 		super.onGain(character);
 		

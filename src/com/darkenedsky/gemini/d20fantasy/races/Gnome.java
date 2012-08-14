@@ -2,7 +2,7 @@ package com.darkenedsky.gemini.d20fantasy.races;
 
 import com.darkenedsky.gemini.common.Dice;
 import com.darkenedsky.gemini.common.Frequency;
-import com.darkenedsky.gemini.common.GameCharacter;
+
 import com.darkenedsky.gemini.common.TimeUnit;
 import com.darkenedsky.gemini.common.modifier.Plus;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
@@ -50,8 +50,8 @@ public class Gnome extends D20Race implements D20Fantasy {
 	}
 
 	@Override
-	public void onGain(GameCharacter chara) { 
-		D20Character character = (D20Character)chara;
+	public void onGain(D20Character character) { 
+		
 		super.onGain(character);
 		character.addSkillRank(D20SRD.Skills.SPEAK_LANGUAGE, "Gnome", false, true);
 		character.addSkillRank(D20SRD.Skills.SPEAK_LANGUAGE, "Common", false, true);

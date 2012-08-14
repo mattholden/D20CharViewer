@@ -1,7 +1,7 @@
 package com.darkenedsky.gemini.d20fantasy.races;
 
 import com.darkenedsky.gemini.common.Dice;
-import com.darkenedsky.gemini.common.GameCharacter;
+
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20system.D20Character;
 import com.darkenedsky.gemini.d20system.D20Race;
@@ -36,8 +36,8 @@ public class Human extends D20Race implements D20Fantasy {
 	}
 	
 	@Override
-	public void onGain(GameCharacter chara) { 
-		D20Character character = (D20Character)chara;
+	public void onGain(D20Character character) { 
+		
 		super.onGain(character);
 		
 		// bonus skills and feats

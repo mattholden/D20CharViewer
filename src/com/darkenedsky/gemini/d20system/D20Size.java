@@ -1,11 +1,8 @@
 package com.darkenedsky.gemini.d20system;
-
-import com.darkenedsky.gemini.common.GameCharacter;
-import com.darkenedsky.gemini.common.RuleObject;
 import com.darkenedsky.gemini.common.modifier.Plus;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 
-public class D20Size extends RuleObject implements D20 {
+public class D20Size extends D20Object {
 
 	/**
 	 * 
@@ -43,8 +40,7 @@ public class D20Size extends RuleObject implements D20 {
 	public static final D20Size COLOSSAL = new D20Size("Colossal", "http://www.d20srd.org/srd/combat/movementPositionAndDistance.htm#tableCreatureSizeAndScale", -8, 16);
 	
 	@Override
-	public void onGain(GameCharacter chara) { 
-		D20Character character = (D20Character)chara;
+	public void onGain(D20Character character) { 
 		character.getStat(DODGE).addBonus(this, new Plus(attackModifier), null);
 		character.getStat(ATTACK).addBonus(this, new Plus(attackModifier),null);
 		character.getStat(GRAPPLE_ATTACK).addBonus(this, new Plus(attackModifier),null);

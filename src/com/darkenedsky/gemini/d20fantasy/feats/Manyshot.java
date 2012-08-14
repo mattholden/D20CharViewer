@@ -1,6 +1,6 @@
 package com.darkenedsky.gemini.d20fantasy.feats;
+import com.darkenedsky.gemini.d20system.D20Character;
 
-import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.prereq.StatisticPrerequisite;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.D20Feat;
@@ -18,7 +18,7 @@ public class Manyshot extends D20Feat {
 	}
 
 	@Override
-	public boolean hasPrerequisites(GameCharacter character) {
+	public boolean hasPrerequisites(D20Character character) {
 		if (!super.hasPrerequisites(character))
 			return false;
 		

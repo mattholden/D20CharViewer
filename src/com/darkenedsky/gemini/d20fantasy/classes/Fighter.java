@@ -3,7 +3,7 @@ package com.darkenedsky.gemini.d20fantasy.classes;
 import java.util.ArrayList;
 
 import com.darkenedsky.gemini.common.Dice;
-import com.darkenedsky.gemini.common.GameCharacter;
+
 import com.darkenedsky.gemini.common.event.ChooseObjectEvent;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
@@ -102,7 +102,7 @@ public class Fighter extends D20Class implements D20Fantasy {
 	}
 	
 	@Override
-	public void onGain(GameCharacter chara) { 
+	public void onGain(D20Character chara) { 
 		D20Character character = (D20Character)chara;
 		super.onGain(character);
 		

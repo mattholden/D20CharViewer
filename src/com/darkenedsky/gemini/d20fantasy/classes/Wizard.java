@@ -1,7 +1,7 @@
 package com.darkenedsky.gemini.d20fantasy.classes;
 
 import com.darkenedsky.gemini.common.Dice;
-import com.darkenedsky.gemini.common.GameCharacter;
+
 import com.darkenedsky.gemini.common.Library;
 import com.darkenedsky.gemini.common.RuleObject;
 import com.darkenedsky.gemini.common.event.ChooseObjectEvent;
@@ -61,7 +61,7 @@ public class Wizard extends D20Class implements D20SpellcasterClass, D20Fantasy 
 	}
 	
 	@Override
-	public void onGain(GameCharacter chara) { 
+	public void onGain(D20Character chara) { 
 		D20Character character = (D20Character)chara;
 		super.onGain(character);
 		

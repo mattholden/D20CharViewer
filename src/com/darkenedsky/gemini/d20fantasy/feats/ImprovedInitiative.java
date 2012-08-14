@@ -1,6 +1,6 @@
 package com.darkenedsky.gemini.d20fantasy.feats;
+import com.darkenedsky.gemini.d20system.D20Character;
 
-import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.modifier.Bonus;
 import com.darkenedsky.gemini.common.modifier.Plus;
 import com.darkenedsky.gemini.d20system.D20Feat;
@@ -18,7 +18,7 @@ public class ImprovedInitiative extends D20Feat {
 	}
 
 	@Override
-	public void onGain(GameCharacter character) {
+	public void onGain(D20Character character) {
 		super.onGain(character);
 		character.addBonus(INITIATIVE, new Bonus(this, new Plus(4), null));
 	} 

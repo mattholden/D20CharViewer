@@ -1,12 +1,10 @@
 package com.darkenedsky.gemini.d20system;
 
 import java.util.ArrayList;
-
-import com.darkenedsky.gemini.common.RuleObject;
 import com.darkenedsky.gemini.d20system.prereq.AlignmentDoubleCheck;
 
 
-public class D20Alignment extends RuleObject implements D20 {
+public class D20Alignment extends D20Object  {
 
 	/**
 	 * 

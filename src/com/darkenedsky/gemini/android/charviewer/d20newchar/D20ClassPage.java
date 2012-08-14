@@ -10,6 +10,7 @@ import com.darkenedsky.gemini.common.Library;
 import com.darkenedsky.gemini.common.RuleObject;
 import com.darkenedsky.gemini.d20system.D20Character;
 import com.darkenedsky.gemini.d20system.D20Class;
+import com.darkenedsky.gemini.d20system.D20Object;
 
 
 public class D20ClassPage extends WizardPageActivity<D20Character> {
@@ -43,8 +44,8 @@ public class D20ClassPage extends WizardPageActivity<D20Character> {
 	public void choose1_srdLookup(View v) { 
 		Spinner spinner1 = (Spinner) findViewById(R.id.choose1_spinner);
 		if (spinner1.getSelectedItemPosition() == -1) return;		
-		RuleObject thing = (RuleObject)spinner1.getSelectedItem();
-		launchBrowser(thing.getSRD_URL());
+		D20Object thing = (D20Object)spinner1.getSelectedItem();
+		launchBrowser(thing.getURL());
 	}	
 	
 	@Override
@@ -52,8 +53,9 @@ public class D20ClassPage extends WizardPageActivity<D20Character> {
 		
 		Spinner spinner1 = (Spinner) findViewById(R.id.choose1_spinner);
 		if (spinner1.getSelectedItemPosition() == -1) return false;		
-		RuleObject race = (RuleObject)spinner1.getSelectedItem();
+		D20Object race = (D20Object)spinner1.getSelectedItem();
 		return race.hasPrerequisites(wizard.getCharacter());
+		
 	}
 	
 	@Override

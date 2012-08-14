@@ -2,9 +2,8 @@ package com.darkenedsky.gemini.d20system;
 
 import com.darkenedsky.gemini.common.Dice;
 import com.darkenedsky.gemini.common.Progression;
-import com.darkenedsky.gemini.common.RuleObject;
 
-public class D20CreatureType extends RuleObject implements D20 {
+public class D20CreatureType extends D20Object  {
 
 	/**
 	 * 

@@ -4,9 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.darkenedsky.gemini.common.RuleObject;
 
-public class D20Spell extends RuleObject implements D20 {
+public class D20Spell extends D20Object {
 
 	/**
 	 * 

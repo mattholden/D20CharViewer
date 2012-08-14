@@ -2,11 +2,10 @@ package com.darkenedsky.gemini.d20system;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import com.darkenedsky.gemini.common.RuleObject;
 import com.darkenedsky.gemini.common.modifier.Bonus;
 import com.darkenedsky.gemini.common.modifier.Plus;
 
-public class D20Skill extends RuleObject implements D20 {
+public class D20Skill extends D20Object {
 
 	/**
 	 * 

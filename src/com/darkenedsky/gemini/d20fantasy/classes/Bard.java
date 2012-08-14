@@ -1,7 +1,6 @@
 package com.darkenedsky.gemini.d20fantasy.classes;
 
 import com.darkenedsky.gemini.common.Dice;
-import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.common.Progression;
 import com.darkenedsky.gemini.d20fantasy.D20Fantasy;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
@@ -11,7 +10,7 @@ import com.darkenedsky.gemini.d20system.D20Class;
 import com.darkenedsky.gemini.d20system.D20Race;
 import com.darkenedsky.gemini.d20system.D20SpellcasterClass;
 
-public class Bard extends D20Class implements D20SpellcasterClass, D20Fantasy{
+public class Bard extends D20Class implements D20SpellcasterClass, D20Fantasy {
 
 	/**
 	 * DONE
@@ -78,8 +77,7 @@ public class Bard extends D20Class implements D20SpellcasterClass, D20Fantasy{
 	
 	
 	@Override
-	public void onGain(GameCharacter chara) { 
-		D20Character character = (D20Character)chara;
+	public void onGain(D20Character character) { 
 		super.onGain(character);
 		
 		// it's already been added to the object, so this should never be below 1

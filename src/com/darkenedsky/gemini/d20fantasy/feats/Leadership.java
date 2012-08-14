@@ -1,6 +1,6 @@
 package com.darkenedsky.gemini.d20fantasy.feats;
+import com.darkenedsky.gemini.d20system.D20Character;
 
-import com.darkenedsky.gemini.common.GameCharacter;
 import com.darkenedsky.gemini.d20system.D20Feat;
 import com.darkenedsky.gemini.d20system.prereq.TotalLevelPrerequisite;
 
@@ -17,7 +17,7 @@ public class Leadership extends D20Feat {
 	}
 
 	@Override
-	public boolean hasPrerequisites(GameCharacter character) {
+	public boolean hasPrerequisites(D20Character character) {
 		if (!super.hasPrerequisites(character))
 			return false;
 		

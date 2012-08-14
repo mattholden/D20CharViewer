@@ -1,16 +1,13 @@
 package com.darkenedsky.gemini.d20system;
 import java.util.ArrayList;
-
 import com.darkenedsky.gemini.common.Dice;
-import com.darkenedsky.gemini.common.GameCharacter;
-import com.darkenedsky.gemini.common.RuleObject;
 import com.darkenedsky.gemini.common.modifier.Bonus;
 import com.darkenedsky.gemini.common.modifier.Plus;
 import com.darkenedsky.gemini.d20fantasy.D20SRD;
 import com.darkenedsky.gemini.d20system.prereq.AlignmentRestriction;
 import com.darkenedsky.gemini.d20system.prereq.RestrictsAlignment;
 
-public class D20Race extends RuleObject implements D20CreatureSubTypeInterface, RestrictsAlignment {
+public class D20Race extends D20Object implements D20CreatureSubTypeInterface, RestrictsAlignment {
 
 	/**
 	 * 
@@ -24,7 +21,7 @@ public class D20Race extends RuleObject implements D20CreatureSubTypeInterface, 
 	}
 	
 	@Override
-	public boolean hasPrerequisites(GameCharacter ch) {
+	public boolean hasPrerequisites(D20Character ch) {
 		if (!super.hasPrerequisites(ch)) 
 			return false;
 		
@@ -165,8 +162,7 @@ public class D20Race extends RuleObject implements D20CreatureSubTypeInterface, 
 	}
 	
 	@Override
-	public void onGain(GameCharacter chara) { 
-		D20Character character = (D20Character)chara;
+	public void onGain(D20Character character) { 
 		
 		// take on the size. (might be some special stuffs there)
 		character.setSize(this.size);
